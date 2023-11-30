@@ -39,14 +39,14 @@ class RegisterOptionsScreen extends StatelessWidget {
                   content: Text('Continue With Email',  style: Theme.of(context)
                       .textTheme
                       .headlineSmall!
-                      .copyWith(color: ColorManager.white, fontSize: 16),),
+                      .copyWith(color: ColorManager.white, fontSize: 18),),
 
                   height: MediaQuery.sizeOf(context).height * 0.06,
-                  width: MediaQuery.sizeOf(context).width * 0.5,
+                  width: MediaQuery.sizeOf(context).height * 0.5,
                   backGroundColor: ColorManager.primaryColor,
                 ),
                 SizedBox(
-                  height: MediaQuery.sizeOf(context).height * 0.02,
+                  height: MediaQuery.sizeOf(context).height * 0.05,
                 ),
                 Wrap(
                   children: [
@@ -56,21 +56,14 @@ class RegisterOptionsScreen extends StatelessWidget {
                         style:
                             Theme.of(context).textTheme.headlineSmall!.copyWith(
                                   color: ColorManager.black,
-                                  fontSize: 16,
+                                  fontSize: 17,
                                 ))
                   ],
                 ),
                 TextButton(
                     onPressed: () {},
-                    child:   Text(
+                    child: const Text(
                       " Continue as a Guest",
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(
-                          color: ColorManager.primaryColor,
-                          fontSize: 16),
                     ))
               ],
             ),
