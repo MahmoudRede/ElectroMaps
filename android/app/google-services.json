@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "818789905198",
+    "project_id": "electro-maps-7bc45",
+    "storage_bucket": "electro-maps-7bc45.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818789905198:android:4d485baf9fce28983480bf",
+        "android_client_info": {
+          "package_name": "com.example.e_electromaps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDB4wMsArKmmNOVPlQQsiT0aJDjn1yAE4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
