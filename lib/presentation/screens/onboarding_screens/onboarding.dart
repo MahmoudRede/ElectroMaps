@@ -1,14 +1,7 @@
+import 'package:e_electromaps/data/model/onboarding_model/onboarding_model.dart';
 import 'package:e_electromaps/presentation/widgets/onboarding_body.dart';
 
 import 'package:flutter/material.dart';
-
-class BoardingModel {
-  final String image;
-  final String title;
-  final String body;
-
-  BoardingModel({required this.image, required this.title, required this.body});
-}
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({super.key});

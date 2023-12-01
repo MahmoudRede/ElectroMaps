@@ -1,4 +1,5 @@
-import 'package:e_electromaps/presentation/screens/onboarding_screens/onboarding.dart';
+import 'package:e_electromaps/data/model/onboarding_model/onboarding_model.dart';
+
 import 'package:e_electromaps/presentation/screens/privacy_and_terms_screen/privacy_and_terms_screen.dart';
 import 'package:e_electromaps/presentation/widgets/onboarding_buttons.dart';
 import 'package:flutter/material.dart';
