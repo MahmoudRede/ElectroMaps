@@ -20,6 +20,10 @@ class AppCubit extends Cubit<AppStates>{
 
   static AppCubit get(context) => BlocProvider.of<AppCubit>(context);
 
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   int currentIndex=0;
 
   void changeBottomNavBar(int index){

@@ -1,3 +1,4 @@
+import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/presentation/screens/login_screen/login_screen.dart';
 import 'package:e_electromaps/presentation/widgets/default_button.dart';
 import 'package:e_electromaps/presentation/widgets/default_text_form_field.dart';
@@ -9,8 +10,6 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
     return SafeArea(
       child: Scaffold(
         backgroundColor: ColorManager.white,
@@ -39,7 +38,8 @@ class RegisterScreen extends StatelessWidget {
                         content: const Icon(
                           Icons.arrow_back,
                           color: ColorManager.white,
-                        )),
+                        ),
+                    ),
                   ),
                   SizedBox(
                     height: MediaQuery.sizeOf(context).height * 0.05,
@@ -56,7 +56,7 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   DefaultTextFormField(
                       labelText: 'Email *',
-                      controller: emailController,
+                      controller: AppCubit.get(context).emailController,
                       textInputType: TextInputType.emailAddress),
                   SizedBox(
                     height: MediaQuery.sizeOf(context).height * 0.05,
@@ -64,7 +64,7 @@ class RegisterScreen extends StatelessWidget {
                   DefaultTextFormField(
                       isPass: true,
                       labelText: 'Password *',
-                      controller: passwordController,
+                      controller: AppCubit.get(context).passwordController,
                       textInputType: TextInputType.text),
                   SizedBox(
                     height: MediaQuery.sizeOf(context).height * 0.01,
@@ -75,11 +75,13 @@ class RegisterScreen extends StatelessWidget {
                       Text(
                           'Must contain at least 8 characters, and at least one uppercase,lowercase, and number.',
                           textAlign: TextAlign.start,
-                          style:
-                              Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                    color: ColorManager.black.withOpacity(.7),
-                                    fontSize: 15,
-                                  ))
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall!
+                              .copyWith(
+                                color: ColorManager.textColor,
+                                fontSize: 15,
+                              ))
                     ],
                   ),
                   SizedBox(
@@ -95,7 +97,10 @@ class RegisterScreen extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!
-                          .copyWith(color: ColorManager.white, fontSize: 18),
+                          .copyWith(
+                              color: ColorManager.white,
+                              fontSize:
+                                  MediaQuery.sizeOf(context).height * 0.02),
                     ),
                   ),
                   SizedBox(
@@ -109,16 +114,16 @@ class RegisterScreen extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .headlineSmall!
-                            .copyWith(
-                                color: ColorManager.textColor, fontSize: 16),
+                            .copyWith(color: ColorManager.black, fontSize: 16),
                       ),
                       TextButton(
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const LoginScreen(),
-                                ));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
                           },
                           child: Text(
                             "Login now",
