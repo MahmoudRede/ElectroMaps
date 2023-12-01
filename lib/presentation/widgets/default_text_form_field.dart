@@ -76,7 +76,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
           textInputAction: TextInputAction.next,
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
             fontSize: 15.0,
-            color: ColorManager.textColor,
+            color: ColorManager.black,
           ),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -105,7 +105,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
           textInputAction: TextInputAction.done,
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
             fontSize: 15.0,
-            color: ColorManager.textColor,
+            color: ColorManager.black,
 
           ),
           decoration: InputDecoration(
@@ -113,7 +113,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
               labelText: widget.labelText,
               labelStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 fontSize: 18.0,
-                color: ColorManager.textColor,
+                color: ColorManager.black,
               ),
               errorStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 fontSize: 15.0,
