@@ -1,3 +1,4 @@
+import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
 
 class PrivacyAndTermsScreen extends StatelessWidget {
@@ -10,91 +11,63 @@ class PrivacyAndTermsScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(
-            height: 80,
+           SizedBox(
+            height:MediaQuery.sizeOf(context).height * 0.13 ,
           ),
-          const Align(
-              alignment: Alignment.topCenter,
-              child: Text(
-                'Terms of service',
-                style: TextStyle(color: Colors.black, fontSize: 25),
-              )),
-          const SizedBox(
-            height: 50,
+          Text(
+            'Terms of service',
+            style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: ColorManager.black),
+          ),
+           SizedBox(
+            height: MediaQuery.sizeOf(context).height*0.05,
           ),
           Image.asset(
             'assets/images/privacy_policy.jpg',
-            height: 250,
-            width: 250,
+            height: MediaQuery.sizeOf(context).height*0.28,
+            width:  MediaQuery.sizeOf(context).width * 0.6,
           ),
-          const SizedBox(
-            height: 50,
+           SizedBox(
+            height: MediaQuery.sizeOf(context).height*0.02,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Please review our',
-                style: TextStyle(fontSize: 18),
-              ),
-              TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Terms and Condions',
-                    style: TextStyle(fontSize: 18, color: Colors.greenAccent),
-                  ))
+              Text('Please review our ',style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 16),),
+              InkWell(onTap: (){},child: Text('Terms and Conditions',style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorManager.primaryColor,fontSize: 16),)),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'and',
-                style: TextStyle(fontSize: 18),
-              ),
-              TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Privacy Policy',
-                    style: TextStyle(fontSize: 18, color: Colors.greenAccent),
-                  )),
-              const Text(
-                'if you wish to',
-                style: TextStyle(fontSize: 18),
-              ),
+              Text('and  ',style:Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 16) ,),
+              InkWell(onTap: (){},child: Text('Privacy Policy',style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorManager.primaryColor,fontSize: 16),)),
+              Text('  if you wish to know ',style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 16),)
             ],
           ),
-          const Text(
-            'know more about the usage details of ElectroMaps',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18),
-          ),
-          const Spacer(),
+          Text('more about the usage details of ElectroMaps',style: Theme.of(context).textTheme.labelLarge!.copyWith(fontSize: 16),),
+
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.15,),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: GestureDetector(
               onTap: () {},
               child: Container(
-                height: 50,
-                width: double.infinity,
+                height: MediaQuery.sizeOf(context).height * 0.05,
+
+                width:  MediaQuery.sizeOf(context).width * 0.52,
                 decoration: BoxDecoration(
-                    color: Colors.greenAccent,
+                    color: ColorManager.primaryColor,
                     borderRadius: BorderRadius.circular(18)),
-                child: const Center(
+                child:  Center(
                   child: Text(
                     'I HAVE READ AND ACCEPT',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorManager.white),
                   ),
                 ),
               ),
             ),
           ),
-          const SizedBox(
-            height: 50,
-          )
+
         ],
       ),
     );
