@@ -5,6 +5,8 @@ import 'package:e_electromaps/presentation/widgets/onboarding_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../styles/colors/color_manager.dart';
+
 Widget onBoardingBody(onboardingController, List<BoardingModel> bording, index,
         context, bool isLast) =>
     Column(
@@ -15,16 +17,16 @@ Widget onBoardingBody(onboardingController, List<BoardingModel> bording, index,
               bottomLeft: Radius.circular(40),
               bottomRight: Radius.circular(40)),
           child: Container(
-            height: 300,
+            height: MediaQuery.sizeOf(context).height * 0.38,
             child: Image.asset(
               bording[index].image,
               fit: BoxFit.cover,
-              height: 300,
+              // height: 300,
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
+         SizedBox(
+          height: MediaQuery.sizeOf(context).height * 0.03,
         ),
         SmoothPageIndicator(
           controller: onboardingController,
@@ -37,32 +39,39 @@ Widget onBoardingBody(onboardingController, List<BoardingModel> bording, index,
             spacing: 5,
           ),
         ),
-        const SizedBox(
-          height: 20,
+         SizedBox(
+          height: MediaQuery.sizeOf(context).height * 0.03,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
           child: Text(
             bording[index].title,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.black, fontSize: 25),
+            style:Theme.of(context)
+                .textTheme
+                .labelLarge!
+                .copyWith(
+                color: ColorManager.black, fontSize: 20),
           ),
         ),
-        const SizedBox(
-          height: 20,
+         SizedBox(
+          height: MediaQuery.sizeOf(context).height * 0.02,
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Text(
-            bording[index].body,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 18),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Text(
+              bording[index].body,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(color: ColorManager.textColor,fontSize: 16),
+            ),
           ),
         ),
-        const Spacer(),
-        if (index == 3)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 40),
+
+        SizedBox(height: MediaQuery.sizeOf(context).height * 0.25,),
+
+          index == 3 ? Padding(
+            padding: EdgeInsets.only(left: MediaQuery.sizeOf(context).width * 0.1 , right:MediaQuery.sizeOf(context).width * 0.1,bottom:MediaQuery.sizeOf(context).height * 0.1  ),
             child: GestureDetector(
               onTap: () {
                 if (isLast == true) {
@@ -77,23 +86,20 @@ Widget onBoardingBody(onboardingController, List<BoardingModel> bording, index,
                     curve: Curves.fastLinearToSlowEaseIn);
               },
               child: Container(
-                height: 60,
-                width: 150,
+                height: MediaQuery.sizeOf(context).height * 0.06,
+                width: MediaQuery.sizeOf(context).width * 0.4,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    color: Colors.greenAccent),
-                child: const Center(
+                    color: ColorManager.primaryColor),
+                child:  Center(
                     child: Text(
                   'Get Started',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 25,
-                      color: Colors.white),
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(color: ColorManager.white,fontSize: 18),
                 )),
               ),
             ),
-          ),
-        if (index != 3)
-          onBoardingButtons(context, onboardingController, isLast),
+          ):onBoardingButtons(context, onboardingController, isLast),
+
+
       ],
     );
