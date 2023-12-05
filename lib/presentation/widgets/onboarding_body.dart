@@ -7,6 +7,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../styles/colors/color_manager.dart';
 
+
 Widget onBoardingBody(onboardingController, List<BoardingModel> bording, index,
         context, bool isLast) =>
     Column(
@@ -33,7 +34,7 @@ Widget onBoardingBody(onboardingController, List<BoardingModel> bording, index,
           count: bording.length,
           effect: const ScrollingDotsEffect(
             dotColor: Colors.grey,
-            activeDotColor: Colors.greenAccent,
+            activeDotColor: ColorManager.primaryColor,
             dotHeight: 10,
             dotWidth: 10,
             spacing: 5,
@@ -59,11 +60,12 @@ Widget onBoardingBody(onboardingController, List<BoardingModel> bording, index,
         ),
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
+            padding:  EdgeInsets.symmetric(horizontal: MediaQuery.sizeOf(context).width * 0.1),
             child: Text(
               bording[index].body,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleSmall!.copyWith(color: ColorManager.textColor,fontSize: 16),
+              overflow:TextOverflow.visible,
             ),
           ),
         ),
