@@ -85,6 +85,10 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
               fontSize: 18.0,
               color: ColorManager.black,
             ),
+            errorStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
+              fontSize: 15.0,
+              color: ColorManager.red,
+            ),
 
           ),
           maxLines: widget.lines,
@@ -96,7 +100,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
           },
           validator: (value) {
             if (value!.isEmpty) {
-              return 'قم بإضافة البيانات المطلوبه';
+              return 'Required field';
             }
             return null;
           },
@@ -117,7 +121,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
               ),
               errorStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 fontSize: 15.0,
-                color: ColorManager.textColor,
+                color: ColorManager.red,
               ),
               suffixIcon: widget.isPass == true
                   ? IconButton(
@@ -157,7 +161,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
           },
           validator: (value) {
             if (value!.isEmpty) {
-              return 'قم بإضافة البيانات المطلوبه';
+              return 'Required field';
             }
             return null;
           },
