@@ -1,6 +1,8 @@
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 import 'package:e_electromaps/core/remote/dio_helper.dart';
+import 'package:e_electromaps/presentation/screens/home_layout/home_layout.dart';
+import 'package:e_electromaps/presentation/screens/splash_screen/splash_screen.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +43,8 @@ class MyApp extends StatelessWidget {
                 )
               ),
               debugShowCheckedModeBanner: false,
-              home: const RegisterOptionsScreen(),
+              home: const SplashScreen(),
+
             );
           }
       ),

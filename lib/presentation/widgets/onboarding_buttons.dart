@@ -1,8 +1,10 @@
 import 'package:e_electromaps/presentation/screens/privacy_and_terms_screen/privacy_and_terms_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../styles/colors/color_manager.dart';
+
 Widget onBoardingButtons(context, onboardingController, isLast) => Padding(
-      padding: const EdgeInsets.all(40),
+      padding:  EdgeInsets.only(left: MediaQuery.sizeOf(context).width * 0.1 , right:MediaQuery.sizeOf(context).width * 0.1,bottom:MediaQuery.sizeOf(context).height * 0.1  ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -15,16 +17,20 @@ Widget onBoardingButtons(context, onboardingController, isLast) => Padding(
               ));
             },
             child: Container(
-              height: 60,
-              width: 100,
+              height: MediaQuery.sizeOf(context).height * 0.06,
+              width: MediaQuery.sizeOf(context).width * 0.2,
               decoration: BoxDecoration(
                   border: Border.all(),
                   borderRadius: BorderRadius.circular(25),
                   color: Colors.white),
-              child: const Center(
+              child:  Center(
                   child: Text(
                 'SKIP',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(
+                    color: ColorManager.textColor, fontSize: 18),
               )),
             ),
           ),
@@ -42,18 +48,19 @@ Widget onBoardingButtons(context, onboardingController, isLast) => Padding(
                   curve: Curves.fastLinearToSlowEaseIn);
             },
             child: Container(
-              height: 60,
-              width: 100,
+              height: MediaQuery.sizeOf(context).height * 0.06,
+              width: MediaQuery.sizeOf(context).width * 0.2,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
-                  color: Colors.greenAccent),
-              child: const Center(
+                  color: ColorManager.primaryColor),
+              child:  Center(
                   child: Text(
                 'Next',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 25,
-                    color: Colors.white),
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(
+                    color: ColorManager.white, fontSize: 18),
               )),
             ),
           )
