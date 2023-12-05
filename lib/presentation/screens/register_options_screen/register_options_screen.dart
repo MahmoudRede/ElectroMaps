@@ -62,8 +62,15 @@ class RegisterOptionsScreen extends StatelessWidget {
                 ),
                 TextButton(
                     onPressed: () {},
-                    child: const Text(
+                    child:   Text(
                       " Continue as a Guest",
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(
+                          color: ColorManager.primaryColor,
+                          fontSize: 16),
                     ))
               ],
             ),
