@@ -35,7 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   builder: (context, state) {
     var cubit = AppCubit.get(context);
     return Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(20.0),
           child: SizedBox(
             height: double.infinity,
             width: double.infinity,
@@ -78,31 +78,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: Theme.of(context)
                           .textTheme
                           .headlineLarge!
-                          .copyWith(color: ColorManager.black, fontSize: 30),
+                          .copyWith(color: ColorManager.black, fontSize: 28),
                     ),
                     SizedBox(
-                      height: MediaQuery.sizeOf(context).height * 0.03,
+                      height: MediaQuery.sizeOf(context).height * 0.02,
                     ),
                     DefaultTextFormField(
                         labelText: 'Name *',
                         controller: nameController,
                         textInputType: TextInputType.text),
                     SizedBox(
-                      height: MediaQuery.sizeOf(context).height * 0.03,
+                      height: MediaQuery.sizeOf(context).height * 0.02,
                     ),
                     DefaultTextFormField(
                         labelText: 'Phone Number *',
                         controller: phoneController,
                         textInputType: TextInputType.phone),
                     SizedBox(
-                      height: MediaQuery.sizeOf(context).height * 0.03,
+                      height: MediaQuery.sizeOf(context).height * 0.02,
                     ),
                     DefaultTextFormField(
                         labelText: 'Email *',
                         controller: emailController,
                         textInputType: TextInputType.emailAddress),
                     SizedBox(
-                      height: MediaQuery.sizeOf(context).height * 0.03,
+                      height: MediaQuery.sizeOf(context).height * 0.02,
                     ),
                     DefaultTextFormField(
                         isPass: true,
@@ -167,14 +167,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       height: MediaQuery.sizeOf(context).height * 0.06,
                       width: MediaQuery.sizeOf(context).height * 0.5,
                       content: Text(
-                        "SIGN UP FOR FREE",
+                        "Sign up for free",
                         style: Theme.of(context)
                             .textTheme
                             .headlineSmall!
                             .copyWith(
                                 color: ColorManager.white,
                                 fontSize:
-                                    MediaQuery.sizeOf(context).height * 0.02),
+                                    MediaQuery.sizeOf(context).height * 0.022),
                       ),
                     ),
 
@@ -205,7 +205,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .copyWith(
                                       color: ColorManager.primaryColor,
                                       fontSize: 16),
-                            ))
+                            ),),
                       ],
                     ),
                   ],
