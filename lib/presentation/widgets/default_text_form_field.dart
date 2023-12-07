@@ -82,7 +82,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
             contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             labelText: widget.labelText,
             labelStyle:Theme.of(context).textTheme.headlineSmall!.copyWith(
-              fontSize: 18.0,
+              fontSize: 16.0,
               color: ColorManager.black,
             ),
             errorStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
@@ -116,7 +116,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
             contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               labelText: widget.labelText,
               labelStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                fontSize: 18.0,
+                fontSize: 16.0,
                 color: ColorManager.black,
               ),
               errorStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(

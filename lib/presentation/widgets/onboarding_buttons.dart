@@ -25,12 +25,12 @@ Widget onBoardingButtons(context, onboardingController, isLast) => Padding(
                   color: Colors.white),
               child:  Center(
                   child: Text(
-                'SKIP',
+                'Skip',
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall!
                     .copyWith(
-                    color: ColorManager.textColor, fontSize: 18),
+                    color: ColorManager.textColor, fontSize: 16),
               )),
             ),
           ),
@@ -60,7 +60,7 @@ Widget onBoardingButtons(context, onboardingController, isLast) => Padding(
                     .textTheme
                     .headlineSmall!
                     .copyWith(
-                    color: ColorManager.white, fontSize: 18),
+                    color: ColorManager.white, fontSize: 16),
               )),
             ),
           )
