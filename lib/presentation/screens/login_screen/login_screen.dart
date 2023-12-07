@@ -154,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: MediaQuery.sizeOf(context).height * 0.06,
                           width: MediaQuery.sizeOf(context).height * 0.5,
                           content: Text(
-                            "LOGIN",
+                            "Login",
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineSmall!

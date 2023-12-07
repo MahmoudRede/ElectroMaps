@@ -60,8 +60,8 @@ class PrivacyAndTermsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(18)),
                 child:  Center(
                   child: Text(
-                    'I HAVE READ AND ACCEPT',
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: ColorManager.white),
+                    'I have read and accept',
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: ColorManager.white,fontSize: 16),
                   ),
                 ),
               ),

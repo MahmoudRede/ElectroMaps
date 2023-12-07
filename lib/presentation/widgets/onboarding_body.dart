@@ -96,7 +96,7 @@ Widget onBoardingBody(onboardingController, List<BoardingModel> bording, index,
                 child:  Center(
                     child: Text(
                   'Get Started',
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(color: ColorManager.white,fontSize: 18),
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(color: ColorManager.white,fontSize: 16),
                 )),
               ),
             ),
