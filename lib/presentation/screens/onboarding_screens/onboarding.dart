@@ -49,7 +49,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             });
           }
         },
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         controller: onboardingController,
         itemCount: bording.length,
         itemBuilder: (context, index) => onBoardingBody(

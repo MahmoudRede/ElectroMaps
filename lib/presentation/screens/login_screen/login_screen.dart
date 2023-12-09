@@ -7,6 +7,7 @@ import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../widgets/pinTextField.dart';
 import '../home_layout/home_layout.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,8 +19,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -91,24 +92,36 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: MediaQuery.sizeOf(context).height * 0.03,
                         ),
                         DefaultTextFormField(
-                            labelText: 'Email *',
-                            controller: emailController,
-                            textInputType: TextInputType.emailAddress),
+                            labelText: 'Phone Number *',
+                            controller: phoneController,
+                            textInputType: TextInputType.phone),
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * 0.03,
                         ),
-                        DefaultTextFormField(
-                            isPass: true,
-                            labelText: 'Password *',
-                            controller: passwordController,
-                            textInputType: TextInputType.text),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Text(
+                            "Password *",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(fontSize: 16),
+                          ),
+                        ),
                         SizedBox(
-                          height: MediaQuery.sizeOf(context).height * 0.01,
+                          height: MediaQuery.sizeOf(context).height * 0.02,
+                        ),
+
+                        PinTextField(
+                          passwordController: passwordController,
+                        ),
+                        SizedBox(
+                          height: MediaQuery.sizeOf(context).height * 0,
                         ),
                         Align(
                           alignment: Alignment.centerRight,
-                          child: TextButton(
-                            onPressed: () {},
+                          child: GestureDetector(
+                            onTap: () {},
                             child: Text(
                               "Forgot Password?",
                               style: Theme.of(context)
@@ -121,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: MediaQuery.sizeOf(context).height * 0.07,
+                          height: MediaQuery.sizeOf(context).height * 0.02,
                         ),
                         state is LoginLoadingState
                             ? const Center(
@@ -134,11 +147,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (formKey.currentState!.validate()) {
                               cubit
                                   .loginWithFirebaseAuth(
-                                      email: emailController.text,
+                                      email: phoneController.text,
                                       password: passwordController.text)
                                   .then(
                                     (value) => {
-                                      emailController.clear(),
+                                      phoneController.clear(),
                                       passwordController.clear(),
                                       Navigator.pushReplacement(
                                           context,
