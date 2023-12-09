@@ -86,7 +86,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
               color: ColorManager.black,
             ),
             errorStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
-              fontSize: 15.0,
+              fontSize: 13.0,
               color: ColorManager.red,
             ),
 
