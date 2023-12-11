@@ -1,4 +1,5 @@
 import 'package:e_electromaps/presentation/screens/privacy_and_terms_screen/privacy_and_terms_screen.dart';
+import 'package:e_electromaps/presentation/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../styles/colors/color_manager.dart';
@@ -8,62 +9,23 @@ Widget onBoardingButtons(context, onboardingController, isLast) => Padding(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GestureDetector(
-            onTap: () {
+          customButton(context:context ,title: 'Skip', onTap: (){
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+              return PrivacyAndTermsScreen();
+            },));
+          }, width: MediaQuery.sizeOf(context).width * 0.2, color: Colors.white ,textColor: ColorManager.textColor),
+          customButton(context: context, title: 'Next', onTap: (){
+            if (isLast == true) {
               Navigator.pushReplacement(context, MaterialPageRoute(
                 builder: (context) {
                   return const PrivacyAndTermsScreen();
                 },
               ));
-            },
-            child: Container(
-              height: MediaQuery.sizeOf(context).height * 0.06,
-              width: MediaQuery.sizeOf(context).width * 0.2,
-              decoration: BoxDecoration(
-                  border: Border.all(),
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.white),
-              child:  Center(
-                  child: Text(
-                'Skip',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(
-                    color: ColorManager.textColor, fontSize: 16),
-              )),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              if (isLast == true) {
-                Navigator.pushReplacement(context, MaterialPageRoute(
-                  builder: (context) {
-                    return const PrivacyAndTermsScreen();
-                  },
-                ));
-              }
-              onboardingController.nextPage(
-                  duration: const Duration(milliseconds: 10),
-                  curve: Curves.fastLinearToSlowEaseIn);
-            },
-            child: Container(
-              height: MediaQuery.sizeOf(context).height * 0.06,
-              width: MediaQuery.sizeOf(context).width * 0.2,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: ColorManager.primaryColor),
-              child:  Center(
-                  child: Text(
-                'Next',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(
-                    color: ColorManager.white, fontSize: 16),
-              )),
-            ),
-          )
+            }
+            onboardingController.nextPage(
+                duration: const Duration(milliseconds: 10),
+                curve: Curves.fastLinearToSlowEaseIn);
+          }, width:MediaQuery.sizeOf(context).width * 0.2 , color: ColorManager.primaryColor,textColor: Colors.white),
         ],
       ),
     );
