@@ -13,7 +13,7 @@ Widget onBoardingButtons(context, onboardingController, isLast) => Padding(
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
               return PrivacyAndTermsScreen();
             },));
-          }, width: MediaQuery.sizeOf(context).width * 0.2, color: Colors.white ,textColor: ColorManager.textColor),
+          }, width: MediaQuery.sizeOf(context).width * 0.2, color: Colors.white ,textColor: ColorManager.textColor,borderColor: Colors.black),
           customButton(context: context, title: 'Next', onTap: (){
             if (isLast == true) {
               Navigator.pushReplacement(context, MaterialPageRoute(
@@ -25,7 +25,7 @@ Widget onBoardingButtons(context, onboardingController, isLast) => Padding(
             onboardingController.nextPage(
                 duration: const Duration(milliseconds: 10),
                 curve: Curves.fastLinearToSlowEaseIn);
-          }, width:MediaQuery.sizeOf(context).width * 0.2 , color: ColorManager.primaryColor,textColor: Colors.white),
+          }, width:MediaQuery.sizeOf(context).width * 0.2 , color: ColorManager.primaryColor,textColor: Colors.white,borderColor: ColorManager.primaryColor),
         ],
       ),
     );

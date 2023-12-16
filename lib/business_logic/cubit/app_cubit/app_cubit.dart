@@ -220,4 +220,44 @@ class AppCubit extends Cubit<AppStates>{
 
 
 
+  ///// New Charging Staions DropDown Lists /////
+
+
+  var typeList = const  [
+    DropdownMenuItem(value:"-1" ,child: Text('Station Charging Type *')),
+    DropdownMenuItem(value:"1" ,child: Text('Public road')),
+    DropdownMenuItem(value:"2" ,child: Text('Parking')),
+    DropdownMenuItem(value:"3" ,child: Text('Airport')),
+    DropdownMenuItem(value:"4" ,child: Text('Camping')),
+    DropdownMenuItem(value:"5" ,child: Text('Hotel')),
+    DropdownMenuItem(value:"6" ,child: Text('Private')),
+    DropdownMenuItem(value:"7" ,child: Text('Restaurant')),
+    DropdownMenuItem(value:"8" ,child: Text('Shop')),
+    DropdownMenuItem(value:"9" ,child: Text('Workshop')),
+    DropdownMenuItem(value:"10" ,child: Text('Service station')),
+    DropdownMenuItem(value:"11" ,child: Text('Car dealer')),
+    DropdownMenuItem(value:"12" ,child: Text('Mall')),
+    DropdownMenuItem(value:"13" ,child: Text('Private user')),
+    DropdownMenuItem(value:"14" ,child: Text('Taxi')),
+  ];
+
+  var statusList = const  [
+    DropdownMenuItem(value:"-1" ,child: Text('Station Charging Status *')),
+    DropdownMenuItem(value:"1" ,child: Text('Working')),
+    DropdownMenuItem(value:"2" ,child: Text('Some stations don\'t work')),
+    DropdownMenuItem(value:"3" ,child: Text('Not working')),
+    DropdownMenuItem(value:"4" ,child: Text('Unknown')),
+  ];
+
+  var energySourceList = const  [
+    DropdownMenuItem(value:"-1" ,child: Text('Energy Source *')),
+    DropdownMenuItem(value:"1" ,child: Text('Renewable')),
+    DropdownMenuItem(value:"2" ,child: Text('Not renewable')),
+    DropdownMenuItem(value:"4" ,child: Text('Unknown')),
+  ];
+
+
+
+
+
 }
