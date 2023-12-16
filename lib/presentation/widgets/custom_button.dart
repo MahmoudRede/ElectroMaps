@@ -7,7 +7,8 @@ Widget customButton({
   required double width,
   required Color? color,
   required Color? textColor,
-required Color borderColor,
+  required Color borderColor,
+
 }) =>
     GestureDetector(
       onTap: onTap,
