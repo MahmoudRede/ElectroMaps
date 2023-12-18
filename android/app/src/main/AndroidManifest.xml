@@ -3,6 +3,8 @@
         android:label="e_electromaps"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBuLAOh8T3Q1vkckbsqwiAlJVY4S6_dteY"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
