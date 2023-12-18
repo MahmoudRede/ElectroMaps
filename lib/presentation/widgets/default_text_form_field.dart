@@ -76,14 +76,18 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
           textInputAction: TextInputAction.next,
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
             fontSize: 15.0,
-            color: ColorManager.textColor,
+            color: ColorManager.black,
           ),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             labelText: widget.labelText,
             labelStyle:Theme.of(context).textTheme.headlineSmall!.copyWith(
-              fontSize: 18.0,
+              fontSize: 16.0,
               color: ColorManager.black,
+            ),
+            errorStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
+              fontSize: 13.0,
+              color: ColorManager.red,
             ),
 
           ),
@@ -96,7 +100,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
           },
           validator: (value) {
             if (value!.isEmpty) {
-              return 'قم بإضافة البيانات المطلوبه';
+              return 'Required field';
             }
             return null;
           },
@@ -105,19 +109,19 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
           textInputAction: TextInputAction.done,
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
             fontSize: 15.0,
-            color: ColorManager.textColor,
+            color: ColorManager.black,
 
           ),
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               labelText: widget.labelText,
               labelStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                fontSize: 18.0,
-                color: ColorManager.textColor,
+                fontSize: 16.0,
+                color: ColorManager.black,
               ),
               errorStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 fontSize: 15.0,
-                color: ColorManager.textColor,
+                color: ColorManager.red,
               ),
               suffixIcon: widget.isPass == true
                   ? IconButton(
@@ -157,7 +161,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
           },
           validator: (value) {
             if (value!.isEmpty) {
-              return 'قم بإضافة البيانات المطلوبه';
+              return 'Required field';
             }
             return null;
           },

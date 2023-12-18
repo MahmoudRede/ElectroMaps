@@ -33,14 +33,14 @@ class HomeLayout extends StatelessWidget {
 
                 selectedLabelStyle: TextStyle(
                   color: ColorManager.primaryColor,
-                  fontSize: MediaQuery.sizeOf(context).height * 0.022,
+                  fontSize: MediaQuery.sizeOf(context).height * 0.02,
                 ),
                 selectedItemColor: ColorManager.primaryColor,
 
                 unselectedItemColor: ColorManager.black.withOpacity(.3),
                 unselectedLabelStyle: TextStyle(
                   color: ColorManager.black,
-                  fontSize: MediaQuery.sizeOf(context).height * 0.02,
+                  fontSize: MediaQuery.sizeOf(context).height * 0.016,
                 ),
 
                 /// items
