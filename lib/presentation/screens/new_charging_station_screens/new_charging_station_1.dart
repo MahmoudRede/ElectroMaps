@@ -9,6 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../widgets/leave_dialog.dart';
+
 class NewChargingStationScreen1 extends StatelessWidget {
   const NewChargingStationScreen1({Key? key}) : super(key: key);
 
@@ -27,7 +29,12 @@ class NewChargingStationScreen1 extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: IconButton(icon:const  Icon(Icons.close,color: Colors.white,),onPressed: (){Navigator.pop(context);},),
+        leading: CloseButton(
+          onPressed: () {
+            closeDialog(context);
+          },
+          color: ColorManager.white,
+        ),
         backgroundColor: ColorManager.primaryColor,
         title:  Text('New Charging Station',style: Theme.of(context).textTheme.headlineMedium!.copyWith(color: Colors.white),),
       ),
@@ -43,7 +50,7 @@ class NewChargingStationScreen1 extends StatelessWidget {
                   borderRadius: BorderRadius.circular(18),
                   color: ColorManager.grey.withOpacity(0.02),
                 ),
-                child: Center(child: Text('Charging Station Information(Step 1of6)',style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: ColorManager.textColor),)),
+                child: Center(child: Text('Charging Station Information(Step 1/6)',style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: ColorManager.textColor),)),
               ),
               SizedBox(height: MediaQuery.sizeOf(context).height*0.005,),
               Text('Add New Charging Station',style: Theme.of(context).textTheme.headlineMedium,),

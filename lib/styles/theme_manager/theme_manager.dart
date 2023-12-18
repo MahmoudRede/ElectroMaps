@@ -13,7 +13,7 @@ ThemeData getApplicationTheme(BuildContext context) {
           color: ColorManager.primaryColor,
           systemOverlayStyle: SystemUiOverlayStyle(
             statusBarColor: ColorManager.primaryColor,
-            statusBarIconBrightness: Brightness.dark,
+            statusBarIconBrightness: Brightness.light,
           )),
 //text theme
     textTheme: const TextTheme(
