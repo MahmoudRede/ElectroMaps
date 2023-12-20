@@ -6,6 +6,7 @@ import 'package:e_electromaps/presentation/widgets/account_content_row.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
@@ -100,7 +101,9 @@ class AccountScreen extends StatelessWidget {
                         AccountContentRow(
                           content: 'Help & Support',
                           prefixIcon: Icons.help,
-                          onTap: () {},
+                          onTap: () {
+                            launch('tel:+966 57 006 7776');
+                          },
                         ),
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * .03,
@@ -108,7 +111,9 @@ class AccountScreen extends StatelessWidget {
                         AccountContentRow(
                           content: 'Terms of use',
                           prefixIcon: Icons.privacy_tip,
-                          onTap: () {},
+                          onTap: () {
+                            AppCubit.get(context).toLocation(locationLink: 'https://www.freeprivacypolicy.com/live/c0ee349f-627f-4943-b3b5-0eb7d99213b2');
+                          },
                         ),
                       ]),
                     ),
