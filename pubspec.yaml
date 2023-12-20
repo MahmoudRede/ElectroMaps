@@ -51,6 +51,7 @@ dependencies:
   lottie: ^2.7.0
   firebase_storage:
   image_picker: ^0.8.8
+  cached_network_image: ^3.3.0
 
 dev_dependencies:
   flutter_test:
