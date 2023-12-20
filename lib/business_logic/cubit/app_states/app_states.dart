@@ -57,3 +57,6 @@ class AddStationErrorState extends AppStates{}
 class GetStationLoadingState extends AppStates{}
 class GetStationSuccessState extends AppStates{}
 class GetStationErrorState extends AppStates{}
+
+
+class LocationLinkLanuchState extends AppStates{}

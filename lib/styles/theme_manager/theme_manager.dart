@@ -7,6 +7,7 @@ ThemeData getApplicationTheme(BuildContext context) {
     //main colors
     primaryColor: ColorManager.primaryColor,
     useMaterial3: true,
+    fontFamily: 'Nunito',
     // app bar theme
       appBarTheme: const AppBarTheme(
           elevation: 0.0,

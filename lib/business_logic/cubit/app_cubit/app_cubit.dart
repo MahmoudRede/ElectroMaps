@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../constants/firebase_errors.dart';
 import '../../../core/local/cash_helper.dart';
@@ -58,168 +59,6 @@ class AppCubit extends Cubit<AppStates>{
     Icons.help,
     Icons.privacy_tip,
   ];
-
-  void createAccountWithFirebaseAuth({required String email,
-    required String password,
-    required String name,
-    required String phone,
-    required BuildContext context}) async {
-    try {
-      emit(SignUpLoadingState());
-      final credential =
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      UserModel user = UserModel(
-        uId: credential.user?.uid ?? "",
-        userName: name,
-        email: email,
-        phoneNumber: phone,
-      );
-      await addUserToFireStore(user).then((value) {
-        getUser(id: (credential.user?.uid)!);
-        CashHelper.saveData(key: 'isUid', value: credential.user?.uid);
-        customToast(
-          title: 'Account Created Successfully',
-          color: ColorManager.primaryColor,
-        );
-        emit(SignUpSuccessState());
-        debugPrint("--------------Account Created");
-      });
-    } on FirebaseAuthException catch (e) {
-      if (e.code == FirebaseErrors.weakPassword) {} else
-      if (CashHelper.getData(key: 'isUid') != null) {
-        customToast(
-          title:
-              'This account already exists',
-          color: ColorManager.red,
-        );
-        emit(SignUpErrorState(e.toString()));
-        debugPrint("--------------Failed To Create Account");
-      }
-    }
-  }
-
-  Future<void> loginWithFirebaseAuth(
-      {required String email, required String password}) async {
-    try {
-      emit(LoginLoadingState());
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      await getUser(id: (credential.user?.uid)!);
-      UserModel? user = await readUserFromFireStore(credential.user?.uid ?? "");
-      if (user != null){
-        CashHelper.saveData(key: 'isUid', value: credential.user?.uid);
-        await getUser(id: (credential.user?.uid)!);
-        emit(LoginSuccessState());
-        debugPrint(CashHelper.getData(key: 'isUid'));
-        debugPrint("-----------Login Successfully");
-      }
-      else {
-        return customToast(
-            title: '''Invalid email or password''',
-            color: Colors.red.shade700);
-      }
-    } on FirebaseAuthException catch (e) {
-      emit(LoginErrorState(e.toString()));
-      debugPrint("-----------Login Failed");
-
-      customToast(title: 'Invalid email or password', color: ColorManager.red);
-    } catch (e) {
-      customToast(title: 'Something went wrong $e', color: ColorManager.red);
-    }
-  }
-
-  Future<void> saveUser({
-    required String name,
-    required String email,
-    required String phoneNumber,
-    required String id,
-  }) async {
-    emit(SaveUserLoadingState());
-
-    UserModel userModel = UserModel(
-      userName: name,
-      phoneNumber: phoneNumber,
-      email: email,
-      uId: id,
-    );
-
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(userModel.uId)
-        .set(userModel.toJson())
-        .then((value) {
-      debugPrint('Save User Success');
-      emit(SaveUserSuccessState());
-    }).catchError((error) {
-      debugPrint('Error in userRegister is ${error.toString()}');
-      emit(SaveUserErrorState(error.toString()));
-    });
-  }
-
-  UserModel? userModel;
-
-  Future<void> getUser({required String id}) async {
-    emit(GetUserLoadingState());
-    FirebaseFirestore.instance.collection('Users').doc(id).get().then((value) {
-      userModel = UserModel.fromJson(value.data()!);
-      debugPrint(userModel!.userName);
-      debugPrint('here');
-      emit(GetUserSuccessState());
-    }).catchError((error) {
-      debugPrint(error.toString());
-      emit(GetUserErrorState());
-    });
-  }
-
-// User Reference
-
-  CollectionReference<UserModel> getUsersCollection() {
-    return FirebaseFirestore.instance
-        .collection(UserModel.collectionName)
-        .withConverter(
-      fromFirestore: (snapshot, options) =>
-          UserModel.fromJson(snapshot.data()!),
-      toFirestore: (value, options) => value.toJson(),
-    );
-  }
-
-  Future<void> addUserToFireStore(UserModel userModel) {
-    return getUsersCollection().doc(userModel.uId).set(userModel);
-  }
-
-  Future<UserModel?> readUserFromFireStore(String id) async {
-    DocumentSnapshot<UserModel> user = await getUsersCollection().doc(id).get();
-    var myUser = user.data();
-    return myUser;
-  }
-
-  Future<void> deleteUser({
-    required String id,
-    required context,
-  }) async {
-    emit(DeleteUserLoadingState());
-
-    FirebaseFirestore.instance
-        .collection('Users')
-        .doc(id)
-        .delete()
-        .then((value) {
-      CashHelper.removeData(key: "isUid");
-      customToast(title: "تم حذف حسابك بنجاح", color: Colors.red.shade700);
-
-      debugPrint('Account Deleted Successfully');
-
-      emit(DeleteUserSuccessState());
-    }).catchError((error) {
-      debugPrint('Error in DeleteUser is ${error.toString()}');
-      emit(DeleteUserErrorState());
-    });
-  }
 
 
 
@@ -371,6 +210,177 @@ class AppCubit extends Cubit<AppStates>{
     });
 
   }
+
+
+  void createAccountWithFirebaseAuth({
+    required String password,
+    required String name,
+    required String phone,
+    required BuildContext context
+  }) async {
+    try {
+      emit(SignUpLoadingState());
+      final credential =
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: '$phone@gmail.com',
+        password: password,
+      );
+
+      await saveUser(
+        name: name,
+        phoneNumber: phone,
+        id: (credential.user?.uid)!,
+      ).then((value) {
+        getUser(id: (credential.user?.uid)!);
+        CashHelper.saveData(key: 'isUid', value: credential.user?.uid);
+        customToast(
+          title: 'Account Created Successfully',
+          color: Colors.green.shade700,
+        );
+        emit(SignUpSuccessState());
+        debugPrint("--------------Account Created");
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == FirebaseErrors.weakPassword) {} else
+      if (CashHelper.getData(key: 'isUid') != null) {
+        customToast(
+          title:
+          'This account already exists',
+          color: ColorManager.red,
+        );
+        emit(SignUpErrorState(e.toString()));
+        debugPrint("--------------Failed To Create Account");
+      }
+    }
+  }
+
+  Future<void> loginWithFirebaseAuth(
+      {required String phone, required String password}) async {
+    try {
+      emit(LoginLoadingState());
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: '$phone@gmail.com',
+        password: password,
+      );
+      await getUser(id: (credential.user?.uid)!);
+      UserModel? user = await readUserFromFireStore(credential.user?.uid ?? "");
+      if (user != null){
+        CashHelper.saveData(key: 'isUid', value: credential.user?.uid);
+        await getUser(id: (credential.user?.uid)!);
+        emit(LoginSuccessState());
+        debugPrint(CashHelper.getData(key: 'isUid'));
+        debugPrint("-----------Login Successfully");
+        return customToast(
+            title: '''Login Successfully''',
+            color: Colors.green.shade700);
+      }
+      else {
+        return customToast(
+            title: '''Invalid email or password''',
+            color: Colors.red.shade700);
+      }
+    } on FirebaseAuthException catch (e) {
+      emit(LoginErrorState(e.toString()));
+      debugPrint("-----------Login Failed");
+
+      customToast(title: 'Invalid email or password', color: ColorManager.red);
+    } catch (e) {
+      customToast(title: 'Something went wrong $e', color: ColorManager.red);
+    }
+  }
+
+  Future<void> saveUser({
+    required String name,
+    required String phoneNumber,
+    required String id,
+  }) async {
+    emit(SaveUserLoadingState());
+
+    UserModel userModel = UserModel(
+      userName: name,
+      phoneNumber: phoneNumber,
+      uId: id,
+      pic: 'assets/images/man.png',
+    );
+
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(userModel.uId)
+        .set(userModel.toJson())
+        .then((value) {
+      debugPrint('Save User Success');
+      emit(SaveUserSuccessState());
+    }).catchError((error) {
+      debugPrint('Error in user Register is ${error.toString()}');
+      emit(SaveUserErrorState(error.toString()));
+    });
+  }
+
+  UserModel? userModel;
+
+  Future<void> getUser({required String id}) async {
+    emit(GetUserLoadingState());
+    FirebaseFirestore.instance.collection('Users').doc(id).get().then((value) {
+      userModel = UserModel.fromJson(value.data()!);
+      debugPrint(userModel!.userName);
+      debugPrint('here');
+      emit(GetUserSuccessState());
+    }).catchError((error) {
+      debugPrint(error.toString());
+      emit(GetUserErrorState());
+    });
+  }
+
+// User Reference
+
+  CollectionReference<UserModel> getUsersCollection() {
+    return FirebaseFirestore.instance
+        .collection(UserModel.collectionName)
+        .withConverter(
+      fromFirestore: (snapshot, options) =>
+          UserModel.fromJson(snapshot.data()!),
+      toFirestore: (value, options) => value.toJson(),
+    );
+  }
+
+
+  Future<UserModel?> readUserFromFireStore(String id) async {
+    DocumentSnapshot<UserModel> user = await getUsersCollection().doc(id).get();
+    var myUser = user.data();
+    return myUser;
+  }
+
+  Future<void> deleteUser({
+    required String id,
+    required context,
+  }) async {
+    emit(DeleteUserLoadingState());
+
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(id)
+        .delete()
+        .then((value) {
+      CashHelper.removeData(key: "isUid");
+      customToast(title: "تم حذف حسابك بنجاح", color: Colors.red.shade700);
+
+      debugPrint('Account Deleted Successfully');
+
+      emit(DeleteUserSuccessState());
+    }).catchError((error) {
+      debugPrint('Error in DeleteUser is ${error.toString()}');
+      emit(DeleteUserErrorState());
+    });
+  }
+
+  Future <void> toLocation({required String locationLink})async
+  {
+    String url= locationLink;
+    await launch(url , forceSafariVC: false);
+    emit(LocationLinkLanuchState());
+  }
+
+  List favoritesItem=[];
 
 
 }
