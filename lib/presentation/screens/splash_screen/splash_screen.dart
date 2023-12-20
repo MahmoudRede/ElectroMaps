@@ -1,70 +1,104 @@
+
+import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
+import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
+import 'package:e_electromaps/constants/constatnts.dart';
+import 'package:e_electromaps/presentation/screens/home_layout/home_layout.dart';
 import 'package:e_electromaps/presentation/screens/onboarding_screens/onboarding.dart';
+import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
+
+
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen> {
+
   @override
   void initState() {
-    super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    //
+    Future.delayed(const Duration(seconds: 3),()async{
 
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(
-        builder: (context) {
-          return const OnBoardingView();
-        },
-      ));
+      if(uId==null||uId==''){
+
+
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+        const OnBoardingView()
+        ), (Route<dynamic> route) => false);
+
+      }
+      else{
+
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+        const HomeLayout()
+        ), (Route<dynamic> route) => false);
+
+      }
+
+
     });
-  }
 
-  @override
-  void dispose() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: SystemUiOverlay.values);
-    super.dispose();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.greenAccent, Color(0xff98FB98)])),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/splash_logo.png',
-                height: 80,
-                width: 80,
+    return BlocConsumer<AppCubit,AppStates>(
+      listener: (context,state){
+
+      },
+      builder: (context,state){
+        return Scaffold(
+          body: SafeArea(
+            child: Container(
+              decoration:  const BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        // ColorManager.lightColor2,
+                        ColorManager.primaryColor,
+                        ColorManager.primaryColor,
+                        // ColorManager.lightColor2,
+                      ]
+                  )
               ),
-              const SizedBox(
-                height: 15,
+              height: double.infinity,
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children:  [
+
+                  Lottie.asset(
+                    'assets/images/splash.json',
+                    height: 200,
+                    width: 200
+                  ),
+                  SizedBox(height: MediaQuery.sizeOf(context).height*0.02,),
+                  Text(
+                    '+ MUGEEP +',style: TextStyle(
+                    color: ColorManager.white,
+                    fontSize: MediaQuery.sizeOf(context).height*0.032,
+                    fontWeight: FontWeight.w500,
+                    fontFamily: 'PermanentMarker'
+                  ),
+                  )
+
+
+                ],
               ),
-              const Text(
-                'ElecrtoMaps',
-                style: TextStyle(
-                    fontStyle: FontStyle.italic,
-                    color: Colors.white,
-                    fontSize: 25),
-              )
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

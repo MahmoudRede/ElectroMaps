@@ -1,3 +1,5 @@
+import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
+import 'package:e_electromaps/presentation/widgets/favorite_widget.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +8,8 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Center(
+    return
+      Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -23,10 +26,16 @@ class FavoritesScreen extends StatelessWidget {
             ),),
           ),
 
-          SizedBox(height: MediaQuery.sizeOf(context).height*.035,),
+          SizedBox(height: MediaQuery.sizeOf(context).height*.01,),
+
+          AppCubit.get(context).favoritesItem.isEmpty?
+
+          const Expanded(child: FavoriteWidget()):
 
           Column(
             children: [
+              SizedBox(height: MediaQuery.sizeOf(context).height*.025,),
+
               Text('You have not added favorites yet',style: TextStyle(
                 color: ColorManager.textColor,
                 fontWeight: FontWeight.w500,
@@ -41,7 +50,7 @@ class FavoritesScreen extends StatelessWidget {
                 child: Image(
                   height: MediaQuery.sizeOf(context).height*.3,
                   width: MediaQuery.sizeOf(context).height*.2,
-                  image: AssetImage('assets/images/charging-station.png'),
+                  image: const AssetImage('assets/images/charging-station.png'),
                 ),
               ),
 
