@@ -1,4 +1,6 @@
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
+import 'package:e_electromaps/core/local/cash_helper.dart';
+import 'package:e_electromaps/presentation/screens/login_screen/login_screen.dart';
 import 'package:e_electromaps/presentation/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,16 +95,13 @@ class AccountDetailsScreen extends StatelessWidget {
                                   color: ColorManager.black),
                         ),
                         TextFormField(
-                          controller: userNameController,
                           keyboardType: TextInputType.name,
-                          initialValue: cubit.us,
+                          initialValue: cubit.userModel!.userName,
                           decoration: InputDecoration(
                               hintStyle: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
-                                  .copyWith(
-                                  color: ColorManager.textColor
-                              )),
+                                  .copyWith(color: ColorManager.textColor)),
                         ),
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * .02,
@@ -118,7 +117,7 @@ class AccountDetailsScreen extends StatelessWidget {
                                   color: ColorManager.black),
                         ),
                         TextFormField(
-                          initialValue:  cubit.userModel!.phoneNumber,
+                          initialValue: cubit.userModel!.phoneNumber,
                           onChanged: (value) {
                             cubit.userModel!.phoneNumber = value;
                           },
@@ -127,9 +126,7 @@ class AccountDetailsScreen extends StatelessWidget {
                               hintStyle: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
-                                  .copyWith(
-                                color: ColorManager.textColor
-                              )),
+                                  .copyWith(color: ColorManager.textColor)),
                         ),
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * .29,
