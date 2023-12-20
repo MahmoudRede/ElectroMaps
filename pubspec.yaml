@@ -48,6 +48,9 @@ dependencies:
   fluttertoast: ^8.2.4
   pin_code_fields: ^8.0.1
   google_maps_flutter: ^2.5.0
+  lottie: ^2.7.0
+  firebase_storage:
+  image_picker: ^0.8.8
 
 dev_dependencies:
   flutter_test:

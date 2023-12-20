@@ -47,3 +47,12 @@ class GetUserErrorState extends AppStates{}
 class DeleteUserLoadingState extends AppStates{}
 class DeleteUserSuccessState extends AppStates{}
 class DeleteUserErrorState extends AppStates{}
+
+//Pick Profile Image
+class PickProfileImageSuccessState extends AppStates {}
+class PickProfileImageErrorState extends AppStates {}
+
+//Upload Profile Image
+class UploadProfileImageLoadingState extends AppStates {}
+class UploadProfileImageSuccessState extends AppStates {}
+class UploadProfileImageErrorState extends AppStates {}

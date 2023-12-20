@@ -34,33 +34,35 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Colors.greenAccent, Color(0xff98FB98)])),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/splash_logo.png',
-              height: 80,
-              width: 80,
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            const Text(
-              'ElecrtoMaps',
-              style: TextStyle(
-                  fontStyle: FontStyle.italic,
-                  color: Colors.white,
-                  fontSize: 25),
-            )
-          ],
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.greenAccent, Color(0xff98FB98)])),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/splash_logo.png',
+                height: 80,
+                width: 80,
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              const Text(
+                'ElecrtoMaps',
+                style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    color: Colors.white,
+                    fontSize: 25),
+              )
+            ],
+          ),
         ),
       ),
     );
