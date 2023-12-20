@@ -1,3 +1,4 @@
+import 'package:e_electromaps/core/local/cash_helper.dart';
 import 'package:e_electromaps/presentation/screens/add_station_screens/add_station_4.dart';
 import 'package:e_electromaps/presentation/widgets/default_text_form_field.dart';
 import 'package:flutter/cupertino.dart';
@@ -92,8 +93,9 @@ class NewChargingStationScreen3 extends StatelessWidget {
                     Expanded(
                         child: DefaultTextFormField(
                             controller: numberController,
-                            textInputType: TextInputType.text,
-                            labelText: 'Number *'))
+                            textInputType: TextInputType.number,
+                            labelText: 'Number *')
+                    )
                   ],
                 ),
               ),
@@ -150,6 +152,9 @@ class NewChargingStationScreen3 extends StatelessWidget {
                             title: 'Next',
                             onTap: () {
                               if (formKey.currentState!.validate()) {
+                                CashHelper.saveData(key: 'address',value:addressController.text);
+                                CashHelper.saveData(key: 'number',value:numberController.text);
+                                CashHelper.saveData(key: 'where',value:whereController.text);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
