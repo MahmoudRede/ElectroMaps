@@ -1,3 +1,5 @@
+import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
+import 'package:e_electromaps/presentation/screens/login_screen/login_screen.dart';
 import 'package:e_electromaps/presentation/widgets/custom_button.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +50,9 @@ class PrivacyAndTermsScreen extends StatelessWidget {
                       .copyWith(fontSize: 18),
                 ),
                 InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      AppCubit.get(context).toLocation(locationLink: 'https://www.freeprivacypolicy.com/live/c0ee349f-627f-4943-b3b5-0eb7d99213b2');
+                    },
                     child: Text(
                       'Terms and Conditions',
                       style: Theme.of(context).textTheme.headlineSmall!.copyWith(
@@ -59,19 +63,27 @@ class PrivacyAndTermsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'and ',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall!.copyWith(
-                      color: ColorManager.primaryColor),
+                InkWell(
+                  onTap: (){
+                    AppCubit.get(context).toLocation(locationLink: 'https://www.freeprivacypolicy.com/live/c0ee349f-627f-4943-b3b5-0eb7d99213b2');
+                  },
+                  child: Text(
+                    'and ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall!.copyWith(
+                        color: ColorManager.primaryColor),
+                  ),
                 ),
                 InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      AppCubit.get(context).toLocation(locationLink: 'https://www.freeprivacypolicy.com/live/c0ee349f-627f-4943-b3b5-0eb7d99213b2');
+                    },
                     child: Text(
                       'Privacy Policy',
                       style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: ColorManager.primaryColor),
+                          color: ColorManager.primaryColor
+                      ),
                     )),
                 Text(
                   ' if you wish to know',
@@ -83,7 +95,7 @@ class PrivacyAndTermsScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text('more about the usage details of\n Electro Maps',
+              child: Text('more about the usage details of\n + MUGEEP +',
                 style:
                     Theme.of(context).textTheme.headlineSmall,
                 textAlign: TextAlign.center,
@@ -99,7 +111,13 @@ class PrivacyAndTermsScreen extends StatelessWidget {
               child: customButton(
                   context: context,
                   title: 'I have read and accept',
-                  onTap: () {},
+                  onTap: () {
+
+                    Navigator.push(context, MaterialPageRoute(builder: (_){
+                      return const LoginScreen();
+                    }));
+
+                  },
                   width: MediaQuery.sizeOf(context).width,
                   color: ColorManager.primaryColor,
                   textColor: ColorManager.white,
