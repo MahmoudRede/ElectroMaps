@@ -325,6 +325,112 @@ class AddStationFive extends StatelessWidget {
                     )
                   ]),
             ),
+                    ],
+                    onChanged: (value) {
+                      print(value);
+
+                    },
+                  ),
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * .04,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: TextFormField(
+                        decoration: InputDecoration(
+                      hintText: 'Schedule',
+                      hintStyle:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                fontSize: 18,
+                                color: ColorManager.textColor,
+                              ),
+                    )),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * .04,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: TextFormField(
+                        decoration: InputDecoration(
+                      hintText: 'Limit time',
+                      hintStyle:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                fontSize: 18,
+                                color: ColorManager.textColor,
+                              ),
+                    )),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * .04,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: TextFormField(
+                        decoration: InputDecoration(
+                      hintText: 'Charging session price',
+                      hintStyle:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                fontSize: 18,
+                                color: ColorManager.textColor,
+                              ),
+                    )),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * .04,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: TextFormField(
+                        decoration: InputDecoration(
+                      hintText: 'Parking price',
+                      hintStyle:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                fontSize: 18,
+                                color: ColorManager.textColor,
+                              ),
+                    )),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * .12,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: customButton(
+                            context: context,
+                            title: 'Previous',
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            width: MediaQuery.sizeOf(context).width * .3,
+                            color: ColorManager.white,
+                            textColor: ColorManager.black,
+                            borderColor: ColorManager.grey.withOpacity(.2)),
+                      ),
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width * .05,
+                      ),
+                      Expanded(
+                        child: customButton(
+                            context: context,
+                            title: 'Next',
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const AddStationSix(),
+                                  ));
+                            },
+                            width: MediaQuery.sizeOf(context).width * .3,
+                            color: ColorManager.primaryColor,
+                            textColor: ColorManager.white,
+                            borderColor: ColorManager.primaryColor),
+                      ),
+                    ],
+                  )
+                ]),
           ),
         ),
       ),

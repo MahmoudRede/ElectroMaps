@@ -57,3 +57,11 @@ class AddStationErrorState extends AppStates{}
 class GetStationLoadingState extends AppStates{}
 class GetStationSuccessState extends AppStates{}
 class GetStationErrorState extends AppStates{}
+//Pick Profile Image
+class PickProfileImageSuccessState extends AppStates {}
+class PickProfileImageErrorState extends AppStates {}
+
+//Upload Profile Image
+class UploadProfileImageLoadingState extends AppStates {}
+class UploadProfileImageSuccessState extends AppStates {}
+class UploadProfileImageErrorState extends AppStates {}

@@ -28,7 +28,18 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         backgroundColor: ColorManager.white,
         body: BlocConsumer<AppCubit, AppStates>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if(state is LoginSuccessState){
+              phoneController.clear();
+              passwordController.clear();
+              Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+              builder: (context) =>
+              const HomeLayout(),
+              ));
+            }
+          },
           builder: (context, state) {
             var cubit = AppCubit.get(context);
             return Padding(
@@ -56,8 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 height:
                                     MediaQuery.sizeOf(context).height * 0.07,
                                 width: MediaQuery.sizeOf(context).width * 0.2,
-                                decoration: BoxDecoration(
-                                  color: ColorManager.grey.withOpacity(.6),
+                                decoration: const BoxDecoration(
+                                  color: ColorManager.primaryColor,
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(
@@ -92,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: MediaQuery.sizeOf(context).height * 0.03,
                         ),
                         DefaultTextFormField(
-                            labelText: 'Phone Number *',
+                            labelText: 'Phone Number',
                             controller: phoneController,
                             textInputType: TextInputType.phone),
                         SizedBox(
@@ -101,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: Text(
-                            "Password *",
+                            "Password",
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineSmall!
@@ -145,22 +156,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             :DefaultButton(
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-                              cubit
-                                  .loginWithFirebaseAuth(
-                                      email: phoneController.text,
-                                      password: passwordController.text)
-                                  .then(
-                                    (value) => {
-                                      phoneController.clear(),
-                                      passwordController.clear(),
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HomeLayout(),
-                                          ))
-                                    },
-                                  );
+                              cubit.loginWithFirebaseAuth(
+                                  password: passwordController.text,
+                                  phone: phoneController.text
+                              );
                             }
                           },
                           backGroundColor: ColorManager.primaryColor,

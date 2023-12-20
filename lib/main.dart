@@ -1,8 +1,10 @@
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 import 'package:e_electromaps/core/remote/dio_helper.dart';
+import 'package:e_electromaps/presentation/screens/account_screen/account_screen.dart';
 import 'package:e_electromaps/presentation/screens/home_layout/home_layout.dart';
 import 'package:e_electromaps/presentation/screens/register_screen/register_screen.dart';
+import 'package:e_electromaps/presentation/screens/splash_screen/splash_screen.dart';
 import 'package:e_electromaps/styles/theme_manager/theme_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
