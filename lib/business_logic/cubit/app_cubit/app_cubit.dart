@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 import 'package:e_electromaps/presentation/screens/account_screen/account_screen.dart';
@@ -7,7 +8,8 @@ import 'package:e_electromaps/presentation/screens/stations_screen/stations_scre
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:image_picker/image_picker.dart';
 import '../../../constants/firebase_errors.dart';
 import '../../../core/local/cash_helper.dart';
 import '../../../data/model/user_model/user_model.dart';
@@ -42,44 +44,30 @@ class AppCubit extends Cubit<AppStates>{
     'AccountScreen',
   ];
 
-  List<String> accountTitles=[
-    'Account details',
-    'About us',
-    'Help & Support',
-    'Terms of use',
-  ];
-
-  List<IconData> accountTitlesIcon=[
-    Icons.account_circle,
-    Icons.info,
-    Icons.help,
-    Icons.privacy_tip,
-  ];
-
-  void createAccountWithFirebaseAuth({required String email,
+  void createAccountWithFirebaseAuth({
     required String password,
     required String name,
     required String phone,
-    required BuildContext context}) async {
+    required BuildContext context
+  }) async {
     try {
       emit(SignUpLoadingState());
       final credential =
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
+        email: '$phone@gmail.com',
         password: password,
       );
-      UserModel user = UserModel(
-        uId: credential.user?.uid ?? "",
-        userName: name,
-        email: email,
+
+      await saveUser(
+        name: name,
         phoneNumber: phone,
-      );
-      await addUserToFireStore(user).then((value) {
+        id: (credential.user?.uid)!,
+      ).then((value) {
         getUser(id: (credential.user?.uid)!);
         CashHelper.saveData(key: 'isUid', value: credential.user?.uid);
         customToast(
           title: 'Account Created Successfully',
-          color: ColorManager.primaryColor,
+          color: Colors.green.shade700,
         );
         emit(SignUpSuccessState());
         debugPrint("--------------Account Created");
@@ -99,11 +87,11 @@ class AppCubit extends Cubit<AppStates>{
   }
 
   Future<void> loginWithFirebaseAuth(
-      {required String email, required String password}) async {
+      {required String phone, required String password}) async {
     try {
       emit(LoginLoadingState());
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
+        email: '$phone@gmail.com',
         password: password,
       );
       await getUser(id: (credential.user?.uid)!);
@@ -114,6 +102,9 @@ class AppCubit extends Cubit<AppStates>{
         emit(LoginSuccessState());
         debugPrint(CashHelper.getData(key: 'isUid'));
         debugPrint("-----------Login Successfully");
+        return customToast(
+            title: '''Login Successfully''',
+            color: Colors.green.shade700);
       }
       else {
         return customToast(
@@ -132,7 +123,6 @@ class AppCubit extends Cubit<AppStates>{
 
   Future<void> saveUser({
     required String name,
-    required String email,
     required String phoneNumber,
     required String id,
   }) async {
@@ -141,8 +131,8 @@ class AppCubit extends Cubit<AppStates>{
     UserModel userModel = UserModel(
       userName: name,
       phoneNumber: phoneNumber,
-      email: email,
       uId: id,
+      pic: 'assets/images/man.png',
     );
 
     FirebaseFirestore.instance
@@ -153,7 +143,7 @@ class AppCubit extends Cubit<AppStates>{
       debugPrint('Save User Success');
       emit(SaveUserSuccessState());
     }).catchError((error) {
-      debugPrint('Error in userRegister is ${error.toString()}');
+      debugPrint('Error in user Register is ${error.toString()}');
       emit(SaveUserErrorState(error.toString()));
     });
   }
@@ -185,9 +175,6 @@ class AppCubit extends Cubit<AppStates>{
     );
   }
 
-  Future<void> addUserToFireStore(UserModel userModel) {
-    return getUsersCollection().doc(userModel.uId).set(userModel);
-  }
 
   Future<UserModel?> readUserFromFireStore(String id) async {
     DocumentSnapshot<UserModel> user = await getUsersCollection().doc(id).get();
@@ -221,8 +208,6 @@ class AppCubit extends Cubit<AppStates>{
 
 
   ///// New Charging Staions DropDown Lists /////
-
-
   var typeList = const  [
     DropdownMenuItem(value:"-1" ,child: Text('Station Charging Type *')),
     DropdownMenuItem(value:"1" ,child: Text('Public road')),
@@ -256,6 +241,57 @@ class AppCubit extends Cubit<AppStates>{
     DropdownMenuItem(value:"4" ,child: Text('Unknown')),
   ];
 
+
+  // // upload user image
+  // File? profileImage;
+  //
+  // ImageProvider profile = const AssetImage('assets/images/man.png');
+  //
+  // var picker = ImagePicker();
+  //
+  // Future<void> getProfileImage() async {
+  //   final pickedFile = await picker.pickImage(
+  //     source: ImageSource.gallery,
+  //   );
+  //   if (pickedFile != null) {
+  //     profileImage = File(pickedFile.path);
+  //     profile = FileImage(profileImage!);
+  //     debugPrint('Path is ${pickedFile.path}');
+  //     emit(PickProfileImageSuccessState());
+  //   } else {
+  //     debugPrint('No Image selected.');
+  //     emit(PickProfileImageErrorState());
+  //   }
+  // }
+  //
+  // String? profilePath;
+  // Future uploadUserImage() {
+  //   emit(UploadProfileImageLoadingState());
+  //   return firebase_storage.FirebaseStorage.instance
+  //       .ref()
+  //       .child('usersImage/${Uri.file(profileImage!.path).pathSegments.last}')
+  //       .putFile(profileImage!)
+  //       .then((value) {
+  //     value.ref.getDownloadURL().then((value) {
+  //       debugPrint('Upload Success');
+  //       profilePath = value;
+  //       FirebaseFirestore.instance
+  //           .collection('users')
+  //           .doc(CashHelper.getData(key: 'isUid'))
+  //           .update({'pic': '$profilePath'}).then((value) {
+  //         debugPrint('Image Updates');
+  //       });
+  //       getUser(id: CashHelper.getData(key: 'isUid'));
+  //       emit(UploadProfileImageSuccessState());
+  //     }).catchError((error) {
+  //       debugPrint('Error in Upload profileImage ${error.toString()}');
+  //       emit(UploadProfileImageErrorState());
+  //     });
+  //   }).catchError((error) {
+  //     debugPrint('Error in Upload profileImage ${error.toString()}');
+  //     emit(UploadProfileImageErrorState());
+  //   });
+  // }
 
 
 

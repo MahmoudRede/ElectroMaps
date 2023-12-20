@@ -159,7 +159,10 @@ class AddStationFive extends StatelessWidget {
                                     color: ColorManager.textColor)),
                       ),
                     ],
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      print(value);
+
+                    },
                   ),
                   SizedBox(
                     height: MediaQuery.sizeOf(context).height * .04,

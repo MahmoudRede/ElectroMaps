@@ -14,25 +14,24 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   var onboardingController = PageController();
   List<BoardingModel> bording = [
     BoardingModel(
-        image: 'assets/images/chargesession.jpg',
-        title: 'Welcome ',
+        image: 'assets/images/charging_1.json',
+        title: 'Welcome',
         body: 'Welcome to the largets community of electric driviers.'),
     BoardingModel(
-        image: 'assets/images/onboardingCharging.png',
+        image: 'assets/images/location.json',
         title: 'All the charging stations at your fingertips ',
-        body:
-            'Know all about the charging stations where and whenever you want .'),
+        body: 'Know all about the charging stations where and whenever you want.'),
     BoardingModel(
-        image: 'assets/images/onboarding1.jpg',
+        image: 'assets/images/stations.json',
         title: 'Charging sessions',
         body: 'Charge your vechile and view you previous charges'),
     BoardingModel(
-        image: 'assets/images/onboarding4.jpg',
+        image: 'assets/images/share.json',
         title: 'Share with the community ',
-        body:
-            'Share information about the charging stations with rest electric vechile drivers '),
+        body: 'Share information about the charging stations with rest electric vechile drivers '),
   ];
   bool isLast = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +52,12 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         controller: onboardingController,
         itemCount: bording.length,
         itemBuilder: (context, index) => onBoardingBody(
-            onboardingController, bording, index, context, isLast),
+          onboardingController,
+          bording,
+          index,
+          context,
+          isLast,
+        ),
       ),
     );
   }

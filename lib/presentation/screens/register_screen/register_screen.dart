@@ -30,7 +30,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
       child: Scaffold(
         backgroundColor: ColorManager.white,
         body: BlocConsumer<AppCubit, AppStates>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if(state is SignUpSuccessState){
+              phoneController.clear();
+              passwordController.clear();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                    const HomeLayout(),
+                  ));
+            }
+          },
           builder: (context, state) {
             var cubit = AppCubit.get(context);
             return Padding(
@@ -58,8 +69,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 height:
                                     MediaQuery.sizeOf(context).height * 0.07,
                                 width: MediaQuery.sizeOf(context).width * 0.2,
-                                decoration: BoxDecoration(
-                                  color: ColorManager.grey.withOpacity(.6),
+                                decoration: const BoxDecoration(
+                                  color: ColorManager.primaryColor,
                                   shape: BoxShape.circle,
                                 ),
                                 child: const Icon(
@@ -85,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         //name
                         DefaultTextFormField(
-                            labelText: 'User Name *',
+                            labelText: 'User Name',
                             controller: nameController,
                             textInputType: TextInputType.text),
                         SizedBox(
@@ -93,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         //phone
                         DefaultTextFormField(
-                            labelText: 'Phone Number *',
+                            labelText: 'Phone Number',
                             controller: phoneController,
                             textInputType: TextInputType.phone),
                         //password
@@ -103,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: Text(
-                            "Password *",
+                            "Password",
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineSmall!
@@ -119,32 +130,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * 0.02,
                         ),
-                        // DefaultTextFormField(
-                        //     isPass: true,
-                        //     labelText: 'Password *',
-                        //     controller: passwordController,
-                        //     textInputType: TextInputType.text),
-                        // SizedBox(
-                        //   height: MediaQuery.sizeOf(context).height * 0.01,
-                        // ),
-                        // Wrap(
-                        //   runSpacing: 1,
-                        //   children: [
-                        //     Text(
-                        //         'Must contain at least 8 characters, and at least one uppercase,lowercase, and number.',
-                        //         textAlign: TextAlign.start,
-                        //         style: Theme.of(context)
-                        //             .textTheme
-                        //             .headlineSmall!
-                        //             .copyWith(
-                        //               color: ColorManager.textColor,
-                        //               fontSize: 15,
-                        //             ))
-                        //   ],
-                        // ),
-                        // SizedBox(
-                        //   height: MediaQuery.sizeOf(context).height * 0.03,
-                        // ),
                         state is SignUpLoadingState
                             ? const Center(
                                 child: CircularProgressIndicator(
@@ -154,31 +139,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             : DefaultButton(
                                 onPressed: () {
                                   if (formKey.currentState!.validate()) {
-
-                                    AppCubit.get(context)
-                                        .createAccountWithFirebaseAuth(
+                                    cubit.createAccountWithFirebaseAuth(
                                             name: nameController.text,
-                                            email: emailController.text,
                                             phone: phoneController.text,
                                             password: passwordController.text,
                                             context: context);
-                                    if (cubit.getUser(
-                                            id: "${cubit.userModel?.uId}") !=
-                                        null) {
-                                      emailController.clear();
-                                      passwordController.clear();
-                                      nameController.clear();
-                                      phoneController.clear();
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) =>
-                                                  const HomeLayout()));
-                                    } else {
-                                      customToast(
-                                          title: 'This  email is already used',
-                                          color: ColorManager.red);
-                                    }
                                   }
                                 },
                                 backGroundColor: ColorManager.primaryColor,
