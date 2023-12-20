@@ -48,6 +48,10 @@ class DeleteUserLoadingState extends AppStates{}
 class DeleteUserSuccessState extends AppStates{}
 class DeleteUserErrorState extends AppStates{}
 
+class UpdateUserDetailsLoadingState extends AppStates{}
+class UpdateUserDetailsSuccessState extends AppStates{}
+class UpdateUserDetailsErrorState extends AppStates{}
+
 class SaveValueState extends AppStates{}
 
 class AddStationLoadingState extends AppStates{}

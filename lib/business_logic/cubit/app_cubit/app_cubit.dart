@@ -45,7 +45,7 @@ class AppCubit extends Cubit<AppStates> {
     'My charges',
     'AccountScreen',
   ];
-
+  ////sign up////
   void createAccountWithFirebaseAuth(
       {required String password,
       required String name,
@@ -85,7 +85,7 @@ class AppCubit extends Cubit<AppStates> {
       }
     }
   }
-
+  //// login ////
   Future<void> loginWithFirebaseAuth(
       {required String phone, required String password}) async {
     try {
@@ -118,6 +118,18 @@ class AppCubit extends Cubit<AppStates> {
     }
   }
 
+//   Future<void>editUserDetails() async{
+//     emit(UpdateUserDetailsLoadingState());
+//     FirebaseFirestore.instance
+//         .collection('Users')
+//         .doc(CashHelper.getData(key: 'isUid'))
+//         .update(data)
+//
+//
+// }
+
+
+  //// Save User ////
   Future<void> saveUser({
     required String name,
     required String phoneNumber,
@@ -146,6 +158,7 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  //// get user ////
   UserModel? userModel;
 
   Future<void> getUser({required String id}) async {
@@ -161,7 +174,7 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-// User Reference
+    //// User Reference////
 
   CollectionReference<UserModel> getUsersCollection() {
     return FirebaseFirestore.instance
@@ -173,12 +186,14 @@ class AppCubit extends Cubit<AppStates> {
         );
   }
 
+    //// read user ////
+
   Future<UserModel?> readUserFromFireStore(String id) async {
     DocumentSnapshot<UserModel> user = await getUsersCollection().doc(id).get();
     var myUser = user.data();
     return myUser;
   }
-
+     //// delete user////
   Future<void> deleteUser({
     required String id,
     required context,
@@ -191,7 +206,7 @@ class AppCubit extends Cubit<AppStates> {
         .delete()
         .then((value) {
       CashHelper.removeData(key: "isUid");
-      customToast(title: "تم حذف حسابك بنجاح", color: Colors.red.shade700);
+      customToast(title: "Account Deleted Successfully", color: Colors.red.shade700);
 
       debugPrint('Account Deleted Successfully');
 

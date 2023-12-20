@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../business_logic/cubit/app_states/app_states.dart';
 import '../../../styles/colors/color_manager.dart';
+import '../../widgets/delete_account_dialog.dart';
+import '../../widgets/leave_dialog.dart';
 
 class AccountDetailsScreen extends StatelessWidget {
   const AccountDetailsScreen({super.key});
@@ -95,6 +97,7 @@ class AccountDetailsScreen extends StatelessWidget {
                                   color: ColorManager.black),
                         ),
                         TextFormField(
+                          enabled: false,
                           keyboardType: TextInputType.name,
                           initialValue: cubit.userModel!.userName,
                           decoration: InputDecoration(
@@ -117,6 +120,7 @@ class AccountDetailsScreen extends StatelessWidget {
                                   color: ColorManager.black),
                         ),
                         TextFormField(
+                          enabled: false,
                           initialValue: cubit.userModel!.phoneNumber,
                           onChanged: (value) {
                             cubit.userModel!.phoneNumber = value;
@@ -132,21 +136,23 @@ class AccountDetailsScreen extends StatelessWidget {
                           height: MediaQuery.sizeOf(context).height * .29,
                         ),
 
-                        customButton(
-                            context: context,
-                            title: "Save",
-                            onTap: () {},
-                            width: MediaQuery.sizeOf(context).width,
-                            color: ColorManager.primaryColor,
-                            textColor: ColorManager.white,
-                            borderColor: ColorManager.primaryColor),
+                        // customButton(
+                        //     context: context,
+                        //     title: "Save",
+                        //     onTap: () {},
+                        //     width: MediaQuery.sizeOf(context).width,
+                        //     color: ColorManager.primaryColor,
+                        //     textColor: ColorManager.white,
+                        //     borderColor: ColorManager.primaryColor),
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * .02,
                         ),
                         customButton(
                             context: context,
                             title: "Delete Account",
-                            onTap: () {},
+                            onTap: () {
+                              confirmDeleteDialog(context);
+                            },
                             width: MediaQuery.sizeOf(context).width,
                             color: ColorManager.white,
                             textColor: ColorManager.red,
