@@ -1,0 +1,34 @@
+Index: lib/business_logic/cubit/app_cubit/app_cubit.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/business_logic/cubit/app_cubit/app_cubit.dart b/lib/business_logic/cubit/app_cubit/app_cubit.dart
+--- a/lib/business_logic/cubit/app_cubit/app_cubit.dart	
++++ b/lib/business_logic/cubit/app_cubit/app_cubit.dart	(date 1703070326972)
+@@ -1,5 +1,6 @@
+ import 'package:cloud_firestore/cloud_firestore.dart';
+ import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
++import 'package:e_electromaps/data/model/station_model/station_model.dart';
+ import 'package:e_electromaps/presentation/screens/account_screen/account_screen.dart';
+ import 'package:e_electromaps/presentation/screens/favorites_screen/favorites_screen.dart';
+ import 'package:e_electromaps/presentation/screens/my_charges_screen/my_charges_screen.dart';
+@@ -7,6 +8,7 @@
+ import 'package:firebase_auth/firebase_auth.dart';
+ import 'package:flutter/material.dart';
+ import 'package:flutter_bloc/flutter_bloc.dart';
++import 'package:google_maps_flutter/google_maps_flutter.dart';
+ 
+ import '../../../constants/firebase_errors.dart';
+ import '../../../core/local/cash_helper.dart';
+@@ -49,6 +51,10 @@
+     'Terms of use',
+   ];
+ 
++  List<Marker> markers=[
++
++  ];
++
+   List<IconData> accountTitlesIcon=[
+     Icons.account_circle,
+     Icons.info,

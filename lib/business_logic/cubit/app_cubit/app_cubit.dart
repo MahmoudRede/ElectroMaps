@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
+import 'package:e_electromaps/data/model/station_model/station_model.dart';
 import 'package:e_electromaps/presentation/screens/account_screen/account_screen.dart';
 import 'package:e_electromaps/presentation/screens/favorites_screen/favorites_screen.dart';
 import 'package:e_electromaps/presentation/screens/my_charges_screen/my_charges_screen.dart';
@@ -8,8 +9,11 @@ import 'package:e_electromaps/presentation/screens/stations_screen/stations_scre
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
+
 import '../../../constants/firebase_errors.dart';
 import '../../../core/local/cash_helper.dart';
 import '../../../data/model/user_model/user_model.dart';
@@ -43,6 +47,7 @@ class AppCubit extends Cubit<AppStates>{
     'My charges',
     'AccountScreen',
   ];
+
 
   void createAccountWithFirebaseAuth({
     required String password,
@@ -209,39 +214,123 @@ class AppCubit extends Cubit<AppStates>{
 
   ///// New Charging Staions DropDown Lists /////
   var typeList = const  [
-    DropdownMenuItem(value:"-1" ,child: Text('Station Charging Type *')),
-    DropdownMenuItem(value:"1" ,child: Text('Public road')),
-    DropdownMenuItem(value:"2" ,child: Text('Parking')),
-    DropdownMenuItem(value:"3" ,child: Text('Airport')),
-    DropdownMenuItem(value:"4" ,child: Text('Camping')),
-    DropdownMenuItem(value:"5" ,child: Text('Hotel')),
-    DropdownMenuItem(value:"6" ,child: Text('Private')),
-    DropdownMenuItem(value:"7" ,child: Text('Restaurant')),
-    DropdownMenuItem(value:"8" ,child: Text('Shop')),
-    DropdownMenuItem(value:"9" ,child: Text('Workshop')),
-    DropdownMenuItem(value:"10" ,child: Text('Service station')),
-    DropdownMenuItem(value:"11" ,child: Text('Car dealer')),
-    DropdownMenuItem(value:"12" ,child: Text('Mall')),
-    DropdownMenuItem(value:"13" ,child: Text('Private user')),
-    DropdownMenuItem(value:"14" ,child: Text('Taxi')),
+    DropdownMenuItem(value:"Station Charging Type *" ,child: Text('Station Charging Type *')),
+    DropdownMenuItem(value:"Public road" ,child: Text('Public road')),
+    DropdownMenuItem(value:"Parking" ,child: Text('Parking')),
+    DropdownMenuItem(value:"Airport" ,child: Text('Airport')),
+    DropdownMenuItem(value:"Camping" ,child: Text('Camping')),
+    DropdownMenuItem(value:"Hotel" ,child: Text('Hotel')),
+    DropdownMenuItem(value:"Private" ,child: Text('Private')),
+    DropdownMenuItem(value:"Restaurant" ,child: Text('Restaurant')),
+    DropdownMenuItem(value:"Shop" ,child: Text('Shop')),
+    DropdownMenuItem(value:"Workshop" ,child: Text('Workshop')),
+    DropdownMenuItem(value:"Service station" ,child: Text('Service station')),
+    DropdownMenuItem(value:"Car dealer" ,child: Text('Car dealer')),
+    DropdownMenuItem(value:"Mall" ,child: Text('Mall')),
+    DropdownMenuItem(value:"Private user" ,child: Text('Private user')),
+    DropdownMenuItem(value:"Taxi" ,child: Text('Taxi')),
   ];
 
   var statusList = const  [
-    DropdownMenuItem(value:"-1" ,child: Text('Station Charging Status *')),
-    DropdownMenuItem(value:"1" ,child: Text('Working')),
-    DropdownMenuItem(value:"2" ,child: Text('Some stations don\'t work')),
-    DropdownMenuItem(value:"3" ,child: Text('Not working')),
-    DropdownMenuItem(value:"4" ,child: Text('Unknown')),
+    DropdownMenuItem(value:"Station Charging Status *" ,child: Text('Station Charging Status *')),
+    DropdownMenuItem(value:"Working" ,child: Text('Working')),
+    DropdownMenuItem(value:"Some stations don\'t work" ,child: Text('Some stations don\'t work')),
+    DropdownMenuItem(value:"Not working" ,child: Text('Not working')),
+    DropdownMenuItem(value:"Unknown" ,child: Text('Unknown')),
   ];
 
   var energySourceList = const  [
-    DropdownMenuItem(value:"-1" ,child: Text('Energy Source *')),
-    DropdownMenuItem(value:"1" ,child: Text('Renewable')),
-    DropdownMenuItem(value:"2" ,child: Text('Not renewable')),
-    DropdownMenuItem(value:"4" ,child: Text('Unknown')),
+    DropdownMenuItem(value:"Energy Source *" ,child: Text('Energy Source *')),
+    DropdownMenuItem(value:"Renewable" ,child: Text('Renewable')),
+    DropdownMenuItem(value:"Not renewable" ,child: Text('Not renewable')),
+    DropdownMenuItem(value:"Unknown" ,child: Text('Unknown')),
   ];
 
 
+  var stationTypeValue='Station Charging Type *';
+  var stationStatusValue='Station Charging Status *';
+  var energySourceValue='Energy Source *';
+
+  var connectorTypeValue='Connector type *';
+  var formatValue='Format';
+  var typeCurrentValue='Type of current';
+
+  var bookingOptionsValue ='Booking options *';
+
+
+  Future<void> addStationToFire(
+      {
+        required String stationName,
+        required String stationType,
+        required String stationStatus,
+        required String energySource,
+        required String langitude,
+        required String latitude,
+        required String location,
+        required String address,
+        required String number,
+        String ?where,
+        required String connectorType,
+        required String power,
+        String? intensity,
+        String? voltage,
+        String? format,
+        String? typeCurrent,
+        String? howWork,
+        required String bookingOptions,
+        String? schedule,
+        String? limitTime,
+        String? chargingSession,
+        String? parkingPrice,
+        String? proprietary,
+        String? email,
+        String? phoneNumber,
+      }
+      )async{
+
+    emit(AddStationLoadingState());
+    StationModel stationModel=StationModel(
+        stationName: stationName,
+        stationType: stationType,
+        stationStatus: stationStatus,
+        energySource: energySource,
+        langitude: langitude,
+        latitude: latitude,
+        location: location,
+        address: address,
+        number: number,
+        where: where,
+        connectorType: connectorType,
+        power: power,
+        intensity: intensity,
+        voltage: voltage,
+        format: format,
+        typeCurrent: typeCurrent,
+        howWork: howWork,
+        bookingOptions: bookingOptions,
+        schedule: schedule,
+        limitTime: limitTime,
+        chargingSession: chargingSession,
+        parkingPrice: parkingPrice,
+        proprietary: proprietary,
+        email: email,
+        phoneNumber: phoneNumber
+    );
+
+    FirebaseFirestore.instance
+        .collection('Stations')
+        .add(stationModel.toJson())
+        .then((value) {
+
+      debugPrint('Station Added Successfully');
+      emit(AddStationSuccessState());
+
+  }).catchError((error){
+      debugPrint('Error in addStationToFire is ${error.toString()}');
+      emit(AddStationErrorState());
+    });
+
+}
   // // upload user image
   // File? profileImage;
   //
@@ -294,6 +383,31 @@ class AppCubit extends Cubit<AppStates>{
   // }
 
 
+  List<StationModel> stationList=[];
+  Future<void> getStationFromFire()async{
+
+    emit(GetStationLoadingState());
+
+    FirebaseFirestore.instance
+        .collection('Stations')
+        .get()
+        .then((value) {
+
+          for (var element in value.docs) {
+            stationList.add(StationModel.fromJson(element.data()));
+          }
+
+          debugPrint('Length of stationList ${stationList.length}');
+
+          debugPrint('Station Get Successfully');
+          emit(GetStationSuccessState());
+
+    }).catchError((error){
+      debugPrint('Error in getStationToFire is ${error.toString()}');
+      emit(GetStationErrorState());
+    });
+
+  }
 
 
 }

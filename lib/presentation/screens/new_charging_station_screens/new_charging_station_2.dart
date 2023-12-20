@@ -1,9 +1,7 @@
 import 'package:e_electromaps/presentation/screens/new_charging_station_screens/new_charging_station_3.dart';
 import 'package:e_electromaps/presentation/widgets/custom_button.dart';
 import 'package:e_electromaps/presentation/widgets/default_text_form_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../styles/colors/color_manager.dart';
 import '../../widgets/leave_dialog.dart';
 
@@ -62,7 +60,8 @@ class NewChargingStationScreen2 extends StatelessWidget {
                 child: DefaultTextFormField(
                     controller: placeController,
                     textInputType: TextInputType.text,
-                    labelText: 'Where is the charging Station?'),
+                    labelText: 'Where is the charging Station?'
+                ),
               ),
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.02,

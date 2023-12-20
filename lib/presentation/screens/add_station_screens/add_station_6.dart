@@ -1,3 +1,5 @@
+import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
+import 'package:e_electromaps/core/local/cash_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../../../styles/colors/color_manager.dart';
@@ -5,7 +7,11 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/leave_dialog.dart';
 
 class AddStationSix extends StatelessWidget {
-  const AddStationSix({super.key});
+  var proprietaryController = TextEditingController();
+  var emailController = TextEditingController();
+  var phoneNumberController = TextEditingController();
+
+  AddStationSix({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +78,7 @@ class AddStationSix extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: TextFormField(
+                      controller: proprietaryController,
                         decoration: InputDecoration(
                           hintText: 'Proprietary',
                           hintStyle:
@@ -87,6 +94,7 @@ class AddStationSix extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: TextFormField(
+                      controller: emailController,
                         decoration: InputDecoration(
                           hintText: 'Email',
                           hintStyle:
@@ -102,6 +110,8 @@ class AddStationSix extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: TextFormField(
+                      controller: phoneNumberController,
+                        keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
                           hintText: 'Phone number',
                           hintStyle:
@@ -111,7 +121,7 @@ class AddStationSix extends StatelessWidget {
                           ),
                         )),
                   ),
-                  SizedBox(height:  MediaQuery.sizeOf(context).height * .39,),
+                  SizedBox(height:  MediaQuery.sizeOf(context).height * .29,),
                   Row(
                     children: [
                       Expanded(
@@ -137,7 +147,41 @@ class AddStationSix extends StatelessWidget {
                         child: customButton(
                             context: context,
                             title: 'Finish',
-                            onTap: () {},
+                            onTap: () {
+                              CashHelper.saveData(key: 'proprietary',value:proprietaryController.text);
+                              CashHelper.saveData(key: 'email',value:emailController.text);
+                              CashHelper.saveData(key: 'phoneNumber',value:phoneNumberController.text);
+
+                              AppCubit.get(context).addStationToFire(
+                                  chargingSession: CashHelper.getData(key: 'chargingSession'),
+                                  email: CashHelper.getData(key: 'email'),
+                                  format: CashHelper.getData(key: 'format'),
+                                  howWork: CashHelper.getData(key: 'howWork'),
+                                  intensity: CashHelper.getData(key: 'intensity'),
+                                  limitTime: CashHelper.getData(key: 'limitTime'),
+                                  parkingPrice: CashHelper.getData(key: 'parkingPrice'),
+                                  phoneNumber:CashHelper.getData(key: 'phoneNumber'),
+                                  proprietary: CashHelper.getData(key: 'proprietary'),
+                                  schedule: CashHelper.getData(key: 'schedule'),
+                                  typeCurrent: CashHelper.getData(key: 'typeCurrent'),
+                                  voltage: CashHelper.getData(key: 'voltage'),
+                                  where: CashHelper.getData(key: 'where'),
+                                  stationName: CashHelper.getData(key: 'stationName'),
+                                  stationType: CashHelper.getData(key: 'stationType'),
+                                  stationStatus: CashHelper.getData(key: 'stationStatus'),
+                                  energySource: CashHelper.getData(key: 'energySource'),
+                                  langitude: '2',
+                                  latitude: '5',
+                                  location: 'Egypt',
+                                  address: CashHelper.getData(key: 'address'),
+                                  number: CashHelper.getData(key: 'number'),
+                                  connectorType: CashHelper.getData(key: 'connectorType'),
+                                  power: CashHelper.getData(key: 'power'),
+                                  bookingOptions: CashHelper.getData(key: 'bookingOptions'),
+
+                              );
+
+                            },
                             width: MediaQuery
                                 .sizeOf(context)
                                 .width * .3,
