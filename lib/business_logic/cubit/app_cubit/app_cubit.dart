@@ -1,8 +1,19 @@
+
+import 'dart:async';
+import 'dart:developer';
+
 import 'dart:io';
 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
+
+import 'package:e_electromaps/core/remote/dio_helper.dart';
+import 'package:e_electromaps/data/model/search_suggestion_model/search_suggesions_model.dart';
+
 import 'package:e_electromaps/data/model/station_model/station_model.dart';
+
 import 'package:e_electromaps/presentation/screens/account_screen/account_screen.dart';
 import 'package:e_electromaps/presentation/screens/favorites_screen/favorites_screen.dart';
 import 'package:e_electromaps/presentation/screens/my_charges_screen/my_charges_screen.dart';
@@ -10,12 +21,17 @@ import 'package:e_electromaps/presentation/screens/stations_screen/stations_scre
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
 
+
 import '../../../constants/firebase_errors.dart';
 import '../../../core/local/cash_helper.dart';
+import '../../../data/model/place_details_model/place_details_model.dart';
 import '../../../data/model/user_model/user_model.dart';
 import '../../../presentation/widgets/custom_toast.dart';
 import '../../../styles/colors/color_manager.dart';
@@ -256,6 +272,130 @@ class AppCubit extends Cubit<AppStates> {
     DropdownMenuItem(value: "Not renewable", child: Text('Not renewable')),
     DropdownMenuItem(value: "Unknown", child: Text('Unknown')),
   ];
+//Getting Search Suggestions Function
+
+
+Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken) async {
+  emit(GettingSearchSuggestionsLoading());
+
+    try {
+      Response response = await DioHelper.getData(url: 'https://maps.googleapis.com/maps/api/place/autocomplete/json',
+          query:{
+            'input':place,
+            'type':'geocode',
+            'components':'country:eg',
+            'key':'AIzaSyBuLAOh8T3Q1vkckbsqwiAlJVY4S6_dteY',
+            'sessiontoken':sessionToken,
+          } );
+
+
+        emit(GettingSearchSuggestionsSuccess());
+        // log(response.data.toString());
+        return response.data['predictions'];
+    }catch (e) {
+      log(e.toString());
+      emit(GettingSearchSuggestionsFailed(errorMessage: e.toString()));
+      return [];
+    }
+
+
+
+
+
+
+
+}
+  List<SearchSuggestionModel> suggestions= [] ;
+
+  getSearchSuggestions(String place , String sessionToken) async{
+
+  List<SearchSuggestionModel> places=[];
+  await  fetchSearchSuggestions(place, sessionToken).then((values) {
+      values.forEach((value) => places.add(SearchSuggestionModel.fromJson(value)));
+      emit(GettingSearchSuggestionsSuccess());
+      suggestions = places;
+      log(places.toString());
+  }).catchError((error){
+    log(error);
+
+  });
+
+}
+
+// get place details function
+
+ Future<dynamic> getPlaceDetails({required String placeId , required String sessionToken}) async {
+    emit(GettingSearchSuggestionsLoading());
+    try {
+      Response response = await DioHelper.getData(url: 'https://maps.googleapis.com/maps/api/place/details/json',
+                     query: {
+                        'place_id':placeId,
+                       'fields':'geometry',
+                       'key':'AIzaSyBuLAOh8T3Q1vkckbsqwiAlJVY4S6_dteY',
+                       'sessiontoken':sessionToken,
+                     });
+      
+      emit(GettingPlaceDetailsSuccess());
+      // log(response.data.toString());
+      return response.data;
+    }catch (e) {
+      emit(GettingPlaceDetailsFailed(errorMessage: e.toString()));
+      return {};
+    }
+    
+ }
+
+
+ //get place location
+  late double lat;
+  late double lng;
+  Future<PlaceDetailsModel> getPlaceLocation({required String placeId , required String sessionToken}) async{
+    final placeDetails = await getPlaceDetails(placeId: placeId, sessionToken: sessionToken);
+    emit(PlaceLocationLoaded());
+   lat = PlaceDetailsModel.fromJson(placeDetails).result.geometry.location.lat;
+   lng = PlaceDetailsModel.fromJson(placeDetails).result.geometry.location.lng;
+    return PlaceDetailsModel.fromJson(placeDetails);
+  }
+
+
+
+
+  late CameraPosition goToSearchedForPlace;
+  void buildCameraNewPosition( double lat,double lng){
+    goToSearchedForPlace = CameraPosition(bearing: 0.0 ,tilt: 0.0,target: LatLng(
+      lat,
+      lng,
+    ),
+        zoom: 13);
+  }
+
+  Future<void> goToMySearchedForLocation(double lat,double lng ,Completer<GoogleMapController> mapController) async{
+    buildCameraNewPosition(lat, lng);
+    final GoogleMapController controller = await mapController.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(goToSearchedForPlace));
+  }
+
+
+  late String mainAddress;
+ late LatLng locationPosition;
+
+
+
+ // this functions to convert latlng to text address but don't work
+
+// Future getAddress(LatLng position) async{
+//   setState(() async {
+//     List<Placemark> placeMarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+//     Placemark address = placeMarks[0];
+//     mainAddress = '${address.street} ,  ${address.locality} , ${address.administrativeArea} , ${address.country}';
+//   });
+//   log(mainAddress);
+// }
+
+
+
+
+
 
   var stationTypeValue = 'Station Charging Type *';
   var stationStatusValue = 'Station Charging Status *';
