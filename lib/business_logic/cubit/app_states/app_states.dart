@@ -47,3 +47,24 @@ class GetUserErrorState extends AppStates{}
 class DeleteUserLoadingState extends AppStates{}
 class DeleteUserSuccessState extends AppStates{}
 class DeleteUserErrorState extends AppStates{}
+
+//Getting Search Suggestions
+class GettingSearchSuggestionsLoading extends AppStates{}
+class GettingSearchSuggestionsSuccess extends AppStates{}
+class GettingSearchSuggestionsFailed extends AppStates{
+  final String errorMessage;
+
+  GettingSearchSuggestionsFailed({required this.errorMessage});
+}
+
+// getting place details
+
+class GettingPlaceDetailsLoading extends AppStates{}
+class GettingPlaceDetailsSuccess extends AppStates{}
+class GettingPlaceDetailsFailed extends AppStates{
+  final String errorMessage;
+
+  GettingPlaceDetailsFailed({required this.errorMessage});
+}
+
+class PlaceLocationLoaded extends AppStates{}
