@@ -1,5 +1,9 @@
+
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
+
+import 'package:e_electromaps/core/local/cash_helper.dart';
+
 import 'package:e_electromaps/presentation/screens/add_station_screens/add_station_4.dart';
 import 'package:e_electromaps/presentation/widgets/default_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -101,8 +105,9 @@ class NewChargingStationScreen3 extends StatelessWidget {
                     Expanded(
                         child: DefaultTextFormField(
                             controller: numberController,
-                            textInputType: TextInputType.text,
-                            labelText: 'Number *'))
+                            textInputType: TextInputType.number,
+                            labelText: 'Number *')
+                    )
                   ],
                 ),
               ),
@@ -142,7 +147,11 @@ class NewChargingStationScreen3 extends StatelessWidget {
                             context: context,
                             title: 'Previous',
                             onTap: () {
+
                               Navigator.pop(context);
+
+
+
                             },
                             width: MediaQuery.sizeOf(context).width * 0.35,
                             color: Colors.white,
@@ -157,12 +166,18 @@ class NewChargingStationScreen3 extends StatelessWidget {
                           title: 'Next',
                           onTap: () {
                             if (formKey.currentState!.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                    const AddStationScreenFour(),
-                                  ));
+
+                                  
+                                CashHelper.saveData(key: 'address',value:addressController.text);
+                                CashHelper.saveData(key: 'number',value:numberController.text);
+                                CashHelper.saveData(key: 'where',value:whereController.text);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                      const AddStationScreenFour(),
+                                    ));
+                             
                             }
                           },
                           width: MediaQuery.sizeOf(context).width * 0.35,

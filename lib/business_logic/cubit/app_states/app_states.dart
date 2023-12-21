@@ -48,6 +48,7 @@ class DeleteUserLoadingState extends AppStates{}
 class DeleteUserSuccessState extends AppStates{}
 class DeleteUserErrorState extends AppStates{}
 
+
 //Getting Search Suggestions
 class GettingSearchSuggestionsLoading extends AppStates{}
 class GettingSearchSuggestionsSuccess extends AppStates{}
@@ -68,3 +69,29 @@ class GettingPlaceDetailsFailed extends AppStates{
 }
 
 class PlaceLocationLoaded extends AppStates{}
+
+class UpdateUserDetailsLoadingState extends AppStates{}
+class UpdateUserDetailsSuccessState extends AppStates{}
+class UpdateUserDetailsErrorState extends AppStates{}
+
+class SaveValueState extends AppStates{}
+
+class AddStationLoadingState extends AppStates{}
+class AddStationSuccessState extends AppStates{}
+class AddStationErrorState extends AppStates{}
+
+class GetStationLoadingState extends AppStates{}
+class GetStationSuccessState extends AppStates{}
+class GetStationErrorState extends AppStates{}
+
+
+class LocationLinkLanuchState extends AppStates{}
+//Pick Profile Image
+class PickProfileImageSuccessState extends AppStates {}
+class PickProfileImageErrorState extends AppStates {}
+
+//Upload Profile Image
+class UploadProfileImageLoadingState extends AppStates {}
+class UploadProfileImageSuccessState extends AppStates {}
+class UploadProfileImageErrorState extends AppStates {}
+

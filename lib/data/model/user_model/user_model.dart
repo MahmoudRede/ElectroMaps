@@ -3,21 +3,24 @@ class UserModel {
 
   String? userName;
   String? phoneNumber;
-  String? email;
   String? uId;
+  String? pic;
+
 
   UserModel({
     required this.userName,
     required this.phoneNumber,
-    required this.email,
-    required this.uId,
+    this.uId,
+    required this.pic,
+
   });
 
   UserModel.fromJson(Map<String, dynamic> json) : this(
     userName : json['userName'],
     phoneNumber : json['phoneNumber'],
-    email : json['email'],
     uId : json['uId'],
+    pic: json["pic"],
+
 
   );
 
@@ -25,8 +28,8 @@ class UserModel {
     return {
       'userName': userName,
       'phoneNumber': phoneNumber,
-      'email': email,
       'uId': uId,
+      "pic": pic,
     };
   }
 }

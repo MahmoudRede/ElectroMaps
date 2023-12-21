@@ -6,6 +6,7 @@ import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 import 'package:e_electromaps/data/model/search_suggestion_model/search_suggesions_model.dart';
 import 'package:e_electromaps/presentation/screens/new_charging_station_screens/new_charging_station_3.dart';
 import 'package:e_electromaps/presentation/widgets/custom_button.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -14,6 +15,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uuid/uuid.dart';
+
+import 'package:e_electromaps/presentation/widgets/default_text_form_field.dart';
+import 'package:flutter/material.dart';
+
 import '../../../styles/colors/color_manager.dart';
 import '../../widgets/leave_dialog.dart';
 
@@ -115,6 +120,7 @@ class _NewChargingStationScreen2State extends State<NewChargingStationScreen2> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
+
                 child:TypeAheadField<SearchSuggestionModel>(
 
                   controller: placeController,
@@ -160,6 +166,7 @@ class _NewChargingStationScreen2State extends State<NewChargingStationScreen2> {
                   },
 
                 ),
+
 
               ),
               SizedBox(
