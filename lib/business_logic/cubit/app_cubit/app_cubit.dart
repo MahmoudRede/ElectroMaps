@@ -134,15 +134,20 @@ class AppCubit extends Cubit<AppStates> {
     }
   }
 
-//   Future<void>editUserDetails() async{
-//     emit(UpdateUserDetailsLoadingState());
-//     FirebaseFirestore.instance
-//         .collection('Users')
-//         .doc(CashHelper.getData(key: 'isUid'))
-//         .update(data)
-//
-//
-// }
+
+  //// Edit User Details////
+  Future<void> editUserDetails() {
+    emit(UpdateUserDetailsLoadingState());
+    CollectionReference editRef = getUsersCollection();
+    return editRef.doc(CashHelper.getData(key: "isUid")).update({
+      "userName": userModel!.userName,
+      "phoneNumber": userModel!.phoneNumber,
+    }).then((value){
+      customToast(title: "Data updated successfully", color: Colors.green.shade700);
+      emit(UpdateUserDetailsSuccessState());
+    });
+
+  }
 
 
   //// Save User ////
@@ -209,7 +214,9 @@ class AppCubit extends Cubit<AppStates> {
     var myUser = user.data();
     return myUser;
   }
-     //// delete user////
+
+
+  //// delete user////
   Future<void> deleteUser({
     required String id,
     required context,
