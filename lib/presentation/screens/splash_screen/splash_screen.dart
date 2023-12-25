@@ -6,9 +6,7 @@ import 'package:e_electromaps/presentation/screens/home_layout/home_layout.dart'
 import 'package:e_electromaps/presentation/screens/onboarding_screens/onboarding.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 
 
 
@@ -33,14 +31,18 @@ class _SplashScreenState extends State<SplashScreen> {
         const OnBoardingView()
         ), (Route<dynamic> route) => false);
 
-      }
-      else{
-
+      }else {
         Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
         const HomeLayout()
         ), (Route<dynamic> route) => false);
 
       }
+      // else{
+      //   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+      //   const LoginScreen()
+      //   ), (Route<dynamic> route) => false);
+      //
+      // }
 
 
     });
@@ -60,11 +62,11 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Container(
               decoration:  const BoxDecoration(
                   gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
                       colors: [
                         // ColorManager.lightColor2,
-                        ColorManager.primaryColor,
+                        ColorManager.secondaryColor,
                         ColorManager.primaryColor,
                         // ColorManager.lightColor2,
                       ]
@@ -72,29 +74,12 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               height: double.infinity,
               width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children:  [
-
-                  Lottie.asset(
-                    'assets/images/splash.json',
-                    height: 200,
-                    width: 200
-                  ),
-                  SizedBox(height: MediaQuery.sizeOf(context).height*0.02,),
-                  Text(
-                    '+ MUGEEP +',style: TextStyle(
-                    color: ColorManager.white,
-                    fontSize: MediaQuery.sizeOf(context).height*0.032,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'PermanentMarker'
-                  ),
-                  )
-
-
-                ],
-              ),
+              child: Image.asset(
+                 'assets/images/mugeeb.png',
+                 color: ColorManager.white,
+                 height: MediaQuery.sizeOf(context).height * .8,
+                 width: MediaQuery.sizeOf(context).width * .5,
+               ),
             ),
           ),
         );

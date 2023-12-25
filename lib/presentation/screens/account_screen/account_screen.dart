@@ -1,17 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 import 'package:e_electromaps/presentation/screens/account_screen/account_details_screen.dart';
 import 'package:e_electromaps/presentation/screens/login_screen/login_screen.dart';
 import 'package:e_electromaps/presentation/widgets/account_content_row.dart';
+import 'package:e_electromaps/presentation/widgets/language_bottom_sheet.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import '../../../business_logic/localization_cubit/app_localization.dart';
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
 
@@ -39,15 +37,15 @@ class AccountScreen extends StatelessWidget {
                         radius: MediaQuery.sizeOf(context).height * .065,
                         child: CircleAvatar(
                           radius: MediaQuery.sizeOf(context).height * .063,
-                          backgroundImage:NetworkImage(
-                             '${cubit.userModel!.pic}',
-
+                          backgroundImage: NetworkImage(
+                            '${cubit.userModel!.pic}',
                           ),
                         ),
                       ),
                       SizedBox(
                         width: MediaQuery.sizeOf(context).height * .02,
                       ),
+
                       Expanded(
                         child: Text(
                           'Hi, ${AppCubit.get(context).userModel!.userName}!',
@@ -56,6 +54,7 @@ class AccountScreen extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             fontSize: MediaQuery.sizeOf(context).height * 0.025,
                           ),
+
                         ),
                       )
                     ],
@@ -81,9 +80,12 @@ class AccountScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Column(children: [
+                        // account details
                         AccountContentRow(
                           isLogout: false,
-                          content: 'Account details',
+                          content: AppLocalizations.of(context)!
+                              .translate("account_details")
+                              .toString(),
                           prefixIcon: Icons.account_circle,
                           onTap: () {
                             Navigator.push(
@@ -97,19 +99,24 @@ class AccountScreen extends StatelessWidget {
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * .03,
                         ),
+                        // About us
                         AccountContentRow(
                           isLogout: false,
-                          content: 'About Us',
+                          content: AppLocalizations.of(context)!
+                              .translate("about_us")
+                              .toString(),
                           prefixIcon: Icons.info,
                           onTap: () {},
                         ),
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * .03,
                         ),
+                        // Help & Support
                         AccountContentRow(
                           isLogout: false,
-
-                          content: 'Help & Support',
+                          content: AppLocalizations.of(context)!
+                              .translate("helps_support")
+                              .toString(),
                           prefixIcon: Icons.help,
                           onTap: () {
                             launch('tel:+966 57 006 7776');
@@ -118,27 +125,63 @@ class AccountScreen extends StatelessWidget {
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * .03,
                         ),
+                        // Terms of use
                         AccountContentRow(
                           isLogout: false,
-
-                          content: 'Terms of use',
+                          content: AppLocalizations.of(context)!
+                              .translate("terms_of_use")
+                              .toString(),
                           prefixIcon: Icons.privacy_tip,
                           onTap: () {
-                            AppCubit.get(context).toLocation(locationLink: 'https://www.freeprivacypolicy.com/live/c0ee349f-627f-4943-b3b5-0eb7d99213b2');
+                            AppCubit.get(context).toLocation(
+                                locationLink:
+                                    'https://www.freeprivacypolicy.com/live/c0ee349f-627f-4943-b3b5-0eb7d99213b2');
                           },
                         ),
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * .03,
                         ),
+                        // Language
+                        AccountContentRow(
+                          isLogout: false,
+                          content: AppLocalizations.of(context)!
+                              .translate("language")
+                              .toString(),
+                          prefixIcon: Icons.language_rounded,
+                          onTap: () {
+                            languageBottomSheet(context);
+                          },
+                        ),
+                        // SizedBox(
+                        //   height: MediaQuery.sizeOf(context).height * .03,
+                        // ),
+                        // AccountContentRow(
+                        //   isLogout: false,
+                        //
+                        //   content: 'Tell Your Friends',
+                        //   prefixIcon: Icons.share,
+                        //   onTap: () {
+                        //   },
+                        // ),
+
+                        // Logout
+                        SizedBox(
+                          height: MediaQuery.sizeOf(context).height * .03,
+                        ),
                         AccountContentRow(
                           isLogout: true,
-                          content: 'Logout',
+                          content: AppLocalizations.of(context)!
+                              .translate("logout")
+                              .toString(),
                           prefixIcon: Icons.logout_outlined,
                           onTap: () {
-                            FirebaseAuth.instance.signOut().then((value) {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
-                                return const LoginScreen();
-                              },));
+                            FirebaseAuth.instance.signOut();
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()),
+                                    (Route<dynamic> route) => false).then((value) {
+                                      cubit.currentIndex=0;
                             });
                           },
                         ),

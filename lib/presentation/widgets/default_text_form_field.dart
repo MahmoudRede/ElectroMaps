@@ -32,6 +32,7 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import '../../business_logic/localization_cubit/app_localization.dart';
 import '../../styles/colors/color_manager.dart';
 
 class DefaultTextFormField extends StatefulWidget {
@@ -100,7 +101,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
           },
           validator: (value) {
             if (value!.isEmpty) {
-              return 'Required field';
+              return AppLocalizations.of(context)!.translate("required").toString();
             }
             return null;
           },
@@ -161,7 +162,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
           },
           validator: (value) {
             if (value!.isEmpty) {
-              return 'Required field';
+              return AppLocalizations.of(context)!.translate("required").toString();
             }
             return null;
           },

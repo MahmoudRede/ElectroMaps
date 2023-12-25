@@ -1,4 +1,5 @@
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
+import 'package:e_electromaps/business_logic/localization_cubit/app_localization.dart';
 import 'package:e_electromaps/core/local/cash_helper.dart';
 import 'package:e_electromaps/presentation/widgets/custom_button.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
@@ -8,6 +9,12 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
   TextEditingController powerController = TextEditingController();
   TextEditingController intensityController = TextEditingController();
   TextEditingController voltageController = TextEditingController();
+  var connectorTypeValue =
+      "${AppLocalizations.of(context)!.translate("connector_type").toString()} *";
+  var formatValue =
+      AppLocalizations.of(context)!.translate("format").toString();
+  var typeCurrentValue =
+      "${AppLocalizations.of(context)!.translate("type_of_current").toString()}";
   var formKey = GlobalKey<FormState>();
   return showAdaptiveDialog(
     context: context,
@@ -36,7 +43,9 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                     child: Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Text(
-                    "Connector information",
+                    AppLocalizations.of(context)!
+                        .translate("connector_info")
+                        .toString(),
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                 ))),
@@ -45,42 +54,46 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
               height: MediaQuery.sizeOf(context).height * .5,
               child: Column(
                 children: [
-
                   DropdownButtonFormField(
                     decoration: InputDecoration(
-                      labelStyle:Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        fontSize: 13,
-                        color: ColorManager.black,
-                      ),
-                      hintStyle:Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        color: ColorManager.black,
-                        fontSize: 13,
-                        fontFamily: 'Nunito',
-
-                      ),
-
-                      errorStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        fontSize: 13.0,
-                        color: ColorManager.red,
-                      ),),
-                    style:Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      fontSize: 16,
-                      color: ColorManager.black,
+                      labelStyle:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                fontSize: 13,
+                                color: ColorManager.black,
+                              ),
+                      hintStyle:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                color: ColorManager.black,
+                                fontSize: 13,
+                                fontFamily: 'Nunito',
+                              ),
+                      errorStyle:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                fontSize: 13.0,
+                                color: ColorManager.red,
+                              ),
                     ),
-                    value: AppCubit.get(context).connectorTypeValue,
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontSize: 16,
+                          color: ColorManager.black,
+                        ),
+                    value: connectorTypeValue,
                     validator: (value) {
-                      if (value == "Connector type *") {
-                        return "Required";
+                      if (value ==
+                          "${AppLocalizations.of(context)!.translate("connector_type").toString()} *") {
+                        return AppLocalizations.of(context)!
+                            .translate("required")
+                            .toString();
                       }
                       return null;
                     },
-                    hint: const Text(
-                      "Connector type *",
+                    hint: Text(
+                      "${AppLocalizations.of(context)!.translate("connector_type").toString()} *",
                     ),
                     items: [
                       DropdownMenuItem(
-                        value: "Connector type *",
-                        child: Text('Connector type *',
+                        value: "${AppLocalizations.of(context)!.translate("connector_type").toString()} *",
+                        child: Text("${AppLocalizations.of(context)!.translate("connector_type").toString()} *",
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineSmall!
@@ -288,14 +301,10 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                       ),
                     ],
                     onChanged: (value) {
-
-                      AppCubit.get(context).connectorTypeValue=value!;
-                      print(AppCubit.get(context).connectorTypeValue);
-
+                      connectorTypeValue = value!;
+                      print( connectorTypeValue);
                     },
                   ),
-
-
                   SizedBox(
                     height: MediaQuery.sizeOf(context).height * .02,
                   ),
@@ -306,13 +315,17 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                         child: TextFormField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return "Required";
+                              return AppLocalizations.of(context)!
+                                  .translate("required")
+                                  .toString();
                             }
                           },
                           controller: powerController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            label: Text("Power (KW)*",
+                            label: Text("${AppLocalizations.of(context)!
+                                .translate("power")
+                                .toString()} (KW)*",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineSmall!
@@ -328,7 +341,9 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                           controller: intensityController,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                            label: Text("Intensity (A)",
+                            label: Text("${AppLocalizations.of(context)!
+                                .translate("intensity")
+                                .toString()} (A)",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineSmall!
@@ -349,11 +364,15 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                           keyboardType: TextInputType.number,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return "Required";
+                              return AppLocalizations.of(context)!
+                                  .translate("required")
+                                  .toString();
                             }
                           },
                           decoration: InputDecoration(
-                            label: Text("Voltage (V)*",
+                            label: Text("${AppLocalizations.of(context)!
+                                .translate("voltage")
+                                .toString()} (V)*",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineSmall!
@@ -372,39 +391,61 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                             ),
                             DropdownButtonFormField(
                               decoration: InputDecoration(
-                                labelStyle:Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  fontSize: 13,
-                                  color: ColorManager.black,
-                                ),
-                                hintStyle:Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  color: ColorManager.black,
-                                  fontSize: 13,
-                                  fontFamily: 'Nunito',
-
-                                ),
-
-                                errorStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  fontSize: 13.0,
-                                  color: ColorManager.red,
-                                ),),
-                              style:Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                fontSize: 16,
-                                color: ColorManager.black,
+                                labelStyle: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall!
+                                    .copyWith(
+                                      fontSize: 13,
+                                      color: ColorManager.black,
+                                    ),
+                                hintStyle: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall!
+                                    .copyWith(
+                                      color: ColorManager.black,
+                                      fontSize: 13,
+                                      fontFamily: 'Nunito',
+                                    ),
+                                errorStyle: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall!
+                                    .copyWith(
+                                      fontSize: 13.0,
+                                      color: ColorManager.red,
+                                    ),
                               ),
-                              value: AppCubit.get(context).formatValue,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall!
+                                  .copyWith(
+                                    fontSize: 16,
+                                    color: ColorManager.black,
+                                  ),
+                              value: formatValue,
                               validator: (value) {
-                                if (value == "Format") {
-                                  return "Required";
+                                if (value ==
+                                    AppLocalizations.of(context)!
+                                        .translate("format")
+                                        .toString()) {
+                                  return AppLocalizations.of(context)!
+                                      .translate("required")
+                                      .toString();
                                 }
                                 return null;
                               },
-                              hint: const Text(
-                                "Format",
+                              hint:   Text(
+                                AppLocalizations.of(context)!
+                                    .translate("format")
+                                    .toString(),
                               ),
                               items: [
                                 DropdownMenuItem(
-                                  value: "Format",
-                                  child: Text('Format',
+                                  value: AppLocalizations.of(context)!
+                                      .translate("format")
+                                      .toString(),
+                                  child: Text(AppLocalizations.of(context)!
+                                      .translate("format")
+                                      .toString(),
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineSmall!
@@ -428,13 +469,10 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                                 ),
                               ],
                               onChanged: (value) {
-
-                                AppCubit.get(context).formatValue=value!;
+                                AppCubit.get(context).formatValue = value!;
                                 print(AppCubit.get(context).formatValue);
-
                               },
                             ),
-
                           ],
                         ),
                       ),
@@ -443,45 +481,48 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                   SizedBox(
                     height: MediaQuery.sizeOf(context).height * .02,
                   ),
-
-
-
                   Expanded(
                     child: DropdownButtonFormField(
                       decoration: InputDecoration(
-                        labelStyle:Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          fontSize: 13,
-                          color: ColorManager.black,
-                        ),
-                        hintStyle:Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          color: ColorManager.black,
-                          fontSize: 13,
-                          fontFamily: 'Nunito',
-
-                        ),
-
-                        errorStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                          fontSize: 13.0,
-                          color: ColorManager.red,
-                        ),),
-                      style:Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        fontSize: 16,
-                        color: ColorManager.black,
+                        labelStyle:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  fontSize: 13,
+                                  color: ColorManager.black,
+                                ),
+                        hintStyle:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  color: ColorManager.black,
+                                  fontSize: 13,
+                                  fontFamily: 'Nunito',
+                                ),
+                        errorStyle:
+                            Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                  fontSize: 13.0,
+                                  color: ColorManager.red,
+                                ),
                       ),
-                      value: AppCubit.get(context).typeCurrentValue,
+                      style:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
+                                fontSize: 16,
+                                color: ColorManager.black,
+                              ),
+                      value: typeCurrentValue,
                       validator: (value) {
-                        if (value == "Type of current") {
-                          return "Required";
+                        if (value !=
+                            '${AppLocalizations.of(context)!.translate("type_of_current").toString()}') {
+                          return AppLocalizations.of(context)!
+                              .translate("required")
+                              .toString();
                         }
                         return null;
                       },
-                      hint: const Text(
-                        "Type of current",
+                      hint: Text(
+                        '${AppLocalizations.of(context)!.translate("type_of_current").toString()}',
                       ),
                       items: [
                         DropdownMenuItem(
-                          value: "Type of current",
-                          child: Text('Type of current',
+                          value: '${AppLocalizations.of(context)!.translate("type_of_current").toString()}',
+                          child: Text('${AppLocalizations.of(context)!.translate("type_of_current").toString()}',
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
@@ -513,37 +554,41 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                         ),
                       ],
                       onChanged: (value) {
-
-                        AppCubit.get(context).typeCurrentValue=value!;
-                        print(AppCubit.get(context).typeCurrentValue);
-
+                         typeCurrentValue = value!;
+                        print( typeCurrentValue);
                       },
                     ),
                   ),
-
                 ],
               ),
             ),
             actions: [
               customButton(
                 context: context,
-                title: "Add Connector",
+                title: AppLocalizations.of(context)!.translate("add_connector").toString(),
                 onTap: () {
-                  if(formKey.currentState!.validate()){
-                    CashHelper.saveData(key: 'connectorType',value:AppCubit.get(context).connectorTypeValue);
-                    CashHelper.saveData(key: 'power',value:powerController.text);
-                    CashHelper.saveData(key: 'intensity',value:intensityController.text);
-                    CashHelper.saveData(key: 'voltage',value:voltageController.text);
-                    CashHelper.saveData(key: 'format',value:AppCubit.get(context).formatValue);
-                    CashHelper.saveData(key: 'typeCurrent',value:AppCubit.get(context).typeCurrentValue);
+                  if (formKey.currentState!.validate()) {
+                    CashHelper.saveData(
+                        key: 'connectorType',
+                        value:  connectorTypeValue);
+                    CashHelper.saveData(
+                        key: 'power', value: powerController.text);
+                    CashHelper.saveData(
+                        key: 'intensity', value: intensityController.text);
+                    CashHelper.saveData(
+                        key: 'voltage', value: voltageController.text);
+                    CashHelper.saveData(
+                        key: 'format',
+                        value:  formatValue);
+                    CashHelper.saveData(
+                        key: 'typeCurrent',
+                        value:  typeCurrentValue);
                   }
-
-
                 },
                 width: MediaQuery.sizeOf(context).width * .8,
-                color: ColorManager.primaryColor,
+                color: ColorManager.secondaryColor,
                 textColor: ColorManager.white,
-                borderColor: ColorManager.primaryColor,
+                borderColor: ColorManager.white, color2: ColorManager.primaryColor,
               ),
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * .02,
@@ -555,7 +600,7 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      "Cancel",
+                      AppLocalizations.of(context)!.translate("cancel").toString(),
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!

@@ -1,3 +1,4 @@
+import 'package:e_electromaps/business_logic/localization_cubit/app_localization.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class MyChargesScreen extends StatelessWidget {
                   horizontal: MediaQuery.sizeOf(context).height*.03,
                   vertical: MediaQuery.sizeOf(context).height*.05,
                 ),
-                child: Text('My charges',style: TextStyle(
+                child: Text(AppLocalizations.of(context)!.translate("my_charges").toString(),style: TextStyle(
                   color: ColorManager.textColor,
                   fontWeight: FontWeight.w500,
                   fontSize: MediaQuery.sizeOf(context).height * 0.03,

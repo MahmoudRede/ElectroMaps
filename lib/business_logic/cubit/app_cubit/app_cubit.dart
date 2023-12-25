@@ -3,8 +3,6 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'dart:io';
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
@@ -19,6 +17,7 @@ import 'package:e_electromaps/presentation/screens/favorites_screen/favorites_sc
 import 'package:e_electromaps/presentation/screens/my_charges_screen/my_charges_screen.dart';
 import 'package:e_electromaps/presentation/screens/stations_screen/stations_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -36,9 +35,11 @@ import '../../../data/model/place_details_model/place_details_model.dart';
 import '../../../data/model/user_model/user_model.dart';
 import '../../../presentation/widgets/custom_toast.dart';
 import '../../../styles/colors/color_manager.dart';
+import '../../localization_cubit/app_localization.dart';
 
 class AppCubit extends Cubit<AppStates> {
-  AppCubit() : super(InitialState());
+  AppCubit() : super(InitialState(
+  ));
 
   static AppCubit get(context) => BlocProvider.of<AppCubit>(context);
 
@@ -67,6 +68,7 @@ class AppCubit extends Cubit<AppStates> {
       {required String password,
       required String name,
       required String phone,
+      required String countryCode,
       required BuildContext context}) async {
     try {
       emit(SignUpLoadingState());
@@ -84,7 +86,7 @@ class AppCubit extends Cubit<AppStates> {
         getUser(id: (credential.user?.uid)!);
         CashHelper.saveData(key: 'isUid', value: credential.user?.uid);
         customToast(
-          title: 'Account Created Successfully',
+          title: AppLocalizations.of(context)!.translate("account_created_successfully").toString(),
           color: Colors.green.shade700,
         );
         emit(SignUpSuccessState());
@@ -94,7 +96,7 @@ class AppCubit extends Cubit<AppStates> {
       if (e.code == FirebaseErrors.weakPassword) {
       } else if (CashHelper.getData(key: 'isUid') != null) {
         customToast(
-          title: 'This account already exists',
+          title: AppLocalizations.of(context)!.translate("account_already_exists").toString(),
           color: ColorManager.red,
         );
         emit(SignUpErrorState(e.toString()));
@@ -104,7 +106,10 @@ class AppCubit extends Cubit<AppStates> {
   }
   //// login ////
   Future<void> loginWithFirebaseAuth(
-      {required String phone, required String password}) async {
+      {required BuildContext context,
+      required String phone,
+      required String countryCode,
+        required String password}) async {
     try {
       emit(LoginLoadingState());
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -120,10 +125,10 @@ class AppCubit extends Cubit<AppStates> {
         debugPrint(CashHelper.getData(key: 'isUid'));
         debugPrint("-----------Login Successfully");
         return customToast(
-            title: '''Login Successfully''', color: Colors.green.shade700);
+            title: AppLocalizations.of(context)!.translate("login_successfully").toString(), color: Colors.green.shade700);
       } else {
         return customToast(
-            title: '''Invalid email or password''', color: Colors.red.shade700);
+            title: AppLocalizations.of(context)!.translate("invalid_email_or_password").toString(), color: Colors.red.shade700);
       }
     } on FirebaseAuthException catch (e) {
       emit(LoginErrorState(e.toString()));
@@ -135,15 +140,20 @@ class AppCubit extends Cubit<AppStates> {
     }
   }
 
-//   Future<void>editUserDetails() async{
-//     emit(UpdateUserDetailsLoadingState());
-//     FirebaseFirestore.instance
-//         .collection('Users')
-//         .doc(CashHelper.getData(key: 'isUid'))
-//         .update(data)
-//
-//
-// }
+
+  //// Edit User Details////
+  Future<void> editUserDetails(BuildContext context) {
+    emit(UpdateUserDetailsLoadingState());
+    CollectionReference editRef = getUsersCollection();
+    return editRef.doc(CashHelper.getData(key: "isUid")).update({
+      "userName": userModel!.userName,
+      "phoneNumber": userModel!.phoneNumber,
+    }).then((value){
+      customToast(title: AppLocalizations.of(context)!.translate("data_updated_successfully").toString(), color: Colors.green.shade700);
+      emit(UpdateUserDetailsSuccessState());
+    });
+
+  }
 
 
   //// Save User ////
@@ -160,6 +170,7 @@ class AppCubit extends Cubit<AppStates> {
       uId: id,
       pic:
           'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=740&t=st=1703015640~exp=1703016240~hmac=d32203ed9a0132b11db5f3890f4293174475e278eb0239a283c39443ae15a38b',
+      countryCode: '+966',
     );
 
     FirebaseFirestore.instance
@@ -210,7 +221,9 @@ class AppCubit extends Cubit<AppStates> {
     var myUser = user.data();
     return myUser;
   }
-     //// delete user////
+
+
+  //// delete user////
   Future<void> deleteUser({
     required String id,
     required context,
@@ -223,7 +236,7 @@ class AppCubit extends Cubit<AppStates> {
         .delete()
         .then((value) {
       CashHelper.removeData(key: "isUid");
-      customToast(title: "Account Deleted Successfully", color: Colors.red.shade700);
+      customToast(title: AppLocalizations.of(context)!.translate("account_deleted_successfully").toString(), color: Colors.red.shade700);
 
       debugPrint('Account Deleted Successfully');
 
@@ -235,10 +248,8 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   ///// New Charging Staions DropDown Lists /////
-  var typeList = const [
-    DropdownMenuItem(
-        value: "Station Charging Type *",
-        child: Text('Station Charging Type *')),
+  var typeList =  [
+    DropdownMenuItem(value: "Station Charging Type *", child: Text('Station Charging Type *')),
     DropdownMenuItem(value: "Public road", child: Text('Public road')),
     DropdownMenuItem(value: "Parking", child: Text('Parking')),
     DropdownMenuItem(value: "Airport", child: Text('Airport')),
@@ -561,16 +572,13 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
 
   List<StationModel> stationList = [];
 
-  Future<void> getStationFromFire() async {
+  Future<void> getStationFromFire()  async {
     emit(GetStationLoadingState());
-
-    FirebaseFirestore.instance.collection('Stations').get().then((value) {
+     FirebaseFirestore.instance.collection('Stations').get().then((value) {
       for (var element in value.docs) {
         stationList.add(StationModel.fromJson(element.data()));
       }
-
       debugPrint('Length of stationList ${stationList.length}');
-
       debugPrint('Station Get Successfully');
       emit(GetStationSuccessState());
     }).catchError((error) {

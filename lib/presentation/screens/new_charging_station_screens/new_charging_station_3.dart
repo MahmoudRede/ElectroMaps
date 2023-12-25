@@ -10,7 +10,11 @@ import 'package:e_electromaps/presentation/screens/add_station_screens/add_stati
 import 'package:e_electromaps/presentation/widgets/default_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../../../business_logic/localization_cubit/app_localization.dart';
+
 import '../../../styles/colors/color_manager.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/leave_dialog.dart';
@@ -49,7 +53,7 @@ class NewChargingStationScreen3 extends StatelessWidget {
         ),
         backgroundColor: ColorManager.primaryColor,
         title: Text(
-          'New Charging Station',
+          AppLocalizations.of(context)!.translate("new_charging_station").toString(),
           style: Theme.of(context)
               .textTheme
               .headlineMedium!
@@ -70,7 +74,7 @@ class NewChargingStationScreen3 extends StatelessWidget {
                 ),
                 child: Center(
                     child: Text(
-                  'Charging Station Information(Step 3/6)',
+                      '${AppLocalizations.of(context)!.translate("charging_station_info").toString()}(${AppLocalizations.of(context)!.translate("step")} 3/6)',
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall!
@@ -118,7 +122,7 @@ class NewChargingStationScreen3 extends StatelessWidget {
                             controller: addressController,
                             value:BlocProvider.of<AppCubit>(context).mainAddress ,
                             textInputType: TextInputType.text,
-                            labelText: 'Address *')),
+                            labelText: '${AppLocalizations.of(context)!.translate("address").toString()} *')),
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * 0.03,
                     ),
@@ -126,7 +130,7 @@ class NewChargingStationScreen3 extends StatelessWidget {
                         child: DefaultTextFormField(
                             controller: numberController,
                             textInputType: TextInputType.number,
-                            labelText: 'Number *')
+                            labelText: '${AppLocalizations.of(context)!.translate("number").toString()} *')
                     )
                   ],
                 ),
@@ -145,7 +149,7 @@ class NewChargingStationScreen3 extends StatelessWidget {
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 10),
-                      labelText: 'How to get there',
+                      labelText: AppLocalizations.of(context)!.translate("how_to_get_there").toString(),
                       labelStyle:
                           Theme.of(context).textTheme.headlineSmall!.copyWith(
                                 fontSize: 16.0,
@@ -165,7 +169,7 @@ class NewChargingStationScreen3 extends StatelessWidget {
                         child: customButton(
                             borderColor: ColorManager.grey,
                             context: context,
-                            title: 'Previous',
+                            title: AppLocalizations.of(context)!.translate("previous").toString(),
                             onTap: () {
 
                               Navigator.pop(context);
@@ -175,15 +179,15 @@ class NewChargingStationScreen3 extends StatelessWidget {
                             },
                             width: MediaQuery.sizeOf(context).width * 0.35,
                             color: Colors.white,
-                            textColor: ColorManager.textColor)),
+                            textColor: ColorManager.textColor, color2: ColorManager.white)),
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * 0.05,
                     ),
                     Expanded(
                       child: customButton(
-                          borderColor: ColorManager.primaryColor,
+                          borderColor: ColorManager.white,
                           context: context,
-                          title: 'Next',
+                          title: AppLocalizations.of(context)!.translate("next").toString(),
                           onTap: () {
                             if (formKey.currentState!.validate()) {
 
@@ -201,8 +205,8 @@ class NewChargingStationScreen3 extends StatelessWidget {
                             }
                           },
                           width: MediaQuery.sizeOf(context).width * 0.35,
-                          color: ColorManager.primaryColor,
-                          textColor: ColorManager.white),
+                          color: ColorManager.secondaryColor,
+                          textColor: ColorManager.white, color2: ColorManager.primaryColor),
                     ),
                   ],
                 ),
