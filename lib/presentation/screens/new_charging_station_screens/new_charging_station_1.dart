@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 import 'package:e_electromaps/core/local/cash_helper.dart';
@@ -230,7 +232,7 @@ class _NewChargingStationScreen1State extends State<NewChargingStationScreen1> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     customButton(borderColor: ColorManager.primaryColor,context: context, title: 'Next',
-                        onTap: (){
+                        onTap: () async{
                       print(cubit.stationTypeValue);
                       print(cubit.stationStatusValue);
                       print(cubit.energySourceValue);
@@ -246,6 +248,9 @@ class _NewChargingStationScreen1State extends State<NewChargingStationScreen1> {
                         print(CashHelper.getData(key: 'stationType'));
                         print(CashHelper.getData(key: 'stationStatus'));
                         print(CashHelper.getData(key: 'energySource'));
+
+                        await cubit.getCurrentPosition();
+                        cubit.currentPositionAddStation =  await cubit.getCurrentPositionAddStation();
                         Navigator.push(context, MaterialPageRoute(builder: (context) =>const  NewChargingStationScreen2(), ));
                       }
                     }, width: MediaQuery.sizeOf(context).width * 0.3, color: ColorManager.primaryColor, textColor:Colors.white ),

@@ -95,3 +95,7 @@ class UploadProfileImageLoadingState extends AppStates {}
 class UploadProfileImageSuccessState extends AppStates {}
 class UploadProfileImageErrorState extends AppStates {}
 
+//get current position
+class GetCurrentPositionLoading extends AppStates{}
+class GetCurrentPositionSuccess extends AppStates{}
+class GetCurrentPositionFailed extends AppStates{}

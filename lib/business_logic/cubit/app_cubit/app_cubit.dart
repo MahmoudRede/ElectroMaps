@@ -21,6 +21,7 @@ import 'package:e_electromaps/presentation/screens/stations_screen/stations_scre
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -374,23 +375,54 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
     final GoogleMapController controller = await mapController.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(goToSearchedForPlace));
   }
-
-
-  late String mainAddress;
+ late String mainAddress;
  late LatLng locationPosition;
+ Position? currentPositionAddStation ;
+
+  getCurrentPosition() async{
+
+    bool serviceEnabled;
+    LocationPermission permission;
+   serviceEnabled = await Geolocator.isLocationServiceEnabled();
+
+   permission = await Geolocator.checkPermission();
+
+
+   if(serviceEnabled == false){
+
+   }
+
+   if(permission == LocationPermission.denied){
+     permission = await Geolocator.requestPermission();
+     if(permission == LocationPermission.denied){
+       log('Permission denied');
+     }
+
+     if(permission == LocationPermission.whileInUse){
+       log('permission whileinuse');
+       Position position = await Geolocator.getCurrentPosition();
+       log('=====================');
+       log(position.latitude.toString());
+       log(position.longitude.toString());
+       log('=====================');
+     }
+   }
+
+
+ }
+
+ Future<Position> getCurrentPositionAddStation()async{
+    Position position = await Geolocator.getCurrentPosition();
+
+    return position;
+ }
 
 
 
- // this functions to convert latlng to text address but don't work
 
-// Future getAddress(LatLng position) async{
-//   setState(() async {
-//     List<Placemark> placeMarks = await placemarkFromCoordinates(position.latitude, position.longitude);
-//     Placemark address = placeMarks[0];
-//     mainAddress = '${address.street} ,  ${address.locality} , ${address.administrativeArea} , ${address.country}';
-//   });
-//   log(mainAddress);
-// }
+
+
+
 
 
 

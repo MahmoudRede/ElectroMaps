@@ -1,3 +1,5 @@
+
+
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 import 'package:e_electromaps/core/remote/dio_helper.dart';
@@ -23,6 +25,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -45,7 +48,7 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               theme: getApplicationTheme(context),
               debugShowCheckedModeBanner: false,
-              home: const SplashScreen(),
+              home: const HomeLayout(),
             );
           }),
     );
