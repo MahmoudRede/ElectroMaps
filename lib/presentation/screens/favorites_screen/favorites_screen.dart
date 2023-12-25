@@ -1,4 +1,5 @@
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
+import 'package:e_electromaps/business_logic/localization_cubit/app_localization.dart';
 import 'package:e_electromaps/presentation/widgets/favorite_widget.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class FavoritesScreen extends StatelessWidget {
               horizontal: MediaQuery.sizeOf(context).height*.03,
               vertical: MediaQuery.sizeOf(context).height*.05,
             ),
-            child: Text('Favorite charging points',style: TextStyle(
+            child: Text(AppLocalizations.of(context)!.translate("favorite_charging_points").toString(),style: TextStyle(
               color: ColorManager.textColor,
               fontWeight: FontWeight.w500,
               fontSize: MediaQuery.sizeOf(context).height * 0.03,

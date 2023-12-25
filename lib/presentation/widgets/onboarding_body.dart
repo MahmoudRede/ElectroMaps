@@ -26,7 +26,6 @@ Widget onBoardingBody(onboardingController, List<BoardingModel> bording, index,
                 fit: BoxFit.contain,
                 height: MediaQuery.sizeOf(context).height * 0.4,
                 width: MediaQuery.sizeOf(context).width * 0.8,
-
               ),
             ),
           ),
@@ -36,7 +35,7 @@ Widget onBoardingBody(onboardingController, List<BoardingModel> bording, index,
           SmoothPageIndicator(
             controller: onboardingController,
             count: bording.length,
-            effect:  ScrollingDotsEffect(
+            effect: ScrollingDotsEffect(
               dotColor: Colors.grey,
               activeDotColor: ColorManager.primaryColor,
               dotHeight: MediaQuery.sizeOf(context).height * 0.005,
@@ -86,20 +85,23 @@ Widget onBoardingBody(onboardingController, List<BoardingModel> bording, index,
                   child: customButton(
                     context: context,
                     title: "Get Started",
-                    onTap: () {if (isLast == true) {
-                      Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const PrivacyAndTermsScreen();
-                        },
-                      ));
-                    }
-                    onboardingController.nextPage(
-                        duration: const Duration(milliseconds: 750),
-                        curve: Curves.fastLinearToSlowEaseIn);},
+                    onTap: () {
+                      if (isLast == true) {
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) {
+                            return const PrivacyAndTermsScreen();
+                          },
+                        ));
+                      }
+                      onboardingController.nextPage(
+                          duration: const Duration(milliseconds: 750),
+                          curve: Curves.fastLinearToSlowEaseIn);
+                    },
                     width: MediaQuery.sizeOf(context).width,
-                    color: ColorManager.primaryColor,
+                    color: ColorManager.secondaryColor,
                     textColor: ColorManager.white,
-                    borderColor: ColorManager.primaryColor,
+                    borderColor: ColorManager.white,
+                    color2: ColorManager.primaryColor,
                   ),
                 )
               : onBoardingButtons(context, onboardingController, isLast),

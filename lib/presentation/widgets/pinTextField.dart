@@ -1,3 +1,4 @@
+import 'package:e_electromaps/business_logic/localization_cubit/app_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import '../../styles/colors/color_manager.dart';
@@ -27,7 +28,7 @@ class _PinTextFieldState extends State<PinTextField> {
       },
       validator: (value) {
         if (value!.isEmpty) {
-          return 'Required field';
+          return AppLocalizations.of(context)!.translate("required").toString();
         }
         return null;
       },

@@ -3,6 +3,8 @@ import 'package:e_electromaps/presentation/widgets/custom_button.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
 
+import '../../business_logic/localization_cubit/app_localization.dart';
+
 Future<dynamic> closeDialog(BuildContext context) {
   return showAdaptiveDialog(
     context: context,
@@ -12,12 +14,12 @@ Future<dynamic> closeDialog(BuildContext context) {
               vertical: MediaQuery.sizeOf(context).height * .15,
               horizontal: MediaQuery.sizeOf(context).width * .05),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0),
+            borderRadius: BorderRadius.circular(15),
           ),
           backgroundColor: ColorManager.white,
           title: const SizedBox(),
           content: Text(
-            'Are you sure you want to leave?\n You will lose all the information introduced',
+            '${AppLocalizations.of(context)!.translate("sure_leave").toString()}\n ${AppLocalizations.of(context)!.translate("lose_info").toString()}',
             style: Theme.of(context)
                 .textTheme
                 .headlineSmall!
@@ -31,7 +33,9 @@ Future<dynamic> closeDialog(BuildContext context) {
               children: [
                 customButton(
                     context: context,
-                    title: 'Yes, Leave',
+                    title: AppLocalizations.of(context)!
+                        .translate("yes_leave")
+                        .toString(),
                     onTap: () {
                       Navigator.pushReplacement(context, MaterialPageRoute(
                         builder: (context) {
@@ -40,9 +44,10 @@ Future<dynamic> closeDialog(BuildContext context) {
                       ));
                     },
                     width: MediaQuery.sizeOf(context).width,
-                    color: ColorManager.primaryColor,
+                    color: ColorManager.secondaryColor,
                     textColor: ColorManager.white,
-                    borderColor: ColorManager.primaryColor),
+                    borderColor: ColorManager.white,
+                    color2: ColorManager.primaryColor),
                 SizedBox(
                   height: MediaQuery.sizeOf(context).height * .02,
                 ),
@@ -51,7 +56,9 @@ Future<dynamic> closeDialog(BuildContext context) {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      'Cancel',
+                      AppLocalizations.of(context)!
+                          .translate("cancel")
+                          .toString(),
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!

@@ -26,7 +26,7 @@ Widget onBoardingButtons(context, onboardingController, isLast) => Padding(
                 width: MediaQuery.sizeOf(context).width * 0.2,
                 color: Colors.white,
                 textColor: ColorManager.black,
-                borderColor: ColorManager.grey),
+                borderColor: ColorManager.grey, color2: Colors.white),
           ),
           SizedBox(
             width: MediaQuery.sizeOf(context).width * 0.05,
@@ -48,9 +48,10 @@ Widget onBoardingButtons(context, onboardingController, isLast) => Padding(
                       curve: Curves.fastLinearToSlowEaseIn);
                 },
                 width: MediaQuery.sizeOf(context).width * 0.2,
-                color: ColorManager.primaryColor,
+                color: ColorManager.secondaryColor,
                 textColor: Colors.white,
-                borderColor: ColorManager.primaryColor),
+                borderColor: ColorManager.white,
+                color2: ColorManager.primaryColor),
           ),
         ],
       ),

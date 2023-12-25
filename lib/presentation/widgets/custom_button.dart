@@ -6,6 +6,7 @@ Widget customButton({
   required Function()? onTap,
   required double width,
   required Color? color,
+  required Color? color2,
   required Color? textColor,
   required Color borderColor,
 
@@ -20,6 +21,14 @@ Widget customButton({
         decoration: BoxDecoration(
             border: Border.all(color:borderColor),
             borderRadius: BorderRadius.circular(25),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  color!,
+                  color2!,
+                ]),
+
             color: color),
         child: Center(
             child: Text(

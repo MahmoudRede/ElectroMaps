@@ -1,8 +1,10 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/presentation/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../business_logic/cubit/app_states/app_states.dart';
+import '../../../business_logic/localization_cubit/app_localization.dart';
 import '../../../styles/colors/color_manager.dart';
 import '../../widgets/delete_account_dialog.dart';
 
@@ -15,7 +17,7 @@ class AccountDetailsScreen extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
-              title: const Text('Account Details'),
+              title:   Text(AppLocalizations.of(context)!.translate("account_details").toString()),
             ),
             body: BlocConsumer<AppCubit, AppStates>(
               listener: (context, state) {},
@@ -40,7 +42,7 @@ class AccountDetailsScreen extends StatelessWidget {
                                 child: CircleAvatar(
                                     radius:
                                         MediaQuery.sizeOf(context).width * .15,
-                                    backgroundImage: NetworkImage(
+                                    backgroundImage:  NetworkImage(
                                         "${cubit.userModel!.pic}")),
                               ),
                               Container(
@@ -70,7 +72,7 @@ class AccountDetailsScreen extends StatelessWidget {
                         ),
                         //Personal data
                         Text(
-                          "Personal data",
+                          AppLocalizations.of(context)!.translate("personal_data").toString(),
                           style: Theme.of(context)
                               .textTheme
                               .headlineSmall!
@@ -83,7 +85,7 @@ class AccountDetailsScreen extends StatelessWidget {
                         ),
                         //User Name
                         Text(
-                          "User Name",
+                          AppLocalizations.of(context)!.translate("user_name").toString(),
                           style: Theme.of(context)
                               .textTheme
                               .headlineSmall!
@@ -109,7 +111,7 @@ class AccountDetailsScreen extends StatelessWidget {
                         ),
                         //Phone Number
                         Text(
-                          "Phone Number",
+                          AppLocalizations.of(context)!.translate("phone_number").toString(),
                           style: Theme.of(context)
                               .textTheme
                               .headlineSmall!
@@ -117,50 +119,81 @@ class AccountDetailsScreen extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   color: ColorManager.black),
                         ),
-                        TextFormField(
-                          enabled: true,
-                          initialValue: cubit.userModel!.phoneNumber,
-                          onChanged: (value) {
-                            cubit.userModel!.phoneNumber = value;
-                          },
-                          keyboardType: TextInputType.phone,
-                          decoration: InputDecoration(
-                              hintStyle: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall!
-                                  .copyWith(color: ColorManager.textColor)),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: CountryCodePicker(
+                                  showDropDownButton: true,
+                                  textOverflow: TextOverflow.visible,
+                                  textStyle: Theme.of(context).textTheme.headlineSmall,
+                                  onChanged: (CountryCode countryCode) {
+                                    cubit.userModel!.countryCode=countryCode.dialCode;
+                                    debugPrint(
+                                        'New Country selected: ${countryCode.dialCode}');
+
+                                  },
+                                  initialSelection: cubit.userModel?.countryCode??'+966',
+                                  dialogSize: Size(
+                                      MediaQuery.sizeOf(context).width * 0.8,
+                                      MediaQuery.sizeOf(context).height * 0.6),
+                                  dialogTextStyle: Theme.of(context).textTheme.headlineSmall,
+                                  flagDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(7),
+                                  ),
+
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: TextFormField(
+                                enabled: true,
+                                initialValue: cubit.userModel!.phoneNumber,
+                                onChanged: (value) {
+                                  cubit.userModel!.phoneNumber = value;
+                                },
+                                keyboardType: TextInputType.phone,
+                                decoration: InputDecoration(
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall!
+                                        .copyWith(color: ColorManager.textColor)),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
-                          height: MediaQuery.sizeOf(context).height * .29,
+                          height: MediaQuery.sizeOf(context).height * .28,
                         ),
 
                         state is UpdateUserDetailsLoadingState ?const Center(child: CircularProgressIndicator()):customButton(
                             context: context,
-                            title: "Save",
+                            title: AppLocalizations.of(context)!.translate("save").toString(),
                             onTap: () {
-                              cubit.editUserDetails().then((value) {
+                              cubit.editUserDetails(context).then((value) {
                                 if(state is UpdateUserDetailsSuccessState){
                                   Navigator.pop(context);
                                 }
                               });
                             },
                             width: MediaQuery.sizeOf(context).width,
-                            color: ColorManager.primaryColor,
+                            color: ColorManager.secondaryColor,
                             textColor: ColorManager.white,
-                            borderColor: ColorManager.primaryColor),
+                            borderColor: ColorManager.white, color2: ColorManager.primaryColor),
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * .02,
                         ),
                         customButton(
                             context: context,
-                            title: "Delete Account",
+                            title: AppLocalizations.of(context)!.translate("delete_account").toString(),
                             onTap: () {
                               confirmDeleteDialog(context);
                             },
                             width: MediaQuery.sizeOf(context).width,
                             color: ColorManager.white,
                             textColor: ColorManager.red,
-                            borderColor: ColorManager.red)
+                            borderColor: ColorManager.red, color2: ColorManager.white)
                       ],
                     ),
                   ),

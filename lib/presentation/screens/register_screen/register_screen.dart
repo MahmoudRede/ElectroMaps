@@ -1,13 +1,15 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
+import 'package:e_electromaps/business_logic/localization_cubit/app_localization.dart';
 import 'package:e_electromaps/presentation/screens/home_layout/home_layout.dart';
 import 'package:e_electromaps/presentation/screens/login_screen/login_screen.dart';
-import 'package:e_electromaps/presentation/widgets/custom_toast.dart';
-import 'package:e_electromaps/presentation/widgets/default_button.dart';
+import 'package:e_electromaps/presentation/widgets/custom_button.dart';
 import 'package:e_electromaps/presentation/widgets/default_text_form_field.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/local/cash_helper.dart';
 import '../../widgets/pinTextField.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -31,14 +33,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         backgroundColor: ColorManager.white,
         body: BlocConsumer<AppCubit, AppStates>(
           listener: (context, state) {
-            if(state is SignUpSuccessState){
+            if (state is SignUpSuccessState) {
               phoneController.clear();
               passwordController.clear();
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                    const HomeLayout(),
+                    builder: (context) => const HomeLayout(),
                   ));
             }
           },
@@ -56,57 +57,86 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SizedBox(
-                          height: MediaQuery.sizeOf(context).height * 0.1,
+
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: MediaQuery.sizeOf(context).height * 0.07,
+                              width: MediaQuery.sizeOf(context).width * 0.2,
+                              decoration: const BoxDecoration(
+                                color: ColorManager.primaryColor,
+                                shape: BoxShape.circle,
+                              ),
+                              child: CashHelper.getData(
+                                              key: CashHelper.languageKey)
+                                          .toString() ==
+                                      'en'
+                                  ? const Icon(
+                                      Icons.arrow_back,
+                                      color: ColorManager.white,
+                                    )
+                                  : const Icon(
+                                      Icons.arrow_forward,
+                                      color: ColorManager.white,
+                                    ),
+                            ),
+                          ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Container(
-                                height:
-                                    MediaQuery.sizeOf(context).height * 0.07,
-                                width: MediaQuery.sizeOf(context).width * 0.2,
-                                decoration: const BoxDecoration(
-                                  color: ColorManager.primaryColor,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Icon(
-                                  Icons.arrow_back,
-                                  color: ColorManager.white,
-                                ),
-                              )),
+                        Image.asset('assets/images/mugeeb.png',
+                          color:  ColorManager.primaryColor,
+                          width: MediaQuery.sizeOf(context).width * 0.4,
                         ),
-                        SizedBox(
-                          height: MediaQuery.sizeOf(context).height * 0.05,
-                        ),
-                        //title
-                        Text(
-                          "JOIN MUGEEP",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineLarge!
-                              .copyWith(
-                                  color: ColorManager.black, fontSize: 28),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.sizeOf(context).height * 0.02,
-                        ),
+
                         //name
                         DefaultTextFormField(
-                            labelText: 'User Name',
+                            labelText: AppLocalizations.of(context)!
+                                .translate("user_name")
+                                .toString(),
                             controller: nameController,
                             textInputType: TextInputType.text),
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * 0.02,
                         ),
                         //phone
-                        DefaultTextFormField(
-                            labelText: 'Phone Number',
-                            controller: phoneController,
-                            textInputType: TextInputType.phone),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CountryCodePicker(
+                                showDropDownButton: true,
+                                textOverflow: TextOverflow.visible,
+                                textStyle: Theme.of(context).textTheme.headlineSmall,
+                                onChanged: (CountryCode countryCode) {
+                                  cubit.userModel!.countryCode=countryCode.dialCode;
+                                   CashHelper.saveData(key: "countryCode", value: countryCode.dialCode);
+                                  print(
+                                      'New Country selected: ${countryCode.dialCode}');
+
+                                },
+                                initialSelection: 'SA',
+                                dialogSize: Size(
+                                    MediaQuery.sizeOf(context).width * 0.8,
+                                    MediaQuery.sizeOf(context).height * 0.6),
+                                dialogTextStyle: Theme.of(context).textTheme.headlineSmall,
+                                flagDecoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+
+                              ),
+                            ),
+                            Expanded(
+                              child: DefaultTextFormField(
+                                  labelText: AppLocalizations.of(context)!
+                                      .translate("phone_number")
+                                      .toString(),
+                                  controller: phoneController,
+                                  textInputType: TextInputType.phone),
+                            ),
+                          ],
+                        ),
                         //password
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * 0.03,
@@ -114,7 +144,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: Text(
-                            "Password",
+                            AppLocalizations.of(context)!
+                                .translate("password")
+                                .toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineSmall!
@@ -136,38 +168,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   color: ColorManager.primaryColor,
                                 ),
                               )
-                            : DefaultButton(
-                                onPressed: () {
+                            : customButton(
+                                onTap: () {
                                   if (formKey.currentState!.validate()) {
                                     cubit.createAccountWithFirebaseAuth(
-                                            name: nameController.text,
-                                            phone: phoneController.text,
-                                            password: passwordController.text,
-                                            context: context);
+                                        name: nameController.text,
+                                        phone: phoneController.text,
+                                        password: passwordController.text,
+                                        countryCode: CashHelper.getData(key: "countryCode"),
+                                        context: context);
                                   }
                                 },
-                                backGroundColor: ColorManager.primaryColor,
-                                height:
-                                    MediaQuery.sizeOf(context).height * 0.06,
+                                color: ColorManager.secondaryColor,
+
                                 width: MediaQuery.sizeOf(context).height * 0.5,
-                                content: Text(
-                                  "Sign up for free",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall!
-                                      .copyWith(
-                                          color: ColorManager.white,
-                                          fontSize: MediaQuery.sizeOf(context)
-                                                  .height *
-                                              0.022),
+                                title: AppLocalizations.of(context)!
+                                    .translate("sign_up")
+                                    .toString(),
+                          context: context, color2: ColorManager.primaryColor, textColor: ColorManager.white, borderColor: ColorManager.white,
                                 ),
-                              ),
+
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Already have an account?",
+                              AppLocalizations.of(context)!
+                                  .translate("already_have_an_account")
+                                  .toString(),
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
@@ -184,7 +212,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 );
                               },
                               child: Text(
-                                "Login now",
+                                AppLocalizations.of(context)!
+                                    .translate("login_now")
+                                    .toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineSmall!

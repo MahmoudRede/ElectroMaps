@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
+import 'package:e_electromaps/core/local/cash_helper.dart';
 import 'package:e_electromaps/data/model/search_suggestion_model/search_suggesions_model.dart';
 import 'package:e_electromaps/presentation/screens/new_charging_station_screens/new_charging_station_3.dart';
 import 'package:e_electromaps/presentation/widgets/custom_button.dart';
@@ -15,10 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uuid/uuid.dart';
-
-import 'package:e_electromaps/presentation/widgets/default_text_form_field.dart';
-import 'package:flutter/material.dart';
-
+import '../../../business_logic/localization_cubit/app_localization.dart';
 import '../../../styles/colors/color_manager.dart';
 import '../../widgets/leave_dialog.dart';
 
@@ -87,7 +85,7 @@ class _NewChargingStationScreen2State extends State<NewChargingStationScreen2> {
 
         backgroundColor: ColorManager.primaryColor,
         title: Text(
-          'New Charging Station',
+          AppLocalizations.of(context)!.translate("new_charging_station").toString(),
           style: Theme.of(context)
               .textTheme
               .headlineMedium!
@@ -108,7 +106,7 @@ class _NewChargingStationScreen2State extends State<NewChargingStationScreen2> {
                 ),
                 child: Center(
                     child: Text(
-                  'Charging Station Information(Step 2/6)',
+                      '${AppLocalizations.of(context)!.translate("charging_station_info").toString()}(${AppLocalizations.of(context)!.translate("step")} 2/6)',
                   style: Theme.of(context)
                       .textTheme
                       .headlineSmall!
@@ -135,7 +133,7 @@ class _NewChargingStationScreen2State extends State<NewChargingStationScreen2> {
                         controller: placeController,
                         focusNode: focusNode,
                         decoration:  InputDecoration(
-                            labelText: 'Where is the charging station?',
+                            labelText: AppLocalizations.of(context)!.translate("where_is_the_charging_station").toString(),
                           errorStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
                             fontSize: 13.0,
                             color: ColorManager.red,
@@ -144,7 +142,7 @@ class _NewChargingStationScreen2State extends State<NewChargingStationScreen2> {
                     ),
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Required field';
+                          return AppLocalizations.of(context)!.translate("required").toString();
                         }
                         return null;
                       },
@@ -214,23 +212,25 @@ class _NewChargingStationScreen2State extends State<NewChargingStationScreen2> {
                         child: customButton(
                             borderColor: ColorManager.grey,
                             context: context,
-                            title: 'Previous',
+                            title: AppLocalizations.of(context)!.translate("previous").toString(),
                             onTap: () {
                               Navigator.pop(context);
                             },
                             width: MediaQuery.sizeOf(context).width * 0.35,
                             color: Colors.white,
-                            textColor: ColorManager.textColor)),
+                            textColor: ColorManager.textColor, color2: ColorManager.white)),
                     SizedBox(
                       width: MediaQuery.sizeOf(context).width * 0.05,
                     ),
                     Expanded(
                       child: customButton(
-                          borderColor: ColorManager.primaryColor,
+                          borderColor: ColorManager.white,
                           context: context,
-                          title: 'Next',
+                          title: AppLocalizations.of(context)!.translate("next").toString(),
                           onTap: () {
                             if (formKey.currentState!.validate() ) {
+                              CashHelper.saveData(key: "lat", value: BlocProvider.of<AppCubit>(context).locationPosition.latitude.toString());
+                              CashHelper.saveData(key: "lng", value: BlocProvider.of<AppCubit>(context).locationPosition.longitude.toString());
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -242,8 +242,8 @@ class _NewChargingStationScreen2State extends State<NewChargingStationScreen2> {
                             }
                           },
                           width: MediaQuery.sizeOf(context).width * 0.35,
-                          color: ColorManager.primaryColor,
-                          textColor: ColorManager.white),
+                          color: ColorManager.secondaryColor,
+                          textColor: ColorManager.white, color2: ColorManager.primaryColor),
                     ),
                   ],
                 ),
