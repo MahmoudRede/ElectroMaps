@@ -49,7 +49,7 @@ class HomeLayout extends StatelessWidget {
               shape: const CircularNotchedRectangle(),
               notchMargin: 5,
               child: SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
+                physics:const  NeverScrollableScrollPhysics(),
                 child: BottomNavigationBar(
 
                   currentIndex: cubit.currentIndex,
