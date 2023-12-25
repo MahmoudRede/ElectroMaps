@@ -48,31 +48,34 @@ class HomeLayout extends StatelessWidget {
           bottomNavigationBar: BottomAppBar(
               shape: const CircularNotchedRectangle(),
               notchMargin: 5,
-              child: BottomNavigationBar(
+              child: SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                child: BottomNavigationBar(
 
-                currentIndex: cubit.currentIndex,
-                onTap: (index) {
-                  cubit.changeBottomNavBar(index);
-                },
+                  currentIndex: cubit.currentIndex,
+                  onTap: (index) {
+                    cubit.changeBottomNavBar(index);
+                  },
 
-                /// items
-                items:   [
-                  BottomNavigationBarItem(
-                    icon: const Icon(
-                      Icons.ev_station,
+                  /// items
+                  items:   [
+                    BottomNavigationBarItem(
+                      icon: const Icon(
+                        Icons.ev_station,
+                      ),
+                      label: AppLocalizations.of(context)!.translate("stations").toString(),
                     ),
-                    label: AppLocalizations.of(context)!.translate("stations").toString(),
-                  ),
-                  BottomNavigationBarItem(
-                      icon: const Icon(Icons.favorite),
-                      label:  AppLocalizations.of(context)!.translate("favourite").toString()),
-                  BottomNavigationBarItem(
-                      icon:const Icon(Icons.battery_charging_full),
-                      label:  AppLocalizations.of(context)!.translate("my_charges").toString()),
-                  BottomNavigationBarItem(
-                      icon: const Icon(Icons.account_circle_rounded),
-                      label:  AppLocalizations.of(context)!.translate("account").toString()),
-                ],
+                    BottomNavigationBarItem(
+                        icon: const Icon(Icons.favorite),
+                        label:  AppLocalizations.of(context)!.translate("favourite").toString()),
+                    BottomNavigationBarItem(
+                        icon:const Icon(Icons.battery_charging_full),
+                        label:  AppLocalizations.of(context)!.translate("my_charges").toString()),
+                    BottomNavigationBarItem(
+                        icon: const Icon(Icons.account_circle_rounded),
+                        label:  AppLocalizations.of(context)!.translate("account").toString()),
+                  ],
+                ),
               )),
         );
       },
