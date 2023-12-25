@@ -1,3 +1,5 @@
+
+
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/core/remote/dio_helper.dart';
 import 'package:e_electromaps/presentation/screens/splash_screen/splash_screen.dart';
@@ -22,6 +24,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -53,6 +56,7 @@ class _MyAppState extends State<MyApp> {
             return MaterialApp(
               theme: getApplicationTheme(context),
               debugShowCheckedModeBanner: false,
+
               home: const SplashScreen(),
               localizationsDelegates:  const [
                 AppLocalizations.delegate,
@@ -76,6 +80,7 @@ class _MyAppState extends State<MyApp> {
                 }
                 return supportLang.first;
               },
+
 
 
 

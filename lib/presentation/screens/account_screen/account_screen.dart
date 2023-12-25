@@ -45,12 +45,16 @@ class AccountScreen extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.sizeOf(context).height * .02,
                       ),
-                      Text(
-                        '${AppLocalizations.of(context)!.translate("hi").toString()}, ${AppCubit.get(context).userModel!.userName}!',
-                        style: TextStyle(
-                          color: ColorManager.textColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: MediaQuery.sizeOf(context).height * 0.025,
+
+                      Expanded(
+                        child: Text(
+                          'Hi, ${AppCubit.get(context).userModel!.userName}!',
+                          style: TextStyle(
+                            color: ColorManager.textColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: MediaQuery.sizeOf(context).height * 0.025,
+                          ),
+
                         ),
                       )
                     ],

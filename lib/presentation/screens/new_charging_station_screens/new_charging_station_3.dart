@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 
@@ -8,7 +10,11 @@ import 'package:e_electromaps/presentation/screens/add_station_screens/add_stati
 import 'package:e_electromaps/presentation/widgets/default_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import '../../../business_logic/localization_cubit/app_localization.dart';
+
 import '../../../styles/colors/color_manager.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/leave_dialog.dart';
@@ -22,6 +28,14 @@ class NewChargingStationScreen3 extends StatelessWidget {
     var numberController = TextEditingController();
     var whereController = TextEditingController();
     GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    var cubit= AppCubit.get(context);
+    CameraPosition _kGooglePlex = CameraPosition(
+      target: LatLng( cubit.locationPosition.latitude ?? 37.42796133580664,cubit.locationPosition.longitude  ??-122.085749655962),
+      zoom: 14,
+    );
+    final Completer<GoogleMapController> _controller =
+    Completer<GoogleMapController>();
+
     return BlocConsumer<AppCubit, AppStates>(
   listener: (context, state) {
     // TODO: implement listener
@@ -74,19 +88,28 @@ class NewChargingStationScreen3 extends StatelessWidget {
                 'This is the location:',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
-              // SizedBox(
-              //   height: MediaQuery.sizeOf(context).height * 0.001,
-              // ),
+              SizedBox(
+                height: MediaQuery.sizeOf(context).height * 0.001,
+              ),
 
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 20),
-              //   child: Container(
-              //     width: double.infinity,
-              //     height: MediaQuery.sizeOf(context).height * 0.25,
-              //     color: ColorManager.primaryColor,
-              //     child: const Center(child: Text('MapHere')),
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Container(
+                  width: double.infinity,
+                  height: MediaQuery.sizeOf(context).height * 0.25,
+                  color: ColorManager.primaryColor,
+                  child: GoogleMap(
+
+                    mapType: MapType.normal,
+                    initialCameraPosition: _kGooglePlex,
+                    onMapCreated: (GoogleMapController controller) {
+                      _controller.complete(controller);
+                    },
+
+
+                  ),
+                ),
+              ),
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.03,
               ),

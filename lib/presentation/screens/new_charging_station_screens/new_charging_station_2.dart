@@ -28,30 +28,14 @@ class NewChargingStationScreen2 extends StatefulWidget {
 }
 
 class _NewChargingStationScreen2State extends State<NewChargingStationScreen2> {
-  static const  CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14,
-  );
+
+
+
+
 
   final Completer<GoogleMapController> _controller =
   Completer<GoogleMapController>();
   var uuid = Uuid();
-
-
-  // variables for setlocation
-
-
-  // late SearchSuggestionModel placeSuggestion;
-  // late PlaceDetailsModel selectedPlace;
-  // late Marker searchedPlaceMarker;
-
-
-
-
-
-
-
-
 
 
 
@@ -73,6 +57,11 @@ class _NewChargingStationScreen2State extends State<NewChargingStationScreen2> {
   },
   builder: (context, state) {
     // final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    var cubit=AppCubit.get(context);
+     CameraPosition _kGooglePlex = CameraPosition(
+      target: LatLng( cubit.currentPositionAddStation!.latitude ?? 37.42796133580664,cubit.currentPositionAddStation!.longitude ??-122.085749655962),
+      zoom: 14,
+    );
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -184,6 +173,8 @@ class _NewChargingStationScreen2State extends State<NewChargingStationScreen2> {
                           Factory<OneSequenceGestureRecognizer>(() => EagerGestureRecognizer())
                         },
                           mapType: MapType.normal,
+
+
                         onCameraMove: (position) async{
                            BlocProvider.of<AppCubit>(context).locationPosition =position.target;
                            log(BlocProvider.of<AppCubit>(context).locationPosition.latitude.toString());

@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../new_charging_station_screens/new_charging_station_1.dart';
+
+
 class StationsScreen extends StatefulWidget {
   const StationsScreen({super.key});
 
@@ -16,10 +19,16 @@ class _StationsScreenState extends State<StationsScreen> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
+   static const  CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(30.033333522243, 31.233334225536),
     zoom: 14,
   );
+
+
+
+
+
+
 
   @override
   void initState() {
@@ -28,12 +37,14 @@ class _StationsScreenState extends State<StationsScreen> {
   }
   @override
   Widget build(BuildContext context) {
+
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {
 
       },
       builder: (context, state) {
         var cubit = AppCubit.get(context);
+        cubit.getCurrentPosition();
         List<Marker> markers = List.generate(
           cubit.stationList.length,
           (index) => Marker(
@@ -66,5 +77,6 @@ class _StationsScreenState extends State<StationsScreen> {
         );
       },
     );
+
   }
 }

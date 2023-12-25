@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 import 'package:e_electromaps/core/local/cash_helper.dart';
@@ -439,7 +441,53 @@ class _NewChargingStationScreen1State extends State<NewChargingStationScreen1> {
                       ],
                     ),
                   ),
+
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  items: cubit.energySourceList,
+                  onChanged: (value) {
+
+                    cubit.energySourceValue=value!;
+
+                  },
+                ),
+              ),
+
+
+              SizedBox(height: MediaQuery.sizeOf(context).height * 0.08,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    customButton(borderColor: ColorManager.primaryColor,context: context, title: 'Next',
+                        onTap: () async{
+                      print(cubit.stationTypeValue);
+                      print(cubit.stationStatusValue);
+                      print(cubit.energySourceValue);
+                      if(formKey.currentState!.validate()){
+                        print(cubit.stationTypeValue);
+                        print(cubit.stationStatusValue);
+                        print(cubit.energySourceValue);
+                        CashHelper.saveData(key: 'stationName', value: nameController.text);
+                        CashHelper.saveData(key: 'stationType', value: cubit.stationTypeValue);
+                        CashHelper.saveData(key: 'stationStatus', value: cubit.stationStatusValue);
+                        CashHelper.saveData(key: 'energySource', value: cubit.energySourceValue);
+                        print(CashHelper.getData(key: 'stationName'));
+                        print(CashHelper.getData(key: 'stationType'));
+                        print(CashHelper.getData(key: 'stationStatus'));
+                        print(CashHelper.getData(key: 'energySource'));
+
+                        await cubit.getCurrentPosition();
+                        cubit.currentPositionAddStation =  await cubit.getCurrentPositionAddStation();
+                        Navigator.push(context, MaterialPageRoute(builder: (context) =>const  NewChargingStationScreen2(), ));
+                      }
+                    },
+                    width: MediaQuery.sizeOf(context).width * 0.3, color: ColorManager.primaryColor, textColor:Colors.white ),
+                  ],
+                ),
+
                 ],
+
               ),
             ),
           ),
