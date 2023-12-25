@@ -1,71 +1,81 @@
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
+import 'package:e_electromaps/business_logic/localization_cubit/app_localization.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../new_charging_station_screens/new_charging_station_1.dart';
 
 class HomeLayout extends StatelessWidget {
   const HomeLayout({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return BlocConsumer<AppCubit, AppStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = AppCubit.get(context);
 
-    return BlocConsumer<AppCubit,AppStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          var cubit=AppCubit.get(context);
+        return Scaffold(
+          extendBody:  true,
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: FloatingActionButton(
+            shape: const StadiumBorder(
+              side: BorderSide(color: ColorManager.primaryColor, width: 2),
+            ),
+            backgroundColor: ColorManager.primaryColor,
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NewChargingStationScreen1(),
+                  ));
+            },
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              Icon(Icons.add_rounded,
+                  color: ColorManager.white,
+                  size: MediaQuery.sizeOf(context).width * 0.05),
+              Icon(Icons.ev_station,
+                  color: ColorManager.white,
+                  size: MediaQuery.sizeOf(context).width * 0.072),
+            ]),
+          ),
 
-          return Scaffold(
-
-              ///body
-              body: SafeArea(
-                  child: cubit.screensLayout[cubit.currentIndex]
-              ),
-
-              /// bottom navigation bar
-              bottomNavigationBar: BottomNavigationBar(
+          ///body
+          body: SafeArea(child: cubit.screensLayout[cubit.currentIndex]),
+          /// bottom navigation bar
+          bottomNavigationBar: BottomAppBar(
+              shape: const CircularNotchedRectangle(),
+              notchMargin: 5,
+              child: BottomNavigationBar(
 
                 currentIndex: cubit.currentIndex,
                 onTap: (index) {
                   cubit.changeBottomNavBar(index);
                 },
-                type: BottomNavigationBarType.fixed,
-
-                selectedLabelStyle: TextStyle(
-                  color: ColorManager.primaryColor,
-                  fontSize: MediaQuery.sizeOf(context).height * 0.02,
-                ),
-                selectedItemColor: ColorManager.primaryColor,
-
-                unselectedItemColor: ColorManager.black.withOpacity(.3),
-                unselectedLabelStyle: TextStyle(
-                  color: ColorManager.black,
-                  fontSize: MediaQuery.sizeOf(context).height * 0.016,
-                ),
 
                 /// items
-                items: const [
+                items:   [
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.ev_station,),
-                    label: 'Stations',
+                    icon: const Icon(
+                      Icons.ev_station,
+                    ),
+                    label: AppLocalizations.of(context)!.translate("stations").toString(),
                   ),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite),
-                      label: 'Favorites'
-                  ),
+                      icon: const Icon(Icons.favorite),
+                      label:  AppLocalizations.of(context)!.translate("favourite").toString()),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.battery_charging_full),
-                      label: 'My Charges'
-                  ),
+                      icon:const Icon(Icons.battery_charging_full),
+                      label:  AppLocalizations.of(context)!.translate("my_charges").toString()),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.account_circle_rounded),
-                      label: 'Account'
-                  ),
+                      icon: const Icon(Icons.account_circle_rounded),
+                      label:  AppLocalizations.of(context)!.translate("account").toString()),
                 ],
-              ),
-
-          );
-        },
+              )),
+        );
+      },
     );
   }
 }

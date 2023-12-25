@@ -1,4 +1,4 @@
-import 'package:e_electromaps/presentation/screens/home_layout/home_layout.dart';
+import 'package:e_electromaps/business_logic/localization_cubit/app_localization.dart';
 import 'package:e_electromaps/presentation/widgets/custom_button.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +16,12 @@ Future<dynamic> confirmDeleteDialog(BuildContext context) {
               vertical: MediaQuery.sizeOf(context).height * .15,
               horizontal: MediaQuery.sizeOf(context).width * .05),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(0),
+            borderRadius: BorderRadius.circular(15),
           ),
           backgroundColor: ColorManager.white,
           title: const SizedBox(),
           content: Text(
-            'Are you sure you want to delete your account?',
+            AppLocalizations.of(context)!.translate("sure_delete_account").toString(),
             style: Theme.of(context)
                 .textTheme
                 .headlineSmall!
@@ -35,7 +35,7 @@ Future<dynamic> confirmDeleteDialog(BuildContext context) {
               children: [
                 customButton(
                     context: context,
-                    title: 'Yes, Delete',
+                    title:  AppLocalizations.of(context)!.translate("yes_delete").toString(),
                     onTap: () {
                       AppCubit.get(context)
                           .deleteUser(
@@ -54,7 +54,8 @@ Future<dynamic> confirmDeleteDialog(BuildContext context) {
                     width: MediaQuery.sizeOf(context).width,
                     color: ColorManager.red,
                     textColor: ColorManager.white,
-                    borderColor: ColorManager.red),
+                    borderColor: ColorManager.red,
+                    color2: ColorManager.red),
                 SizedBox(
                   height: MediaQuery.sizeOf(context).height * .02,
                 ),
@@ -63,7 +64,7 @@ Future<dynamic> confirmDeleteDialog(BuildContext context) {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      'Cancel',
+                      AppLocalizations.of(context)!.translate("cancel").toString(),
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!

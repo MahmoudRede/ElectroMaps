@@ -119,9 +119,9 @@ class PrivacyAndTermsScreen extends StatelessWidget {
 
                   },
                   width: MediaQuery.sizeOf(context).width,
-                  color: ColorManager.primaryColor,
+                  color: ColorManager.secondaryColor,
                   textColor: ColorManager.white,
-                  borderColor: ColorManager.primaryColor),
+                  borderColor: ColorManager.white, color2: ColorManager.primaryColor),
             ),
           ],
         ),
