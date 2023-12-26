@@ -5,8 +5,8 @@ class StationModel {
   String? stationType;
   String? stationStatus;
   String? energySource;
-  String? langitude;
-  String? latitude;
+  double? langitude;
+  double? latitude;
   String? location;
   String? address;
   String? number;
