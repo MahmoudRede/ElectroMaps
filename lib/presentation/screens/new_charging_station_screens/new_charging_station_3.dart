@@ -33,6 +33,15 @@ class NewChargingStationScreen3 extends StatelessWidget {
       target: LatLng( cubit.locationPosition.latitude ?? 37.42796133580664,cubit.locationPosition.longitude  ??-122.085749655962),
       zoom: 14,
     );
+    List< Marker> locationMarkers =[
+      Marker(
+        markerId: const MarkerId("1"),
+        position: LatLng(
+          double.parse("${CashHelper.getData(key: "lat")}").toDouble(),
+          double.parse("${CashHelper.getData(key: "lng")}").toDouble(),
+        ),
+      ),
+    ];
     final Completer<GoogleMapController> _controller =
     Completer<GoogleMapController>();
 
@@ -84,14 +93,6 @@ class NewChargingStationScreen3 extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.001,
               ),
-              Text(
-                'This is the location:',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.001,
-              ),
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
@@ -105,6 +106,7 @@ class NewChargingStationScreen3 extends StatelessWidget {
                     onMapCreated: (GoogleMapController controller) {
                       _controller.complete(controller);
                     },
+                    markers: locationMarkers.toSet(),
 
 
                   ),
@@ -158,11 +160,11 @@ class NewChargingStationScreen3 extends StatelessWidget {
                     ),
                   )),
               SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.48,
+                height: MediaQuery.sizeOf(context).height * 0.25,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.only(left: 20, right: 20, bottom: 30),
+                    const EdgeInsets.symmetric(horizontal:  20, vertical: 20),
                 child: Row(
                   children: [
                     Expanded(

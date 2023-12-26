@@ -219,8 +219,8 @@ class AddStationSix extends StatelessWidget {
                                     CashHelper.getData(key: 'stationStatus'),
                                 energySource:
                                     CashHelper.getData(key: 'energySource'),
-                                langitude: CashHelper.getData(key: 'lat'),
-                                latitude: CashHelper.getData(key: 'lng'),
+                                langitude: double.parse(CashHelper.getData(key: 'lat')).toDouble(),
+                                latitude: double.parse(CashHelper.getData(key: 'lng')).toDouble(),
                                 location: CashHelper.getData(key: 'address'),
                                 address: CashHelper.getData(key: 'address'),
                                 number: CashHelper.getData(key: 'number'),

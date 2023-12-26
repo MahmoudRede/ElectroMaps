@@ -452,16 +452,12 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                                           .copyWith(fontSize: 18)),
                                 ),
                                 DropdownMenuItem(
-                                  value: "Connector",
-                                  child: Text('Connector',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall!
-                                          .copyWith(fontSize: 18)),
+                                  value: AppLocalizations.of(context)!.translate("connector").toString(),
+                                  child: Text(AppLocalizations.of(context)!.translate("connector").toString()),
                                 ),
                                 DropdownMenuItem(
-                                  value: "Cable",
-                                  child: Text('Cable',
+                                  value: AppLocalizations.of(context)!.translate("cable").toString(),
+                                  child: Text(AppLocalizations.of(context)!.translate("cable").toString(),
                                       style: Theme.of(context)
                                           .textTheme
                                           .headlineSmall!
@@ -508,8 +504,7 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                               ),
                       value: typeCurrentValue,
                       validator: (value) {
-                        if (value !=
-                            '${AppLocalizations.of(context)!.translate("type_of_current").toString()}') {
+                        if (value == AppLocalizations.of(context)!.translate("type_of_current").toString()) {
                           return AppLocalizations.of(context)!
                               .translate("required")
                               .toString();
@@ -517,36 +512,36 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                         return null;
                       },
                       hint: Text(
-                        '${AppLocalizations.of(context)!.translate("type_of_current").toString()}',
+                        AppLocalizations.of(context)!.translate("type_of_current").toString(),
                       ),
                       items: [
                         DropdownMenuItem(
-                          value: '${AppLocalizations.of(context)!.translate("type_of_current").toString()}',
-                          child: Text('${AppLocalizations.of(context)!.translate("type_of_current").toString()}',
+                          value: AppLocalizations.of(context)!.translate("type_of_current").toString(),
+                          child: Text(AppLocalizations.of(context)!.translate("type_of_current").toString(),
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
                                   .copyWith(fontSize: 18)),
                         ),
                         DropdownMenuItem(
-                          value: "Monophase (AC)",
-                          child: Text('Monophase (AC)',
+                          value: "${AppLocalizations.of(context)!.translate("Monophase").toString()} (AC)",
+                          child: Text("${AppLocalizations.of(context)!.translate("Monophase").toString()} (AC)",
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
                                   .copyWith(fontSize: 18)),
                         ),
                         DropdownMenuItem(
-                          value: "Triphasic (AC)",
-                          child: Text('Triphasic (AC)',
+                          value: "${AppLocalizations.of(context)!.translate("triphasic").toString()} (AC)",
+                          child: Text("${AppLocalizations.of(context)!.translate("triphasic").toString()} (AC)",
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
                                   .copyWith(fontSize: 18)),
                         ),
                         DropdownMenuItem(
-                          value: "Direct Current (DC)",
-                          child: Text('Direct Current (DC)',
+                          value: "${AppLocalizations.of(context)!.translate("Monophase").toString()} (DC)",
+                          child: Text("${AppLocalizations.of(context)!.translate("Monophase").toString()} (DC)",
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!

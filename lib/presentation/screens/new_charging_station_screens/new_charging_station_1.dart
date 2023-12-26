@@ -402,17 +402,17 @@ class _NewChargingStationScreen1State extends State<NewChargingStationScreen1> {
                   customButton(
                       borderColor: ColorManager.white,context: context, title: 'Next',
                       onTap: () async{
-                        print(cubit.stationTypeValue);
-                        print(cubit.stationStatusValue);
-                        print(cubit.energySourceValue);
+                        print( stationTypeValue);
+                        print( stationStatusValue);
+                        print( energySourceValue);
                         if(formKey.currentState!.validate()){
-                          print(cubit.stationTypeValue);
-                          print(cubit.stationStatusValue);
-                          print(cubit.energySourceValue);
+                          print( stationTypeValue);
+                          print( stationStatusValue);
+                          print( energySourceValue);
                           CashHelper.saveData(key: 'stationName', value: nameController.text);
-                          CashHelper.saveData(key: 'stationType', value: cubit.stationTypeValue);
-                          CashHelper.saveData(key: 'stationStatus', value: cubit.stationStatusValue);
-                          CashHelper.saveData(key: 'energySource', value: cubit.energySourceValue);
+                          CashHelper.saveData(key: 'stationType', value: stationTypeValue);
+                          CashHelper.saveData(key: 'stationStatus', value: stationStatusValue);
+                          CashHelper.saveData(key: 'energySource', value: energySourceValue);
                           print(CashHelper.getData(key: 'stationName'));
                           print(CashHelper.getData(key: 'stationType'));
                           print(CashHelper.getData(key: 'stationStatus'));
