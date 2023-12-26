@@ -134,7 +134,7 @@ class AccountDetailsScreen extends StatelessWidget {
                                         'New Country selected: ${countryCode.dialCode}');
 
                                   },
-                                  initialSelection: cubit.userModel?.countryCode??'+966',
+                                  initialSelection: cubit.userModel?.countryCode,
                                   dialogSize: Size(
                                       MediaQuery.sizeOf(context).width * 0.8,
                                       MediaQuery.sizeOf(context).height * 0.6),

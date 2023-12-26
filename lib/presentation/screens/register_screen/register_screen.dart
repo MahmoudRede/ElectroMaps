@@ -109,8 +109,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 showDropDownButton: true,
                                 textOverflow: TextOverflow.visible,
                                 textStyle: Theme.of(context).textTheme.headlineSmall,
+
                                 onChanged: (CountryCode countryCode) {
-                                  cubit.userModel!.countryCode=countryCode.dialCode;
                                    CashHelper.saveData(key: "countryCode", value: countryCode.dialCode);
                                   print(
                                       'New Country selected: ${countryCode.dialCode}');

@@ -11,7 +11,7 @@ class UserModel {
   UserModel({
     required this.userName,
     required this.phoneNumber,
-    required this.countryCode,
+    this.countryCode,
     this.uId,
     required this.pic,
 

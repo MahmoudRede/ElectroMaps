@@ -81,7 +81,7 @@ class AppCubit extends Cubit<AppStates> {
       await saveUser(
         name: name,
         phoneNumber: phone,
-        id: (credential.user?.uid)!,
+        id: (credential.user?.uid)!, countryCode: CashHelper.getData(key: 'countryCode'),
       ).then((value) {
         getUser(id: (credential.user?.uid)!);
         CashHelper.saveData(key: 'isUid', value: credential.user?.uid);
@@ -148,6 +148,7 @@ class AppCubit extends Cubit<AppStates> {
     return editRef.doc(CashHelper.getData(key: "isUid")).update({
       "userName": userModel!.userName,
       "phoneNumber": userModel!.phoneNumber,
+      "countryCode": userModel!.countryCode,
     }).then((value){
       customToast(title: AppLocalizations.of(context)!.translate("data_updated_successfully").toString(), color: Colors.green.shade700);
       emit(UpdateUserDetailsSuccessState());
@@ -161,6 +162,7 @@ class AppCubit extends Cubit<AppStates> {
     required String name,
     required String phoneNumber,
     required String id,
+    required countryCode
   }) async {
     emit(SaveUserLoadingState());
 
@@ -170,7 +172,7 @@ class AppCubit extends Cubit<AppStates> {
       uId: id,
       pic:
           'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=740&t=st=1703015640~exp=1703016240~hmac=d32203ed9a0132b11db5f3890f4293174475e278eb0239a283c39443ae15a38b',
-      countryCode: '+966',
+      countryCode: CashHelper.getData(key: "countryCode"),
     );
 
     FirebaseFirestore.instance
@@ -248,7 +250,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   ///// New Charging Staions DropDown Lists /////
-  var typeList =  [
+  var typeList = const  [
     DropdownMenuItem(value: "Station Charging Type *", child: Text('Station Charging Type *')),
     DropdownMenuItem(value: "Public road", child: Text('Public road')),
     DropdownMenuItem(value: "Parking", child: Text('Parking')),
