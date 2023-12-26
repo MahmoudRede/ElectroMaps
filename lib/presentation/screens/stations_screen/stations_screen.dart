@@ -40,8 +40,8 @@ class _StationsScreenState extends State<StationsScreen> {
             onTap: () {},
             markerId: MarkerId(index.toString()),
             position: LatLng(
-              double.parse(cubit.stationList[index].latitude!),
-              double.parse(cubit.stationList[index].langitude!),
+              double.parse("${cubit.stationList[index].latitude!}").toDouble(),
+              double.parse("${cubit.stationList[index].langitude!}").toDouble(),
             ),
           ),
         );
