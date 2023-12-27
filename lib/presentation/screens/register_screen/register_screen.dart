@@ -128,6 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             Expanded(
+
                               child: DefaultTextFormField(
                                   labelText: AppLocalizations.of(context)!
                                       .translate("phone_number")
