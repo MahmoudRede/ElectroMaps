@@ -99,3 +99,4 @@ class UploadProfileImageErrorState extends AppStates {}
 class GetCurrentPositionLoading extends AppStates{}
 class GetCurrentPositionSuccess extends AppStates{}
 class GetCurrentPositionFailed extends AppStates{}
+class CameraChanged extends AppStates{}

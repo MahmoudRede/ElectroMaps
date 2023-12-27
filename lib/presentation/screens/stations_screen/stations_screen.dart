@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../styles/colors/color_manager.dart';
@@ -18,7 +20,9 @@ class _StationsScreenState extends State<StationsScreen> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
+  late GoogleMapController googleMapController;
+
+ static const CameraPosition   _kGooglePlex = CameraPosition(
     target: LatLng(30.033333522243, 31.233334225536),
     zoom: 12,
   );
@@ -29,12 +33,16 @@ class _StationsScreenState extends State<StationsScreen> {
     super.initState();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = AppCubit.get(context);
+
+
         cubit.getCurrentPosition();
         List<Marker> markers = List.generate(
           cubit.stationList.length,
@@ -51,10 +59,23 @@ class _StationsScreenState extends State<StationsScreen> {
         return Scaffold(
           extendBody: true,
           floatingActionButton: FloatingActionButton(
+            heroTag: 'btn2',
             backgroundColor: ColorManager.white.withOpacity(.8),
             shape: const CircleBorder(),
-            onPressed: () {
-              cubit.getCurrentPositionAddStation();
+            onPressed: () async {
+              await cubit.getCurrentPosition();
+             cubit.currentPositionAddStation = await  cubit.getCurrentPositionAddStation();
+             log('button worked');
+             log(cubit.currentPositionAddStation!.latitude.toString());
+             log(cubit.currentPositionAddStation!.longitude.toString());
+             googleMapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: LatLng(cubit.currentPositionAddStation!.latitude,cubit.currentPositionAddStation!.longitude),zoom: 12)));
+             setState(() {
+
+             });
+
+
+
+
             },
             child: Icon(
               Icons.my_location,
@@ -70,11 +91,12 @@ class _StationsScreenState extends State<StationsScreen> {
                   mapType: MapType.normal,
                   compassEnabled: true,
                   myLocationEnabled: true,
-                  myLocationButtonEnabled: true,
+                  myLocationButtonEnabled: false,
                   zoomControlsEnabled: false,
-                  initialCameraPosition: _kGooglePlex,
+                  initialCameraPosition:_kGooglePlex ,
                   onMapCreated: (GoogleMapController controller) {
                     _controller.complete(controller);
+                    googleMapController = controller;
                   },
                   markers: markers.toSet(),
                   zoomGesturesEnabled: true,
