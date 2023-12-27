@@ -392,6 +392,7 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
  late LatLng locationPosition;
  Position? currentPositionAddStation ;
 
+
   getCurrentPosition() async{
 
     bool serviceEnabled;
@@ -405,13 +406,13 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
 
    }
 
-   if(permission == LocationPermission.denied){
+   if(permission == LocationPermission.denied || permission == LocationPermission.deniedForever ||  permission == LocationPermission.unableToDetermine ){
      permission = await Geolocator.requestPermission();
      if(permission == LocationPermission.denied){
-       log('Permission denied');
+
      }
 
-     if(permission == LocationPermission.whileInUse){
+     if(permission == LocationPermission.whileInUse || permission == LocationPermission.always){
        log('permission whileinuse');
        Position position = await Geolocator.getCurrentPosition();
        log('=====================');
@@ -419,6 +420,8 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
        log(position.longitude.toString());
        log('=====================');
      }
+
+
    }
 
 
@@ -426,6 +429,9 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
 
  Future<Position> getCurrentPositionAddStation()async{
     Position position = await Geolocator.getCurrentPosition();
+    log('function worked');
+    log(position.latitude.toString());
+    log(position.longitude.toString());
 
     return position;
  }

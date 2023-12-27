@@ -21,6 +21,7 @@ class HomeLayout extends StatelessWidget {
           extendBody:  true,
           floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingActionButton(
+            heroTag: 'btn1',
             shape: const StadiumBorder(
               side: BorderSide(color: ColorManager.primaryColor, width: 2),
             ),
