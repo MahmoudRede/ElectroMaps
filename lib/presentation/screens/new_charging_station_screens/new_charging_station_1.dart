@@ -417,7 +417,7 @@ class _NewChargingStationScreen1State extends State<NewChargingStationScreen1> {
                           print(CashHelper.getData(key: 'stationType'));
                           print(CashHelper.getData(key: 'stationStatus'));
                           print(CashHelper.getData(key: 'energySource'));
-
+                          await cubit.requestLocationPermission(context);
                           await cubit.getCurrentPosition();
                           cubit.currentPositionAddStation =  await cubit.getCurrentPositionAddStation();
                           Navigator.push(context, MaterialPageRoute(builder: (context) =>const  NewChargingStationScreen2(), ));

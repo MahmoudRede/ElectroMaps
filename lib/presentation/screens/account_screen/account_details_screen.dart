@@ -55,10 +55,8 @@ class AccountDetailsScreen extends StatelessWidget {
                                     color: ColorManager.white,
                                   ),
                                   child: IconButton(
-                                      onPressed: () {
-                                        cubit.getProfileImage().then((value) {
-                                          cubit.uploadUserImage();
-                                        });
+                                      onPressed: () async{
+                                              await cubit.pickImageWithPermission(context);
                                       },
                                       icon: const Icon(
                                         Icons.camera_alt_outlined,

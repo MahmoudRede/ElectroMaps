@@ -16,6 +16,7 @@ import 'package:e_electromaps/presentation/screens/account_screen/account_screen
 import 'package:e_electromaps/presentation/screens/favorites_screen/favorites_screen.dart';
 import 'package:e_electromaps/presentation/screens/my_charges_screen/my_charges_screen.dart';
 import 'package:e_electromaps/presentation/screens/stations_screen/stations_screen.dart';
+import 'package:e_electromaps/presentation/widgets/custom_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -391,7 +393,7 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
  late String mainAddress;
  late LatLng locationPosition;
  Position? currentPositionAddStation ;
-
+ late LocationPermission currentPermission ;
 
   getCurrentPosition() async{
 
@@ -400,6 +402,7 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
    serviceEnabled = await Geolocator.isLocationServiceEnabled();
 
    permission = await Geolocator.checkPermission();
+   currentPermission = permission;
 
 
    if(serviceEnabled == false){
@@ -435,6 +438,93 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
 
     return position;
  }
+
+
+  Future<void> requestLocationPermission(BuildContext context) async {
+    PermissionStatus permissionStatus = await Permission.location.status;
+
+    if (permissionStatus.isDenied) {
+      // Permission is denied, request it
+      permissionStatus = await Permission.location.request();
+
+      if (permissionStatus.isDenied) {
+        // If permission is still denied, show a dialog or message to the user
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: Text('Location Permission'),
+            content: Text('Location permission is required to proceed.'),
+            actions: <Widget>[
+              customButton(context: context, title: 'Give permission', onTap: () {
+                Navigator.pop(context);
+                openAppSettings();
+              },
+               width: MediaQuery.sizeOf(context).width*0.4, color: ColorManager.secondaryColor, color2: ColorManager.primaryColor, textColor: Colors.white, borderColor: Colors.white),
+            ],
+          ),
+        );
+      }
+    }
+  }
+
+
+
+  Future<void> requestPhotoPermission(BuildContext context) async {
+    PermissionStatus permissionStatus = await Permission.photos.status;
+
+    if (permissionStatus.isDenied || permissionStatus.isRestricted || permissionStatus.isLimited || permissionStatus.isPermanentlyDenied ) {
+      // Permission is denied, request it
+      permissionStatus = await Permission.photos.request();
+
+      if (permissionStatus.isDenied) {
+        // If permission is still denied, show a dialog or message to the user
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: Text('Photos Permission'),
+            content: Text('Access photos permission is required to proceed.'),
+            actions: <Widget>[
+              customButton(context: context, title: 'Give permission', onTap: () {
+                Navigator.pop(context);
+                openAppSettings();
+              },
+                  width: MediaQuery.sizeOf(context).width*0.4, color: ColorManager.secondaryColor, color2: ColorManager.primaryColor, textColor: Colors.white, borderColor: Colors.white),
+            ],
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> pickImageWithPermission(context) async{
+    PermissionStatus permissionStatus = await Permission.storage.request();
+
+    if(permissionStatus.isGranted){
+      getProfileImage().then((value) {
+        uploadUserImage();
+      });
+    }else{
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Text('Photos Permission'),
+          content: Text('Access photos permission is required to proceed.'),
+          actions: <Widget>[
+            customButton(context: context, title: 'Give permission', onTap: () {
+              Navigator.pop(context);
+              openAppSettings();
+            },
+                width: MediaQuery.sizeOf(context).width*0.4, color: ColorManager.secondaryColor, color2: ColorManager.primaryColor, textColor: Colors.white, borderColor: Colors.white),
+          ],
+        ),
+      );
+    }
+
+
+
+  }
+
+
 
 
 

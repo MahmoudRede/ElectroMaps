@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../styles/colors/color_manager.dart';
 
@@ -58,12 +59,13 @@ class _StationsScreenState extends State<StationsScreen> {
 
         return Scaffold(
           extendBody: true,
+          floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
           floatingActionButton: FloatingActionButton(
             heroTag: 'btn2',
             backgroundColor: ColorManager.white.withOpacity(.8),
             shape: const CircleBorder(),
             onPressed: () async {
-              await cubit.getCurrentPosition();
+              await cubit.requestLocationPermission(context);
              cubit.currentPositionAddStation = await  cubit.getCurrentPositionAddStation();
              log('button worked');
              log(cubit.currentPositionAddStation!.latitude.toString());
