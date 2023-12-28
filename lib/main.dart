@@ -58,7 +58,7 @@ class _MyAppState extends State<MyApp> {
               theme: getApplicationTheme(context),
               debugShowCheckedModeBanner: false,
 
-              home: const HomeLayout(),
+              home: const SplashScreen(),
               localizationsDelegates:  const [
                 AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,
