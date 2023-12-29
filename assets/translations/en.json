@@ -114,5 +114,8 @@
   "reset_password": "Reset Password",
   "empty_field": "Empty Field",
   "station_added_successfully":"Station Added Successfully",
-  "add": "Add"
+  "add": "Add",
+  "station_details": "Station Details",
+  "edit_station_information": "Edit Station Information",
+  "get_direction": "Get Direction"
 }

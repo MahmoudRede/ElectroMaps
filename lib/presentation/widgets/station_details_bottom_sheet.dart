@@ -1,7 +1,10 @@
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/localization_cubit/app_localization.dart';
+import 'package:e_electromaps/core/local/cash_helper.dart';
+import 'package:e_electromaps/presentation/widgets/custom_button.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<dynamic> stationDetailsBottomSheet(BuildContext context,
     {required int index}) {
@@ -20,8 +23,8 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
             children: [
               Center(
                 child: Container(
-                  height:  MediaQuery.sizeOf(context).height * 0.007,
-                  width: MediaQuery.sizeOf(context).width*.2,
+                  height: MediaQuery.sizeOf(context).height * 0.007,
+                  width: MediaQuery.sizeOf(context).width * .2,
                   decoration: BoxDecoration(
                     color: ColorManager.primaryColor,
                     borderRadius: BorderRadius.circular(10),
@@ -37,12 +40,35 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
                       .translate("charging_station_info")
                       .toString(),
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                      color: ColorManager.primaryColor,
+                        color: ColorManager.primaryColor,
                       ),
                 ),
               ),
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.01,
+              ),
+
+              Align(
+                alignment: CashHelper.getData(key: CashHelper.languageKey)
+                            .toString() ==
+                        'en'
+                    ? Alignment.centerRight
+                    : Alignment.centerLeft,
+                child: customButton(
+                    context: context,
+                    title: AppLocalizations.of(context)!
+                        .translate("get_direction")
+                        .toString(),
+                    onTap: () {
+                      launchUrl(Uri.parse(
+                          "https://www.google.com/maps/search/?api=1&query=${AppCubit.get(context).stationList[index].langitude.toString()}+"
+                          "${AppCubit.get(context).stationList[index].latitude.toString()}"));
+                    },
+                    width: MediaQuery.sizeOf(context).width * .33,
+                    color: ColorManager.primaryColor,
+                    color2: ColorManager.primaryColor,
+                    textColor: ColorManager.white,
+                    borderColor: ColorManager.white),
               ),
               // Station Name
               Text(
@@ -65,9 +91,7 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
 
               // Station Address
               Text(
-                AppLocalizations.of(context)!
-                    .translate("address")
-                    .toString(),
+                AppLocalizations.of(context)!.translate("address").toString(),
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     color: ColorManager.primaryColor,
                     fontWeight: FontWeight.bold),
@@ -82,9 +106,7 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
               const Divider(),
               // number
               Text(
-                AppLocalizations.of(context)!
-                    .translate("number")
-                    .toString(),
+                AppLocalizations.of(context)!.translate("number").toString(),
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     color: ColorManager.primaryColor,
                     fontWeight: FontWeight.bold),
@@ -110,21 +132,21 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.01,
               ),
-              AppCubit.get(context).stationList[index].where ==
-                  ""
+              AppCubit.get(context).stationList[index].where == ""
                   ? Text(
-                AppLocalizations.of(context)!.translate("empty_field").toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(color: ColorManager.red),
-              )
+                      AppLocalizations.of(context)!
+                          .translate("empty_field")
+                          .toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(color: ColorManager.red),
+                    )
                   : Text(
-                AppCubit.get(context).stationList[index].where!,
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
+                      AppCubit.get(context).stationList[index].where!,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
               const Divider(),
-
 
               // Station Type
               Text(
@@ -139,18 +161,20 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
                 height: MediaQuery.sizeOf(context).height * 0.01,
               ),
               AppCubit.get(context).stationList[index].stationType ==
-                  "${AppLocalizations.of(context)!.translate("station_charging_type").toString()} *"
+                      "${AppLocalizations.of(context)!.translate("station_charging_type").toString()} *"
                   ? Text(
-                AppLocalizations.of(context)!.translate("empty_field").toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(color: ColorManager.red),
-              )
+                      AppLocalizations.of(context)!
+                          .translate("empty_field")
+                          .toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(color: ColorManager.red),
+                    )
                   : Text(
-                AppCubit.get(context).stationList[index].stationType!,
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
+                      AppCubit.get(context).stationList[index].stationType!,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
               const Divider(),
 
               // Station Status
@@ -166,19 +190,21 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
                 height: MediaQuery.sizeOf(context).height * 0.01,
               ),
               AppCubit.get(context).stationList[index].stationStatus ==
-                  "${AppLocalizations.of(context)!.translate("station_charging_status").toString()} *"
+                      "${AppLocalizations.of(context)!.translate("station_charging_status").toString()} *"
                   ? Text(
-                AppLocalizations.of(context)!.translate("empty_field").toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(color: ColorManager.red),
-              )
+                      AppLocalizations.of(context)!
+                          .translate("empty_field")
+                          .toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(color: ColorManager.red),
+                    )
                   : Text(
-                AppCubit.get(context).stationList[index].stationStatus!,
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
-               const Divider(),
+                      AppCubit.get(context).stationList[index].stationStatus!,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+              const Divider(),
 
               // Energy Source
               Text(
@@ -195,7 +221,9 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
               AppCubit.get(context).stationList[index].energySource ==
                       "${AppLocalizations.of(context)!.translate("energy_source").toString()} *"
                   ? Text(
-                AppLocalizations.of(context)!.translate("empty_field").toString(),
+                      AppLocalizations.of(context)!
+                          .translate("empty_field")
+                          .toString(),
                       style: Theme.of(context)
                           .textTheme
                           .headlineSmall!
@@ -216,14 +244,12 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
                       .translate("connector_info")
                       .toString(),
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                    color: ColorManager.primaryColor,
-                  ),
+                        color: ColorManager.primaryColor,
+                      ),
                 ),
               ),
               Text(
-                AppLocalizations.of(context)!
-                    .translate("format")
-                    .toString(),
+                AppLocalizations.of(context)!.translate("format").toString(),
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     color: ColorManager.primaryColor,
                     fontWeight: FontWeight.bold),
@@ -231,25 +257,24 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.01,
               ),
-              AppCubit.get(context).stationList[index].format ==
-                  ""
+              AppCubit.get(context).stationList[index].format == ""
                   ? Text(
-                AppLocalizations.of(context)!.translate("empty_field").toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(color: ColorManager.red),
-              )
+                      AppLocalizations.of(context)!
+                          .translate("empty_field")
+                          .toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(color: ColorManager.red),
+                    )
                   : Text(
-                AppCubit.get(context).stationList[index].format!,
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
+                      AppCubit.get(context).stationList[index].format!,
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
               const Divider(),
               // power
               Text(
-                AppLocalizations.of(context)!
-                    .translate("power")
-                    .toString(),
+                AppLocalizations.of(context)!.translate("power").toString(),
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     color: ColorManager.primaryColor,
                     fontWeight: FontWeight.bold),
@@ -257,25 +282,24 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.01,
               ),
-              AppCubit.get(context).stationList[index].power ==
-                  ""
+              AppCubit.get(context).stationList[index].power == ""
                   ? Text(
-                AppLocalizations.of(context)!.translate("empty_field").toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(color: ColorManager.red),
-              )
+                      AppLocalizations.of(context)!
+                          .translate("empty_field")
+                          .toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(color: ColorManager.red),
+                    )
                   : Text(
-                "${AppCubit.get(context).stationList[index].power!} (KW)",
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
+                      "${AppCubit.get(context).stationList[index].power!} (KW)",
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
               const Divider(),
               //intensity
               Text(
-                AppLocalizations.of(context)!
-                    .translate("intensity")
-                    .toString(),
+                AppLocalizations.of(context)!.translate("intensity").toString(),
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     color: ColorManager.primaryColor,
                     fontWeight: FontWeight.bold),
@@ -283,25 +307,24 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.01,
               ),
-              AppCubit.get(context).stationList[index].intensity ==
-                  ""
+              AppCubit.get(context).stationList[index].intensity == ""
                   ? Text(
-                AppLocalizations.of(context)!.translate("empty_field").toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(color: ColorManager.red),
-              )
+                      AppLocalizations.of(context)!
+                          .translate("empty_field")
+                          .toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(color: ColorManager.red),
+                    )
                   : Text(
-                "${AppCubit.get(context).stationList[index].intensity!} (A)",
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
+                      "${AppCubit.get(context).stationList[index].intensity!} (A)",
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
               const Divider(),
               // voltage
               Text(
-                AppLocalizations.of(context)!
-                    .translate("voltage")
-                    .toString(),
+                AppLocalizations.of(context)!.translate("voltage").toString(),
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     color: ColorManager.primaryColor,
                     fontWeight: FontWeight.bold),
@@ -309,19 +332,20 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.01,
               ),
-              AppCubit.get(context).stationList[index].voltage ==
-                  ""
+              AppCubit.get(context).stationList[index].voltage == ""
                   ? Text(
-                AppLocalizations.of(context)!.translate("empty_field").toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(color: ColorManager.red),
-              )
+                      AppLocalizations.of(context)!
+                          .translate("empty_field")
+                          .toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineSmall!
+                          .copyWith(color: ColorManager.red),
+                    )
                   : Text(
-                "${AppCubit.get(context).stationList[index].voltage!} (V)",
-                style: Theme.of(context).textTheme.headlineSmall,
-              ),
+                      "${AppCubit.get(context).stationList[index].voltage!} (V)",
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
             ],
           ),
         ),

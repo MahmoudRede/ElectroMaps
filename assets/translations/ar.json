@@ -113,5 +113,8 @@
   "reset_password": "اعادة تعيين كلمة المرور",
   "empty_field": "فارغ",
   "station_added_successfully":"تم اضافة المحطة بنجاح",
-  "add": "اضافة"
+  "add": "اضافة",
+  "station_details": "تفاصيل المحطة",
+  "edit_station_information": "تعديل بيانات المحطة",
+  "get_direction": "الإتجاهات"
 }
