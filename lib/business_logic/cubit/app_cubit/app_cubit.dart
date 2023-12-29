@@ -387,7 +387,7 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
                        'key':'AIzaSyBuLAOh8T3Q1vkckbsqwiAlJVY4S6_dteY',
                        'sessiontoken':sessionToken,
                      });
-      
+
       emit(GettingPlaceDetailsSuccess());
       // log(response.data.toString());
       return response.data;
@@ -395,7 +395,7 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
       emit(GettingPlaceDetailsFailed(errorMessage: e.toString()));
       return {};
     }
-    
+
  }
 
 
@@ -561,20 +561,6 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
 
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   var stationTypeValue = 'Station Charging Type *';
   var stationStatusValue = 'Station Charging Status *';
   var energySourceValue = 'Energy Source *';
@@ -585,7 +571,11 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
 
   var bookingOptionsValue = 'Booking options *';
 
+
+  int? stationIndex;
+
   Future<void> addStationToFire({
+    String? stationId,
     required String stationName,
     required String stationType,
     required String stationStatus,
@@ -638,13 +628,15 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
         parkingPrice: parkingPrice,
         proprietary: proprietary,
         email: email,
-        phoneNumber: phoneNumber);
-
-    FirebaseFirestore.instance
-        .collection('Stations')
-        .add(stationModel.toJson())
+        phoneNumber: phoneNumber,
+        stationId: stationId);
+var stationRef = getStationsCollection();
+var docRef = stationRef.doc();
+stationModel.stationId = docRef.id;
+    docRef.set(stationModel)
         .then((value) {
       debugPrint('Station Added Successfully');
+      CashHelper.saveData(key: 'stationId', value: stationModel.stationId);
       emit(AddStationSuccessState());
     }).catchError((error) {
       debugPrint('Error in addStationToFire is ${error.toString()}');
@@ -652,29 +644,54 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
     });
   }
 
-
+  CollectionReference<StationModel> getStationsCollection() {
+    return FirebaseFirestore.instance
+        .collection(StationModel.collectionName)
+        .withConverter(
+      fromFirestore: (snapshot, options) =>
+          StationModel.fromJson(snapshot.data()!),
+      toFirestore: (value, options) => value.toJson(),
+    );
+  }
 StationModel? stationModel;
-  Future<void> updateStationDetails(BuildContext context) {
+
+  Future<void> updateStationDetails(BuildContext context,
+      {
+        required String stationId,
+        required String chargingSession,
+        required String email,
+        required String format,
+        required String howWork,
+        required String intensity,
+        required String limitTime,
+        required String parkingPrice,
+        required String phoneNumber,
+        required String proprietary,
+        required String schedule,
+        required String typeCurrent,
+        required String voltage,
+        required String connectorType,
+        required String power,
+        required String bookingOptions
+      }){
     emit(UpdateStationDetailsLoadingState());
-   return FirebaseFirestore.instance
-        .collection("Stations").doc(CashHelper.getData(key: "isUid")).update({
-     "chargingSession": stationModel!.chargingSession,
-     "email": stationModel!.email,
-     "format": stationModel!.format,
-     "howWork": stationModel!.howWork,
-     "intensity": stationModel!.intensity,
-     "limitTime": stationModel!.limitTime,
-     "parkingPrice":stationModel!.parkingPrice,
-     "phoneNumber":stationModel!.phoneNumber,
-     "proprietary":stationModel!.proprietary,
-     "schedule": stationModel!.schedule,
-     "typeCurrent": stationModel!.typeCurrent,
-     "voltage": stationModel!.voltage,
-     "connectorType": stationModel!.connectorType,
-     "power": stationModel!.power,
-     "bookingOptions": stationModel!.bookingOptions,
+    return FirebaseFirestore.instance.collection("Stations").doc(stationId).update({
+     "chargingSession": chargingSession,
+     "email": email,
+     "format":  format,
+     "howWork": howWork,
+     "intensity":  intensity,
+     "limitTime": limitTime ,
+     "parkingPrice":parkingPrice ,
+     "phoneNumber":phoneNumber ,
+     "proprietary":proprietary ,
+     "schedule": schedule ,
+     "typeCurrent": typeCurrent ,
+     "voltage": voltage ,
+     "connectorType": connectorType ,
+     "power": power ,
+     "bookingOptions": bookingOptions,
     }).then((value){
-      customToast(title: AppLocalizations.of(context)!.translate("data_updated_successfully").toString(), color: Colors.green.shade700);
       emit(UpdateStationDetailsSuccessState());
     });
 
@@ -757,5 +774,40 @@ StationModel? stationModel;
     emit(LocationLinkLanuchState());
   }
 
-  List favoritesItem=[];
+  List<String> favoriteStationsIds=[];
+
+  List<StationModel> favoritesStations=[];
+
+  Future<void> getFavoriteStationFromFire(String id)  async {
+    emit(GetFavStationLoadingState());
+    FirebaseFirestore.instance.collection('Stations').doc(id).get().then((value) {
+
+      StationModel stationModel = StationModel.fromJson(value.data()!);
+      favoritesStations.add(stationModel );
+
+      debugPrint('Length of favoritesStations ${favoritesStations.length}');
+      debugPrint('Station Get Successfully');
+      emit(GetFavStationSuccessState());
+    }).catchError((error) {
+      debugPrint('Error in getStationToFire is ${error.toString()}');
+      emit(GetFavStationErrorState());
+    });
+  }
+  void getFavouriteIds(){
+    emit(GetFavStationIdsLoadingState());
+   favoriteStationsIds.forEach((element) {
+     getFavoriteStationFromFire(element);
+   });
+    emit(GetFavStationIdsSuccessState());
+  }
+
+
+
+  bool isClicked=false;
+
+  void changeFavouriteState({required int index }){
+    isClicked=!isClicked;
+    emit(ChangeFavouriteState());
+  }
+
 }

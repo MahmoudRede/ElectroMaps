@@ -116,5 +116,6 @@
   "add": "اضافة",
   "station_details": "تفاصيل المحطة",
   "edit_station_information": "تعديل بيانات المحطة",
-  "get_direction": "الإتجاهات"
+  "get_direction": "الإتجاهات",
+  "plugin_added": "تم إضافة الملحق"
 }

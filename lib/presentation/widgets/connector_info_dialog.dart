@@ -2,6 +2,7 @@ import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/localization_cubit/app_localization.dart';
 import 'package:e_electromaps/core/local/cash_helper.dart';
 import 'package:e_electromaps/presentation/widgets/custom_button.dart';
+import 'package:e_electromaps/presentation/widgets/custom_toast.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -465,7 +466,7 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                                 ),
                               ],
                               onChanged: (value) {
-                                AppCubit.get(context).formatValue = value!;
+                                formatValue = value!;
                                 print(AppCubit.get(context).formatValue);
                               },
                             ),
@@ -524,8 +525,8 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                                   .copyWith(fontSize: 18)),
                         ),
                         DropdownMenuItem(
-                          value: "${AppLocalizations.of(context)!.translate("Monophase").toString()} (AC)",
-                          child: Text("${AppLocalizations.of(context)!.translate("Monophase").toString()} (AC)",
+                          value: "${AppLocalizations.of(context)!.translate("monophase").toString()} (AC)",
+                          child: Text("${AppLocalizations.of(context)!.translate("monophase").toString()} (AC)",
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
@@ -540,8 +541,8 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                                   .copyWith(fontSize: 18)),
                         ),
                         DropdownMenuItem(
-                          value: "${AppLocalizations.of(context)!.translate("Monophase").toString()} (DC)",
-                          child: Text("${AppLocalizations.of(context)!.translate("Monophase").toString()} (DC)",
+                          value: "${AppLocalizations.of(context)!.translate("monophase").toString()} (DC)",
+                          child: Text("${AppLocalizations.of(context)!.translate("monophase").toString()} (DC)",
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
@@ -578,7 +579,9 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                     CashHelper.saveData(
                         key: 'typeCurrent',
                         value:  typeCurrentValue);
+                  customToast(title: AppLocalizations.of(context)!.translate("plugin_added").toString(), color: ColorManager.primaryColor);
                   }
+                  Navigator.pop(context);
                 },
                 width: MediaQuery.sizeOf(context).width * .8,
                 color: ColorManager.secondaryColor,

@@ -6,8 +6,6 @@ import 'package:e_electromaps/presentation/widgets/marker_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
-
 import '../../../styles/colors/color_manager.dart';
 
 class StationsScreen extends StatefulWidget {
@@ -49,7 +47,8 @@ class _StationsScreenState extends State<StationsScreen> {
           cubit.stationList.length,
           (index) => Marker(
             onTap: () {
-              markerBottomSheet(context, index: index);
+              cubit.stationIndex=index;
+              markerBottomSheet(context, index: cubit.stationIndex!);
             },
             markerId: MarkerId(index.toString()),
             position: LatLng(
@@ -61,7 +60,6 @@ class _StationsScreenState extends State<StationsScreen> {
 
         return Scaffold(
           extendBody: true,
-          floatingActionButtonLocation: FloatingActionButtonLocation.miniStartFloat,
           floatingActionButton: FloatingActionButton(
             heroTag: 'btn2',
             backgroundColor: ColorManager.white.withOpacity(.8),
@@ -106,7 +104,7 @@ class _StationsScreenState extends State<StationsScreen> {
                   zoomGesturesEnabled: true,
                   scrollGesturesEnabled: true,
                   rotateGesturesEnabled: true,
-                  mapToolbarEnabled: true,
+                  mapToolbarEnabled: false,
                 ),
               ],
             ),

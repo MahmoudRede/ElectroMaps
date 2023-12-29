@@ -117,5 +117,6 @@
   "add": "Add",
   "station_details": "Station Details",
   "edit_station_information": "Edit Station Information",
-  "get_direction": "Get Direction"
+  "get_direction": "Get Direction",
+  "plugin_added": "Plugin Added"
 }

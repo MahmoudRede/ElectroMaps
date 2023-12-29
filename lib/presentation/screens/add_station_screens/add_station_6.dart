@@ -44,6 +44,7 @@ class AddStationSix extends StatelessWidget {
             // TODO: implement listener
           },
           builder: (context, state) {
+            var cubit=AppCubit.get(context);
             return Padding(
               padding: const EdgeInsets.all(20),
               child: SizedBox(
@@ -196,33 +197,23 @@ class AddStationSix extends StatelessWidget {
                                       value: phoneNumberController.text);
 
                                   AppCubit.get(context)
-                                      .addStationToFire(
-                                    chargingSession: "",
-                                    email: "",
-                                    format: "",
-                                    howWork: "",
-                                    intensity: "",
-                                    limitTime: "",
-                                    parkingPrice:"",
-                                    phoneNumber:"",
-                                    proprietary:"",
-                                    schedule: "",
-                                    typeCurrent: "",
-                                    voltage: "",
-                                    where: CashHelper.getData(key: 'where'),
-                                    stationName: CashHelper.getData(key: 'stationName'),
-                                    stationType: CashHelper.getData(key: 'stationType'),
-                                    stationStatus: CashHelper.getData(key: 'stationStatus'),
-                                    energySource: CashHelper.getData(key: 'energySource'),
-                                    langitude: double.parse(CashHelper.getData(key: 'lat')).toDouble(),
-                                    latitude: double.parse(CashHelper.getData(key: 'lng')).toDouble(),
-                                    location: CashHelper.getData(key: 'address'),
-                                    address: CashHelper.getData(key: 'address'),
-                                    number: CashHelper.getData(key: 'number'),
-                                    connectorType: "",
-                                    power: "",
-                                    bookingOptions: "",
-                                  )
+                                      .updateStationDetails(context,
+                                          stationId: cubit.stationList[cubit.stationIndex!].stationId!,
+                                          chargingSession: CashHelper.getData(key: "chargingSession"),
+                                          email: CashHelper.getData(key: "email"),
+                                          format: CashHelper.getData(key: "format"),
+                                          howWork: CashHelper.getData(key: "howWork"),
+                                          intensity: CashHelper.getData(key: "intensity"),
+                                          limitTime: CashHelper.getData(key: "limitTime"),
+                                          parkingPrice: CashHelper.getData(key: "parkingPrice"),
+                                          phoneNumber: CashHelper.getData(key: "phoneNumber"),
+                                          proprietary: CashHelper.getData(key: "proprietary"),
+                                          schedule: CashHelper.getData(key: "schedule"),
+                                          typeCurrent: CashHelper.getData(key: "typeCurrent"),
+                                          voltage: CashHelper.getData(key: "voltage"),
+                                          connectorType: CashHelper.getData(key: "connectorType"),
+                                          power: CashHelper.getData(key: "power"),
+                                          bookingOptions: CashHelper.getData(key: "bookingOptions"))
                                       .then((value) {
                                     customToast(
                                         title: AppLocalizations.of(context)!
