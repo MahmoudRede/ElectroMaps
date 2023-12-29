@@ -174,7 +174,7 @@ class AppCubit extends Cubit<AppStates> {
       uId: id,
       pic:
           'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=740&t=st=1703015640~exp=1703016240~hmac=d32203ed9a0132b11db5f3890f4293174475e278eb0239a283c39443ae15a38b',
-      countryCode: CashHelper.getData(key: "countryCode"),
+      countryCode: "+966",
     );
 
     FirebaseFirestore.instance
@@ -250,6 +250,43 @@ class AppCubit extends Cubit<AppStates> {
       emit(DeleteUserErrorState());
     });
   }
+
+
+  //// forget password////
+
+  Future<void> resetPassword({required String email}) async {
+    emit(ForgetPasswordLoadingState());
+
+    FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+      customToast(title: 'check your email', color: ColorManager.primaryColor);
+      emit(ForgetPasswordSuccessState());
+
+    } catch (e) {
+      // An error occurred, handle the error
+      print('Error in ResetPassword is ${e.toString()}');
+      emit(ForgetPasswordErrorState());
+    }
+  }
+
+  // void forgetPassword({required String email,required context}){
+  //   emit(ForgetPasswordLoadingState());
+  //   FirebaseAuth.instance.sendPasswordResetEmail(
+  //       email: email
+  //   ).then((value) {
+  //     print('Check Your email');
+  //     customToast(title: 'check your email', color: ColorManager.primaryColor);
+  //     emit(ForgetPasswordSuccessState());
+  //   }).catchError((error){
+  //     print('Error in ResetPassword is ${error.toString()}');
+  //     emit(ForgetPasswordErrorState());
+  //   });
+  // }
+
+  //  Future<void> sendPasswordResetEmail(String email) async {
+  //     return _firebaseAuth.sendPasswordResetEmail(email: email);
+  //   }
 
   ///// New Charging Staions DropDown Lists /////
   var typeList = const  [
@@ -615,7 +652,36 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
     });
   }
 
- // upload user image
+
+StationModel? stationModel;
+  Future<void> updateStationDetails(BuildContext context) {
+    emit(UpdateStationDetailsLoadingState());
+   return FirebaseFirestore.instance
+        .collection("Stations").doc(CashHelper.getData(key: "isUid")).update({
+     "chargingSession": stationModel!.chargingSession,
+     "email": stationModel!.email,
+     "format": stationModel!.format,
+     "howWork": stationModel!.howWork,
+     "intensity": stationModel!.intensity,
+     "limitTime": stationModel!.limitTime,
+     "parkingPrice":stationModel!.parkingPrice,
+     "phoneNumber":stationModel!.phoneNumber,
+     "proprietary":stationModel!.proprietary,
+     "schedule": stationModel!.schedule,
+     "typeCurrent": stationModel!.typeCurrent,
+     "voltage": stationModel!.voltage,
+     "connectorType": stationModel!.connectorType,
+     "power": stationModel!.power,
+     "bookingOptions": stationModel!.bookingOptions,
+    }).then((value){
+      customToast(title: AppLocalizations.of(context)!.translate("data_updated_successfully").toString(), color: Colors.green.shade700);
+      emit(UpdateStationDetailsSuccessState());
+    });
+
+  }
+
+
+  // upload user image
   File? profileImage;
 
   ImageProvider profile = const NetworkImage(

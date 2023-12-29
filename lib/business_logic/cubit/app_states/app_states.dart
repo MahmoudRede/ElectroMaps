@@ -73,6 +73,9 @@ class PlaceLocationLoaded extends AppStates{}
 class UpdateUserDetailsLoadingState extends AppStates{}
 class UpdateUserDetailsSuccessState extends AppStates{}
 class UpdateUserDetailsErrorState extends AppStates{}
+class UpdateStationDetailsLoadingState extends AppStates{}
+class UpdateStationDetailsSuccessState extends AppStates{}
+class UpdateStationDetailsErrorState extends AppStates{}
 
 class SaveValueState extends AppStates{}
 

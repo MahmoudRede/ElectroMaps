@@ -86,24 +86,24 @@ class _NewChargingStationScreen2State extends State<NewChargingStationScreen2> {
           key: formKey,
           child: Column(
             children: [
-              Container(
-                height: MediaQuery.sizeOf(context).height * 0.045,
-                margin: EdgeInsets.all(MediaQuery.sizeOf(context).width * 0.05),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18),
-                  color: ColorManager.grey.withOpacity(0.02),
-                ),
-                child: Center(
-                    child: Text(
-                      '${AppLocalizations.of(context)!.translate("charging_station_info").toString()}(${AppLocalizations.of(context)!.translate("step")} 2/6)',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall!
-                      .copyWith(color: ColorManager.textColor),
-                )),
-              ),
+              // Container(
+              //   height: MediaQuery.sizeOf(context).height * 0.045,
+              //   margin: EdgeInsets.all(MediaQuery.sizeOf(context).width * 0.05),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(18),
+              //     color: ColorManager.grey.withOpacity(0.02),
+              //   ),
+              //   child: Center(
+              //       child: Text(
+              //         '${AppLocalizations.of(context)!.translate("charging_station_info").toString()}(${AppLocalizations.of(context)!.translate("step")} 2/6)',
+              //     style: Theme.of(context)
+              //         .textTheme
+              //         .headlineSmall!
+              //         .copyWith(color: ColorManager.textColor),
+              //   )),
+              // ),
               SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.001,
+                height: MediaQuery.sizeOf(context).height * 0.03,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),

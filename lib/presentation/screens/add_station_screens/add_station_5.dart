@@ -52,26 +52,26 @@ class AddStationFive extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      height: MediaQuery.sizeOf(context).height * .05,
-                      width: MediaQuery.sizeOf(context).width * .54,
-                      decoration: BoxDecoration(
-                          color: ColorManager.grey.withOpacity(0.07),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(25))),
-                      child: Center(
-                          child: Text(
-                        '${AppLocalizations.of(context)!.translate("more_info").toString()} (${AppLocalizations.of(context)!.translate("step").toString()} 5/6)',
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  fontSize: 14,
-                                  color: ColorManager.textColor,
-                                ),
-                      )),
-                    ),
-                    SizedBox(
-                      height: MediaQuery.sizeOf(context).height * .05,
-                    ),
+                    // Container(
+                    //   height: MediaQuery.sizeOf(context).height * .05,
+                    //   width: MediaQuery.sizeOf(context).width * .54,
+                    //   decoration: BoxDecoration(
+                    //       color: ColorManager.grey.withOpacity(0.07),
+                    //       borderRadius:
+                    //           const BorderRadius.all(Radius.circular(25))),
+                    //   child: Center(
+                    //       child: Text(
+                    //     '${AppLocalizations.of(context)!.translate("more_info").toString()} (${AppLocalizations.of(context)!.translate("step").toString()} 5/6)',
+                    //     style:
+                    //         Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    //               fontSize: 14,
+                    //               color: ColorManager.textColor,
+                    //             ),
+                    //   )),
+                    // ),
+                    // SizedBox(
+                    //   height: MediaQuery.sizeOf(context).height * .05,
+                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: TextFormField(
@@ -347,7 +347,7 @@ class AddStationFive extends StatelessWidget {
                           )),
                     ),
                     SizedBox(
-                      height: MediaQuery.sizeOf(context).height * .07,
+                      height: MediaQuery.sizeOf(context).height * .2,
                     ),
                     Row(
                       children: [

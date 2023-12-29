@@ -109,5 +109,9 @@
   "account_created_successfully": "تم انشاء الحساب بنجاح",
   "this_account_already_exists": "هذا الحساب موجود بالفعل",
   "english": "الإنجليزية",
-  "arabic": "العربية"
+  "arabic": "العربية",
+  "reset_password": "اعادة تعيين كلمة المرور",
+  "empty_field": "فارغ",
+  "station_added_successfully":"تم اضافة المحطة بنجاح",
+  "add": "اضافة"
 }
