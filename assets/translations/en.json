@@ -110,5 +110,9 @@
   "account_created_successfully": "Account Created Successfully",
   "this_account_already_exists": "This account already exists",
   "english": "English",
-  "arabic": "Arabic"
+  "arabic": "Arabic",
+  "reset_password": "Reset Password",
+  "empty_field": "Empty Field",
+  "station_added_successfully":"Station Added Successfully",
+  "add": "Add"
 }

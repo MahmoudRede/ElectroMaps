@@ -6,7 +6,6 @@ import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 
 import 'package:e_electromaps/core/local/cash_helper.dart';
 
-import 'package:e_electromaps/presentation/screens/add_station_screens/add_station_4.dart';
 import 'package:e_electromaps/presentation/widgets/default_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +16,9 @@ import '../../../business_logic/localization_cubit/app_localization.dart';
 
 import '../../../styles/colors/color_manager.dart';
 import '../../widgets/custom_button.dart';
+import '../../widgets/custom_toast.dart';
 import '../../widgets/leave_dialog.dart';
+import '../home_layout/home_layout.dart';
 
 class NewChargingStationScreen3 extends StatelessWidget {
   const NewChargingStationScreen3({Key? key}) : super(key: key);
@@ -74,24 +75,24 @@ class NewChargingStationScreen3 extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: MediaQuery.sizeOf(context).height * 0.045,
-                margin: EdgeInsets.all(MediaQuery.sizeOf(context).width * 0.05),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18),
-                  color: ColorManager.grey.withOpacity(0.02),
-                ),
-                child: Center(
-                    child: Text(
-                      '${AppLocalizations.of(context)!.translate("charging_station_info").toString()}(${AppLocalizations.of(context)!.translate("step")} 3/6)',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall!
-                      .copyWith(color: ColorManager.textColor),
-                )),
-              ),
+              // Container(
+              //   height: MediaQuery.sizeOf(context).height * 0.045,
+              //   margin: EdgeInsets.all(MediaQuery.sizeOf(context).width * 0.05),
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(18),
+              //     color: ColorManager.grey.withOpacity(0.02),
+              //   ),
+              //   child: Center(
+              //       child: Text(
+              //         '${AppLocalizations.of(context)!.translate("charging_station_info").toString()}(${AppLocalizations.of(context)!.translate("step")} 3/6)',
+              //     style: Theme.of(context)
+              //         .textTheme
+              //         .headlineSmall!
+              //         .copyWith(color: ColorManager.textColor),
+              //   )),
+              // ),
               SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.001,
+                height: MediaQuery.sizeOf(context).height * 0.04,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -173,11 +174,7 @@ class NewChargingStationScreen3 extends StatelessWidget {
                             context: context,
                             title: AppLocalizations.of(context)!.translate("previous").toString(),
                             onTap: () {
-
                               Navigator.pop(context);
-
-
-
                             },
                             width: MediaQuery.sizeOf(context).width * 0.35,
                             color: Colors.white,
@@ -189,21 +186,59 @@ class NewChargingStationScreen3 extends StatelessWidget {
                       child: customButton(
                           borderColor: ColorManager.white,
                           context: context,
-                          title: AppLocalizations.of(context)!.translate("next").toString(),
+                          title: AppLocalizations.of(context)!.translate("add").toString(),
                           onTap: () {
                             if (formKey.currentState!.validate()) {
 
-                                  
                                 CashHelper.saveData(key: 'address',value:addressController.text);
                                 CashHelper.saveData(key: 'number',value:numberController.text);
                                 CashHelper.saveData(key: 'where',value:whereController.text);
-                                Navigator.push(
+                                AppCubit.get(context)
+                                    .addStationToFire(
+                                  chargingSession: "",
+                                  email: "",
+                                  format: "",
+                                  howWork: "",
+                                  intensity: "",
+                                  limitTime: "",
+                                  parkingPrice:"",
+                                  phoneNumber:"",
+                                  proprietary:"",
+                                  schedule: "",
+                                  typeCurrent: "",
+                                  voltage: "",
+                                  where: CashHelper.getData(key: 'where'),
+                                  stationName: CashHelper.getData(key: 'stationName'),
+                                  stationType: CashHelper.getData(key: 'stationType'),
+                                  stationStatus: CashHelper.getData(key: 'stationStatus'),
+                                  energySource: CashHelper.getData(key: 'energySource'),
+                                  langitude: double.parse(CashHelper.getData(key: 'lat')).toDouble(),
+                                  latitude: double.parse(CashHelper.getData(key: 'lng')).toDouble(),
+                                  location: CashHelper.getData(key: 'address'),
+                                  address: CashHelper.getData(key: 'address'),
+                                  number: CashHelper.getData(key: 'number'),
+                                  connectorType: "",
+                                  power: "",
+                                  bookingOptions: "",
+                                ).then((value) {
+                                  customToast(
+                                      title: AppLocalizations.of(context)!
+                                          .translate(
+                                          "station_added_successfully")
+                                          .toString(),
+                                      color: ColorManager.primaryColor);
+
+                                  AppCubit.get(context).getStationFromFire();
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                      const AddStationScreenFour(),
-                                    ));
-                             
+                                      const HomeLayout(),
+                                    ),
+                                  );
+
+                                });
+
                             }
                           },
                           width: MediaQuery.sizeOf(context).width * 0.35,

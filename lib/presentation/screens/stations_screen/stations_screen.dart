@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
+import 'package:e_electromaps/presentation/widgets/marker_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../styles/colors/color_manager.dart';
@@ -47,7 +47,9 @@ class _StationsScreenState extends State<StationsScreen> {
         List<Marker> markers = List.generate(
           cubit.stationList.length,
           (index) => Marker(
-            onTap: () {},
+            onTap: () {
+              markerBottomSheet(context, index: index);
+            },
             markerId: MarkerId(index.toString()),
             position: LatLng(
               cubit.stationList[index].langitude!,

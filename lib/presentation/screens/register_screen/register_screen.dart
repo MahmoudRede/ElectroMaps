@@ -57,7 +57,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-
                         Align(
                           alignment: Alignment.topLeft,
                           child: GestureDetector(
@@ -86,8 +85,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
-                        Image.asset('assets/images/mugeeb.png',
-                          color:  ColorManager.primaryColor,
+                        Image.asset(
+                          'assets/images/mugeeb.png',
+                          color: ColorManager.primaryColor,
                           width: MediaQuery.sizeOf(context).width * 0.4,
                         ),
 
@@ -108,27 +108,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               child: CountryCodePicker(
                                 showDropDownButton: true,
                                 textOverflow: TextOverflow.visible,
-                                textStyle: Theme.of(context).textTheme.headlineSmall,
-
+                                textStyle:
+                                    Theme.of(context).textTheme.headlineSmall,
                                 onChanged: (CountryCode countryCode) {
-                                   CashHelper.saveData(key: "countryCode", value: countryCode.dialCode);
-                                  print(
+                                 CashHelper.saveData(
+                                          key: "countryCode",
+                                          value: countryCode.dialCode??"+966");
+                                  debugPrint(
                                       'New Country selected: ${countryCode.dialCode}');
-
                                 },
                                 initialSelection: 'SA',
                                 dialogSize: Size(
                                     MediaQuery.sizeOf(context).width * 0.8,
                                     MediaQuery.sizeOf(context).height * 0.6),
-                                dialogTextStyle: Theme.of(context).textTheme.headlineSmall,
+                                dialogTextStyle:
+                                    Theme.of(context).textTheme.headlineSmall,
                                 flagDecoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(7),
                                 ),
-
                               ),
                             ),
                             Expanded(
-
                               child: DefaultTextFormField(
                                   labelText: AppLocalizations.of(context)!
                                       .translate("phone_number")
@@ -176,19 +176,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         name: nameController.text,
                                         phone: phoneController.text,
                                         password: passwordController.text,
-                                        countryCode: CashHelper.getData(key: "countryCode"),
+                                        countryCode: CashHelper.getData(
+                                            key: "countryCode")??'+966',
                                         context: context);
                                   }
                                 },
                                 color: ColorManager.secondaryColor,
-
                                 width: MediaQuery.sizeOf(context).height * 0.5,
                                 title: AppLocalizations.of(context)!
                                     .translate("sign_up")
                                     .toString(),
-                          context: context, color2: ColorManager.primaryColor, textColor: ColorManager.white, borderColor: ColorManager.white,
-                                ),
-
+                                context: context,
+                                color2: ColorManager.primaryColor,
+                                textColor: ColorManager.white,
+                                borderColor: ColorManager.white,
+                              ),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

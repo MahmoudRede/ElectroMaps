@@ -55,22 +55,22 @@ class AddStationScreenFour extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                height: MediaQuery.sizeOf(context).height * .05,
-                width: MediaQuery.sizeOf(context).width * .5,
-                decoration: BoxDecoration(
-                    color: ColorManager.grey.withOpacity(0.07),
-                    borderRadius: const BorderRadius.all(Radius.circular(25))),
-                child: Center(
-                  child: Text(
-                      '${AppLocalizations.of(context)!.translate("connectors").toString()} (${AppLocalizations.of(context)!.translate("step").toString()} 4/6)',
-                      style:
-                          Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                fontSize: 14,
-                                color: ColorManager.textColor,
-                              )),
-                ),
-              ),
+              // Container(
+              //   height: MediaQuery.sizeOf(context).height * .05,
+              //   width: MediaQuery.sizeOf(context).width * .5,
+              //   decoration: BoxDecoration(
+              //       color: ColorManager.grey.withOpacity(0.07),
+              //       borderRadius: const BorderRadius.all(Radius.circular(25))),
+              //   child: Center(
+              //     child: Text(
+              //         '${AppLocalizations.of(context)!.translate("connectors").toString()} (${AppLocalizations.of(context)!.translate("step").toString()} 4/6)',
+              //         style:
+              //             Theme.of(context).textTheme.headlineSmall!.copyWith(
+              //                   fontSize: 14,
+              //                   color: ColorManager.textColor,
+              //                 )),
+              //   ),
+              // ),
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * .12,
               ),

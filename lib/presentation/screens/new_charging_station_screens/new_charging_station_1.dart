@@ -188,26 +188,26 @@ class _NewChargingStationScreen1State extends State<NewChargingStationScreen1> {
               key: formKey,
               child: Column(
                 children: [
-                  Container(
-                    height: MediaQuery.sizeOf(context).height * 0.045,
-                    margin:
-                        EdgeInsets.all(MediaQuery.sizeOf(context).width * 0.05),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
-                      color: ColorManager.grey.withOpacity(0.02),
-                    ),
-                    child: Center(
-                        child: Text(
-                      '${AppLocalizations.of(context)!.translate("charging_station_info").toString()}(${AppLocalizations.of(context)!.translate("step")} 1/6)',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(color: ColorManager.textColor),
-                    )),
-                  ),
+                  // Container(
+                  //   height: MediaQuery.sizeOf(context).height * 0.045,
+                  //   margin:
+                  //       EdgeInsets.all(MediaQuery.sizeOf(context).width * 0.05),
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(18),
+                  //     color: ColorManager.grey.withOpacity(0.02),
+                  //   ),
+                  //   child: Center(
+                  //       child: Text(
+                  //     '${AppLocalizations.of(context)!.translate("charging_station_info").toString()}(${AppLocalizations.of(context)!.translate("step")} 1/6)',
+                  //     style: Theme.of(context)
+                  //         .textTheme
+                  //         .headlineSmall!
+                  //         .copyWith(color: ColorManager.textColor),
+                  //   )),
+                  // ),
 
                   SizedBox(
-                    height: MediaQuery.sizeOf(context).height * 0.005,
+                    height: MediaQuery.sizeOf(context).height * 0.05,
                   ),
 
                   Text(

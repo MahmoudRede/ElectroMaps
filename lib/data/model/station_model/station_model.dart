@@ -1,5 +1,5 @@
 class StationModel {
-  static const String collectionName = 'Users';
+  static const String collectionName = 'Stations';
 
   String? stationName;
   String? stationType;

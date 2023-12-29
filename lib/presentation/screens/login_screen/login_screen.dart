@@ -108,7 +108,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 flagDecoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(7),
                                 ),
-
                               ),
                             ),
 
@@ -146,23 +145,30 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * 0,
                         ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .translate("forgot_password")
-                                  .toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall!
-                                  .copyWith(
-                                      color: ColorManager.primaryColor,
-                                      fontSize: 16),
-                            ),
-                          ),
-                        ),
+                        //forget password
+
+                        // Align(
+                        //   alignment: Alignment.centerRight,
+                        //   child: GestureDetector(
+                        //     onTap: () {
+                        //       Navigator.push(
+                        //         context, MaterialPageRoute(
+                        //           builder: (context) =>   const ForgetPassword(),)
+                        //       );
+                        //     },
+                        //     child: Text(
+                        //       AppLocalizations.of(context)!
+                        //           .translate("forgot_password")
+                        //           .toString(),
+                        //       style: Theme.of(context)
+                        //           .textTheme
+                        //           .headlineSmall!
+                        //           .copyWith(
+                        //               color: ColorManager.primaryColor,
+                        //               fontSize: 16),
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(
                           height: MediaQuery.sizeOf(context).height * 0.02,
                         ),
@@ -179,7 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     cubit.loginWithFirebaseAuth(
                                         password: passwordController.text,
                                         phone: phoneController.text,
-                                        countryCode: CashHelper.getData(key: "countryCode"),
+                                        countryCode: cubit.userModel!.countryCode!,
                                         context: context);
                                   }
 
