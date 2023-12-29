@@ -1,6 +1,7 @@
 class StationModel {
   static const String collectionName = 'Stations';
 
+  String? stationId;
   String? stationName;
   String? stationType;
   String? stationStatus;
@@ -31,6 +32,7 @@ class StationModel {
 
   StationModel({
 
+    required this.stationId,
     required this.stationName,
     required this.stationType,
     required this.stationStatus,
@@ -60,6 +62,7 @@ class StationModel {
   });
 
   StationModel.fromJson(Map<String, dynamic> json) : this(
+    stationId: json['stationId'],
     address: json['address'],
     stationName : json['stationName'],
     stationType : json['stationType'],

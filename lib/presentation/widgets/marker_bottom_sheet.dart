@@ -1,3 +1,4 @@
+import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/localization_cubit/app_localization.dart';
 import 'package:e_electromaps/presentation/screens/add_station_screens/add_station_4.dart';
 import 'package:e_electromaps/presentation/widgets/custom_button.dart';
@@ -37,6 +38,7 @@ Future<dynamic> markerBottomSheet(BuildContext context, {required int index}) {
                       title: AppLocalizations.of(context)!.translate("station_details").toString(),
                       onTap: () {
                         Navigator.pop(context);
+                        AppCubit.get(context).changeFavouriteState(index: index);
                         stationDetailsBottomSheet(context, index: index);
                       },
                       width: MediaQuery.sizeOf(context).width,

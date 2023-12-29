@@ -1,9 +1,11 @@
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
+import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 import 'package:e_electromaps/business_logic/localization_cubit/app_localization.dart';
 import 'package:e_electromaps/core/local/cash_helper.dart';
 import 'package:e_electromaps/presentation/widgets/custom_button.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<dynamic> stationDetailsBottomSheet(BuildContext context,
@@ -48,27 +50,58 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
                 height: MediaQuery.sizeOf(context).height * 0.01,
               ),
 
-              Align(
-                alignment: CashHelper.getData(key: CashHelper.languageKey)
-                            .toString() ==
-                        'en'
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
-                child: customButton(
-                    context: context,
-                    title: AppLocalizations.of(context)!
-                        .translate("get_direction")
-                        .toString(),
-                    onTap: () {
-                      launchUrl(Uri.parse(
-                          "https://www.google.com/maps/search/?api=1&query=${AppCubit.get(context).stationList[index].langitude.toString()}+"
-                          "${AppCubit.get(context).stationList[index].latitude.toString()}"));
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  BlocConsumer<AppCubit, AppStates>(
+                    listener: (context, state) {
+                      // TODO: implement listener
                     },
-                    width: MediaQuery.sizeOf(context).width * .33,
-                    color: ColorManager.primaryColor,
-                    color2: ColorManager.primaryColor,
-                    textColor: ColorManager.white,
-                    borderColor: ColorManager.white),
+                    builder: (context, state) {
+                      var cubit = AppCubit.get(context);
+                      return IconButton(
+                          onPressed: () {
+
+                            cubit.favoriteStationsIds.add(cubit.stationList[cubit.stationIndex!].stationId!);
+                            debugPrint("*******************************${cubit.favoriteStationsIds.length}");
+                          },
+                          icon: Icon(
+                            AppCubit.get(context).isClicked == true
+                                ? Icons.favorite
+                                : Icons.favorite_border_rounded,
+                            size:  MediaQuery.sizeOf(context).width * .08,
+                            color: AppCubit.get(context).isClicked == true
+                                ? ColorManager.red
+                                : ColorManager.grey,
+                          ));
+                    },
+                  ),
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width * .02,
+                  ),
+                  Align(
+                    alignment: CashHelper.getData(key: CashHelper.languageKey)
+                                .toString() ==
+                            'en'
+                        ? Alignment.centerRight
+                        : Alignment.centerLeft,
+                    child: customButton(
+                        context: context,
+                        title: AppLocalizations.of(context)!
+                            .translate("get_direction")
+                            .toString(),
+                        onTap: () {
+                          launchUrl(Uri.parse(
+                              "https://www.google.com/maps/search/?api=1&query=${AppCubit.get(context).stationList[index].langitude.toString()}+"
+                              "${AppCubit.get(context).stationList[index].latitude.toString()}"));
+                        },
+                        width: MediaQuery.sizeOf(context).width * .33,
+                        color: ColorManager.primaryColor,
+                        color2: ColorManager.primaryColor,
+                        textColor: ColorManager.white,
+                        borderColor: ColorManager.white),
+                  ),
+                ],
               ),
               // Station Name
               Text(
@@ -257,7 +290,8 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
               SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.01,
               ),
-              AppCubit.get(context).stationList[index].format == ""
+              AppCubit.get(context).stationList[index].format ==
+                      "${AppLocalizations.of(context)!.translate("empty_field").toString()} *"
                   ? Text(
                       AppLocalizations.of(context)!
                           .translate("empty_field")

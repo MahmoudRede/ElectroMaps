@@ -87,6 +87,12 @@ class GetStationLoadingState extends AppStates{}
 class GetStationSuccessState extends AppStates{}
 class GetStationErrorState extends AppStates{}
 
+class GetFavStationLoadingState extends AppStates{}
+class GetFavStationSuccessState extends AppStates{}
+class GetFavStationErrorState extends AppStates{}
+
+class GetFavStationIdsLoadingState extends AppStates{}
+class GetFavStationIdsSuccessState extends AppStates{}
 
 class LocationLinkLanuchState extends AppStates{}
 //Pick Profile Image
@@ -103,3 +109,5 @@ class GetCurrentPositionLoading extends AppStates{}
 class GetCurrentPositionSuccess extends AppStates{}
 class GetCurrentPositionFailed extends AppStates{}
 class CameraChanged extends AppStates{}
+
+class ChangeFavouriteState extends AppStates{}

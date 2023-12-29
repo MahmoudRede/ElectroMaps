@@ -24,6 +24,7 @@ class CashHelper{
     if(value is String) return sharedPreferences!.setString(key, value);
     if(value is bool) return sharedPreferences!.setBool(key, value);
     if(value is int) return sharedPreferences!.setInt(key, value);
+    if(value is List<String>) return sharedPreferences!.setStringList(key, value);
 
     return sharedPreferences!.setDouble(key, value);
   }
