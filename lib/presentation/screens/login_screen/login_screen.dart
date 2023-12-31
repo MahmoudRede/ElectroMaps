@@ -3,13 +3,11 @@ import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
 import 'package:e_electromaps/presentation/screens/register_screen/register_screen.dart';
 import 'package:e_electromaps/presentation/widgets/custom_button.dart';
-import 'package:e_electromaps/presentation/widgets/default_text_form_field.dart';
 import 'package:e_electromaps/styles/colors/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../business_logic/localization_cubit/app_localization.dart';
-import '../../../core/local/cash_helper.dart';
 import '../../widgets/pinTextField.dart';
 import '../home_layout/home_layout.dart';
 
@@ -35,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
             if (state is LoginSuccessState) {
               phoneController.clear();
               passwordController.clear();
+              AppCubit.get(context).currentIndex = 0;
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -56,34 +55,34 @@ class _LoginScreenState extends State<LoginScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: MediaQuery.sizeOf(context).height * 0.07,
-                              width: MediaQuery.sizeOf(context).width * 0.2,
-                              decoration: const BoxDecoration(
-                                color: ColorManager.primaryColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: CashHelper.getData(
-                                  key: CashHelper.languageKey)
-                                  .toString() ==
-                                  'en'
-                                  ? const Icon(
-                                Icons.arrow_back,
-                                color: ColorManager.white,
-                              )
-                                  : const Icon(
-                                Icons.arrow_forward,
-                                color: ColorManager.white,
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Align(
+                        //   alignment: Alignment.topLeft,
+                        //   child: GestureDetector(
+                        //     onTap: () {
+                        //       Navigator.pop(context);
+                        //     },
+                        //     child: Container(
+                        //       height: MediaQuery.sizeOf(context).height * 0.07,
+                        //       width: MediaQuery.sizeOf(context).width * 0.2,
+                        //       decoration: const BoxDecoration(
+                        //         color: ColorManager.primaryColor,
+                        //         shape: BoxShape.circle,
+                        //       ),
+                        //       child: CashHelper.getData(
+                        //           key: CashHelper.languageKey)
+                        //           .toString() ==
+                        //           'en'
+                        //           ? const Icon(
+                        //         Icons.arrow_back,
+                        //         color: ColorManager.white,
+                        //       )
+                        //           : const Icon(
+                        //         Icons.arrow_forward,
+                        //         color: ColorManager.white,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Image.asset('assets/images/mugeeb.png',
                           color:  ColorManager.primaryColor,
                           width: MediaQuery.sizeOf(context).width * 0.4,
@@ -92,7 +91,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             Expanded(
                               child: CountryCodePicker(
-                                showDropDownButton: true,
+                                padding:  EdgeInsets.all(20),
+                                enabled: false,
                                 textOverflow: TextOverflow.visible,
                                 textStyle: Theme.of(context).textTheme.headlineSmall,
                                 onChanged: (CountryCode countryCode) {
@@ -110,15 +110,31 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ),
-
                             Expanded(
-                              child: DefaultTextFormField(
-                                  labelText: AppLocalizations.of(context)!
-                                      .translate("phone_number")
-                                      .toString(),
-                                  controller: phoneController,
-                                  textInputType: TextInputType.phone),
-                            ),
+                              child: TextFormField(
+                              controller: phoneController,
+                              keyboardType: TextInputType.phone,
+                              textInputAction:  TextInputAction.next,
+                              maxLength:  9,
+                              decoration: InputDecoration(
+                                labelText: AppLocalizations.of(context)!
+                                    .translate("phone_number")
+                                    .toString(),
+
+                              ),
+                              validator: (text) {
+                                if (text!.trim() == "") {
+                                  return AppLocalizations.of(context)!.translate("required").toString();
+                                }
+                                final bool phoneValid = RegExp(r'^[0-9]{9}$').hasMatch(text);
+                                if (phoneValid == false) {
+                                  return AppLocalizations.of(context)!.translate("required").toString();
+                                }
+                                return null;
+                              },
+                            )
+
+              ),
                           ],
                         ),
                         SizedBox(
@@ -190,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   }
 
                                 },
-                                color: ColorManager.secondaryColor,
+                                color: ColorManager.primaryColor,
                                 textColor: ColorManager.white,
                                 width: MediaQuery.sizeOf(context).height * 0.5,
                           title: AppLocalizations.of(context)!

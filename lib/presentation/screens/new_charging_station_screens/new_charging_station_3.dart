@@ -242,7 +242,7 @@ class NewChargingStationScreen3 extends StatelessWidget {
                             }
                           },
                           width: MediaQuery.sizeOf(context).width * 0.35,
-                          color: ColorManager.secondaryColor,
+                          color: ColorManager.primaryColor,
                           textColor: ColorManager.white, color2: ColorManager.primaryColor),
                     ),
                   ],

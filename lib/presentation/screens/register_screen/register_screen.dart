@@ -57,34 +57,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: MediaQuery.sizeOf(context).height * 0.07,
-                              width: MediaQuery.sizeOf(context).width * 0.2,
-                              decoration: const BoxDecoration(
-                                color: ColorManager.primaryColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: CashHelper.getData(
-                                              key: CashHelper.languageKey)
-                                          .toString() ==
-                                      'en'
-                                  ? const Icon(
-                                      Icons.arrow_back,
-                                      color: ColorManager.white,
-                                    )
-                                  : const Icon(
-                                      Icons.arrow_forward,
-                                      color: ColorManager.white,
-                                    ),
-                            ),
-                          ),
-                        ),
+                        // Align(
+                        //   alignment: Alignment.topLeft,
+                        //   child: GestureDetector(
+                        //     onTap: () {
+                        //       Navigator.pop(context);
+                        //     },
+                        //     child: Container(
+                        //       height: MediaQuery.sizeOf(context).height * 0.07,
+                        //       width: MediaQuery.sizeOf(context).width * 0.2,
+                        //       decoration: const BoxDecoration(
+                        //         color: ColorManager.primaryColor,
+                        //         shape: BoxShape.circle,
+                        //       ),
+                        //       child: CashHelper.getData(
+                        //                       key: CashHelper.languageKey)
+                        //                   .toString() ==
+                        //               'en'
+                        //           ? const Icon(
+                        //               Icons.arrow_back,
+                        //               color: ColorManager.white,
+                        //             )
+                        //           : const Icon(
+                        //               Icons.arrow_forward,
+                        //               color: ColorManager.white,
+                        //             ),
+                        //     ),
+                        //   ),
+                        // ),
                         Image.asset(
                           'assets/images/mugeeb.png',
                           color: ColorManager.primaryColor,
@@ -106,7 +106,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             Expanded(
                               child: CountryCodePicker(
-                                showDropDownButton: true,
+                                alignLeft: true,
+                                enabled: false,
                                 textOverflow: TextOverflow.visible,
                                 textStyle:
                                     Theme.of(context).textTheme.headlineSmall,
@@ -129,12 +130,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                             ),
                             Expanded(
-                              child: DefaultTextFormField(
+                              child: TextFormField(
+                                controller: phoneController,
+                                keyboardType: TextInputType.phone,
+                                textInputAction:  TextInputAction.next,
+                                maxLength:  9,
+                                decoration: InputDecoration(
                                   labelText: AppLocalizations.of(context)!
                                       .translate("phone_number")
                                       .toString(),
-                                  controller: phoneController,
-                                  textInputType: TextInputType.phone),
+
+                                ),
+                                validator: (text) {
+                                  if (text!.trim() == "") {
+                                    return AppLocalizations.of(context)!.translate("required").toString();
+                                  }
+                                  final bool phoneValid = RegExp(r'^[0-9]{9}$').hasMatch(text);
+                                  if (phoneValid == false) {
+                                    return AppLocalizations.of(context)!.translate("required").toString();
+                                  }
+                                  return null;
+                                },
+                              )
+
+                              // DefaultTextFormField(
+                              //
+                              //     labelText: AppLocalizations.of(context)!
+                              //         .translate("phone_number")
+                              //         .toString(),
+                              //     controller: phoneController,
+                              //     textInputType: TextInputType.phone),
                             ),
                           ],
                         ),
@@ -181,7 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         context: context);
                                   }
                                 },
-                                color: ColorManager.secondaryColor,
+                                color: ColorManager.primaryColor,
                                 width: MediaQuery.sizeOf(context).height * 0.5,
                                 title: AppLocalizations.of(context)!
                                     .translate("sign_up")

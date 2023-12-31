@@ -496,7 +496,7 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
                 Navigator.pop(context);
                 openAppSettings();
               },
-               width: MediaQuery.sizeOf(context).width*0.4, color: ColorManager.secondaryColor, color2: ColorManager.primaryColor, textColor: Colors.white, borderColor: Colors.white),
+               width: MediaQuery.sizeOf(context).width*0.4, color: ColorManager.primaryColor, color2: ColorManager.primaryColor, textColor: Colors.white, borderColor: Colors.white),
             ],
           ),
         );
@@ -525,7 +525,7 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
                 Navigator.pop(context);
                 openAppSettings();
               },
-                  width: MediaQuery.sizeOf(context).width*0.4, color: ColorManager.secondaryColor, color2: ColorManager.primaryColor, textColor: Colors.white, borderColor: Colors.white),
+                  width: MediaQuery.sizeOf(context).width*0.4, color: ColorManager.primaryColor, color2: ColorManager.primaryColor, textColor: Colors.white, borderColor: Colors.white),
             ],
           ),
         );
@@ -551,7 +551,7 @@ Future<List<dynamic>> fetchSearchSuggestions(String place , String sessionToken)
               Navigator.pop(context);
               openAppSettings();
             },
-                width: MediaQuery.sizeOf(context).width*0.4, color: ColorManager.secondaryColor, color2: ColorManager.primaryColor, textColor: Colors.white, borderColor: Colors.white),
+                width: MediaQuery.sizeOf(context).width*0.4, color: ColorManager.primaryColor, color2: ColorManager.primaryColor, textColor: Colors.white, borderColor: Colors.white),
           ],
         ),
       );

@@ -102,6 +102,7 @@ class AddStationSix extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: TextFormField(
                             controller: proprietaryController,
+                            textInputAction:  TextInputAction.next,
                             decoration: InputDecoration(
                               hintText: AppLocalizations.of(context)!
                                   .translate("proprietary")
@@ -122,6 +123,7 @@ class AddStationSix extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: TextFormField(
                             controller: emailController,
+                            textInputAction:  TextInputAction.next,
                             decoration: InputDecoration(
                               hintText: AppLocalizations.of(context)!
                                   .translate("email")
@@ -143,6 +145,7 @@ class AddStationSix extends StatelessWidget {
                         child: TextFormField(
                             controller: phoneNumberController,
                             keyboardType: TextInputType.phone,
+                            textInputAction:  TextInputAction.done,
                             decoration: InputDecoration(
                               hintText: AppLocalizations.of(context)!
                                   .translate("phone_number")
@@ -233,7 +236,7 @@ class AddStationSix extends StatelessWidget {
                                   });
                                 },
                                 width: MediaQuery.sizeOf(context).width * .3,
-                                color: ColorManager.secondaryColor,
+                                color: ColorManager.primaryColor,
                                 textColor: ColorManager.white,
                                 borderColor: ColorManager.white,
                                 color2: ColorManager.primaryColor),

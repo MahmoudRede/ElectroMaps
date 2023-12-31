@@ -176,6 +176,7 @@ class AccountScreen extends StatelessWidget {
                           prefixIcon: Icons.logout_outlined,
                           onTap: () {
                             FirebaseAuth.instance.signOut();
+                            cubit.currentIndex = 0;
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(

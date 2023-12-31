@@ -423,7 +423,7 @@ class _NewChargingStationScreen1State extends State<NewChargingStationScreen1> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) =>const  NewChargingStationScreen2(), ));
                         }
                       },
-                      width: MediaQuery.sizeOf(context).width * 0.3, color: ColorManager.secondaryColor, textColor:Colors.white,
+                      width: MediaQuery.sizeOf(context).width * 0.3, color: ColorManager.primaryColor, textColor:Colors.white,
                       color2:ColorManager.primaryColor ),
                 ],
               ),
