@@ -76,6 +76,7 @@ class AddStationFive extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: TextFormField(
                           controller: howWorkController,
+                          textInputAction:  TextInputAction.next,
                           decoration: InputDecoration(
                             hintText: AppLocalizations.of(context)!
                                 .translate("how_it_works")
@@ -271,6 +272,7 @@ class AddStationFive extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: TextFormField(
                           controller: scheduleController,
+                          textInputAction:  TextInputAction.next,
                           decoration: InputDecoration(
                             hintText: AppLocalizations.of(context)!
                                 .translate("schedule")
@@ -291,6 +293,7 @@ class AddStationFive extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: TextFormField(
                           controller: limitTimeController,
+                          textInputAction:  TextInputAction.next,
                           decoration: InputDecoration(
                             hintText: AppLocalizations.of(context)!
                                 .translate("limit_time")
@@ -312,6 +315,7 @@ class AddStationFive extends StatelessWidget {
                       child: TextFormField(
                           controller: chargingSessionController,
                           keyboardType: TextInputType.number,
+                          textInputAction:  TextInputAction.next,
                           decoration: InputDecoration(
                             hintText: AppLocalizations.of(context)!
                                 .translate("charging_session_price")
@@ -333,6 +337,7 @@ class AddStationFive extends StatelessWidget {
                       child: TextFormField(
                           controller: parkingPriceController,
                           keyboardType: TextInputType.number,
+                          textInputAction:  TextInputAction.done,
                           decoration: InputDecoration(
                             hintText: AppLocalizations.of(context)!
                                 .translate("parking_price")
@@ -402,7 +407,7 @@ class AddStationFive extends StatelessWidget {
                                 }
                               },
                               width: MediaQuery.sizeOf(context).width * .3,
-                              color: ColorManager.secondaryColor,
+                              color: ColorManager.primaryColor,
                               textColor: ColorManager.white,
                               borderColor: ColorManager.white, color2: ColorManager.primaryColor),
                         ),

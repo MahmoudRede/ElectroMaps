@@ -123,7 +123,9 @@ class AccountDetailsScreen extends StatelessWidget {
                               child: Align(
                                 alignment: Alignment.bottomCenter,
                                 child: CountryCodePicker(
-                                  showDropDownButton: true,
+                                  alignLeft: true,
+
+                                  enabled: false,
                                   textOverflow: TextOverflow.visible,
                                   textStyle: Theme.of(context).textTheme.headlineSmall,
                                   onChanged: (CountryCode countryCode) {
@@ -145,19 +147,45 @@ class AccountDetailsScreen extends StatelessWidget {
                               ),
                             ),
                             Expanded(
-                              child: TextFormField(
-                                enabled: true,
-                                initialValue: cubit.userModel!.phoneNumber,
-                                onChanged: (value) {
-                                  cubit.userModel!.phoneNumber = value;
-                                },
-                                keyboardType: TextInputType.phone,
-                                decoration: InputDecoration(
-                                    hintStyle: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall!
-                                        .copyWith(color: ColorManager.textColor)),
-                              ),
+                                child: TextFormField(
+                                  initialValue: cubit.userModel!.phoneNumber,
+                                  keyboardType: TextInputType.phone,
+                                  textInputAction:  TextInputAction.next,
+                                  onChanged: (value) {
+                                    cubit.userModel!.phoneNumber = value;
+                                  },
+                                  maxLength:  9,
+                                  decoration: InputDecoration(
+                                    labelText: AppLocalizations.of(context)!
+                                        .translate("phone_number")
+                                        .toString(),
+
+                                  ),
+                                  validator: (text) {
+                                    if (text!.trim() == "") {
+                                      return AppLocalizations.of(context)!.translate("required").toString();
+                                    }
+                                    final bool phoneValid = RegExp(r'^[0-9]{9}$').hasMatch(text);
+                                    if (phoneValid == false) {
+                                      return AppLocalizations.of(context)!.translate("required").toString();
+                                    }
+                                    return null;
+                                  },
+                                )
+
+                              // child: TextFormField(
+                              //   enabled: true,
+                              //   initialValue: cubit.userModel!.phoneNumber,
+                              //   onChanged: (value) {
+                              //     cubit.userModel!.phoneNumber = value;
+                              //   },
+                              //   keyboardType: TextInputType.phone,
+                              //   decoration: InputDecoration(
+                              //       hintStyle: Theme.of(context)
+                              //           .textTheme
+                              //           .headlineSmall!
+                              //           .copyWith(color: ColorManager.textColor)),
+                              // ),
                             ),
                           ],
                         ),
@@ -176,7 +204,7 @@ class AccountDetailsScreen extends StatelessWidget {
                               });
                             },
                             width: MediaQuery.sizeOf(context).width,
-                            color: ColorManager.secondaryColor,
+                            color: ColorManager.primaryColor,
                             textColor: ColorManager.white,
                             borderColor: ColorManager.white, color2: ColorManager.primaryColor),
                         SizedBox(

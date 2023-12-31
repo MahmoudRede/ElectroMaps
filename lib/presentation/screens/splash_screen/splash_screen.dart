@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       end: Alignment.centerRight,
                       colors: [
                         // ColorManager.lightColor2,
-                        ColorManager.secondaryColor,
+                        ColorManager.primaryColor,
                         ColorManager.primaryColor,
                         // ColorManager.lightColor2,
                       ]

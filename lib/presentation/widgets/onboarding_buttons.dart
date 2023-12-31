@@ -48,7 +48,7 @@ Widget onBoardingButtons(context, onboardingController, isLast) => Padding(
                       curve: Curves.fastLinearToSlowEaseIn);
                 },
                 width: MediaQuery.sizeOf(context).width * 0.2,
-                color: ColorManager.secondaryColor,
+                color: ColorManager.primaryColor,
                 textColor: Colors.white,
                 borderColor: ColorManager.white,
                 color2: ColorManager.primaryColor),

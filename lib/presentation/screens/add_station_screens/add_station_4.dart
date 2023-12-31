@@ -149,7 +149,7 @@ class AddStationScreenFour extends StatelessWidget {
                               ));
                         },
                         width: MediaQuery.sizeOf(context).width * .3,
-                        color: ColorManager.secondaryColor,
+                        color: ColorManager.primaryColor,
                         textColor: ColorManager.white,
                         borderColor: ColorManager.white,
                         color2: ColorManager.primaryColor),

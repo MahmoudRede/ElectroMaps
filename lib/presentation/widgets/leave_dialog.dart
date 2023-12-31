@@ -44,7 +44,7 @@ Future<dynamic> closeDialog(BuildContext context) {
                       ));
                     },
                     width: MediaQuery.sizeOf(context).width,
-                    color: ColorManager.secondaryColor,
+                    color: ColorManager.primaryColor,
                     textColor: ColorManager.white,
                     borderColor: ColorManager.white,
                     color2: ColorManager.primaryColor),

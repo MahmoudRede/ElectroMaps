@@ -584,7 +584,7 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                   Navigator.pop(context);
                 },
                 width: MediaQuery.sizeOf(context).width * .8,
-                color: ColorManager.secondaryColor,
+                color: ColorManager.primaryColor,
                 textColor: ColorManager.white,
                 borderColor: ColorManager.white, color2: ColorManager.primaryColor,
               ),
