@@ -22,8 +22,8 @@ class _StationsScreenState extends State<StationsScreen> {
   late GoogleMapController googleMapController;
 
  static const CameraPosition   _kGooglePlex = CameraPosition(
-    target: LatLng(30.033333522243, 31.233334225536),
-    zoom: 12,
+    target: LatLng(24.7028069, 46.7000284),
+    zoom: 9,
   );
 
   @override

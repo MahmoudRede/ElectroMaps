@@ -93,6 +93,7 @@ class StationModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'stationId': stationId,
       'address': address,
       'stationName': stationName,
       'stationType': stationType,
