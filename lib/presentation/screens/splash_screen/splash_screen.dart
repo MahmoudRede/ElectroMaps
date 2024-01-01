@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       end: Alignment.centerRight,
                       colors: [
                         // ColorManager.lightColor2,
-                        ColorManager.primaryColor,
+                        ColorManager.secondaryColor,
                         ColorManager.primaryColor,
                         // ColorManager.lightColor2,
                       ]
@@ -75,10 +75,10 @@ class _SplashScreenState extends State<SplashScreen> {
               height: double.infinity,
               width: double.infinity,
               child: Image.asset(
-                 'assets/images/mugeeb.png',
+                 'assets/images/horizontal_logo.png',
                  color: ColorManager.white,
-                 height: MediaQuery.sizeOf(context).height * .8,
-                 width: MediaQuery.sizeOf(context).width * .5,
+                 // height: MediaQuery.sizeOf(context).height * .8,
+                 // width: MediaQuery.sizeOf(context).width * .5,
                ),
             ),
           ),

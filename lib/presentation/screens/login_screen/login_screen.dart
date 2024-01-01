@@ -83,9 +83,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         //     ),
                         //   ),
                         // ),
-                        Image.asset('assets/images/mugeeb.png',
-                          color:  ColorManager.primaryColor,
-                          width: MediaQuery.sizeOf(context).width * 0.4,
+                        Image.asset('assets/images/horizontal_logo.png',
+                          // color:  ColorManager.primaryColor,
+                          width: MediaQuery.sizeOf(context).width * 0.3,
                         ),
                         Row(
                           children: [
@@ -201,7 +201,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     cubit.loginWithFirebaseAuth(
                                         password: passwordController.text,
                                         phone: phoneController.text,
-                                        countryCode: cubit.userModel!.countryCode!,
+                                        countryCode: cubit.userModel?.countryCode??'+966',
                                         context: context);
                                   }
 

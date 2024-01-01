@@ -86,9 +86,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         //   ),
                         // ),
                         Image.asset(
-                          'assets/images/mugeeb.png',
-                          color: ColorManager.primaryColor,
-                          width: MediaQuery.sizeOf(context).width * 0.4,
+                          'assets/images/horizontal_logo.png',
+                          // color: ColorManager.primaryColor,
+                          width: MediaQuery.sizeOf(context).width * 0.3,
                         ),
 
                         //name

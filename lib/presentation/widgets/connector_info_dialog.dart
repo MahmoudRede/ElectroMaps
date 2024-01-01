@@ -323,6 +323,7 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                           },
                           controller: powerController,
                           keyboardType: TextInputType.number,
+                          textInputAction:  TextInputAction.next,
                           decoration: InputDecoration(
                             label: Text("${AppLocalizations.of(context)!
                                 .translate("power")
@@ -341,6 +342,7 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                         child: TextFormField(
                           controller: intensityController,
                           keyboardType: TextInputType.number,
+                          textInputAction:  TextInputAction.next,
                           decoration: InputDecoration(
                             label: Text("${AppLocalizations.of(context)!
                                 .translate("intensity")
@@ -363,6 +365,7 @@ Future<dynamic> connectorInfoDialog(BuildContext context) {
                         child: TextFormField(
                           controller: voltageController,
                           keyboardType: TextInputType.number,
+                          textInputAction:  TextInputAction.next,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return AppLocalizations.of(context)!
