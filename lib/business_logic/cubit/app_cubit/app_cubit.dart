@@ -25,6 +25,7 @@ import 'package:geolocator/geolocator.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sqflite/sqflite.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -774,40 +775,124 @@ StationModel? stationModel;
     emit(LocationLinkLanuchState());
   }
 
-  List<String> favoriteStationsIds=[];
+  Database? database;
+  List<Map> allFavorite = [];
 
-  List<StationModel> favoritesStations=[];
-
-  Future<void> getFavoriteStationFromFire(String id)  async {
-    emit(GetFavStationLoadingState());
-    FirebaseFirestore.instance.collection('Stations').doc(id).get().then((value) {
-
-      StationModel stationModel = StationModel.fromJson(value.data()!);
-      favoritesStations.add(stationModel );
-
-      debugPrint('Length of favoritesStations ${favoritesStations.length}');
-      debugPrint('Station Get Successfully');
-      emit(GetFavStationSuccessState());
+  void createDatabase() async {
+    return await openDatabase('favorite.db', version: 1,
+        onCreate: (database, version) {
+          database
+              .execute(
+              'CREATE TABLE favorite (id INTEGER PRIMARY KEY , name TEXT , address TEXT, lat TEXT, long TEXT)')
+              .then((value) {
+            print('Table Created');
+            emit(CreateTableState());
+          });
+        }, onOpen: (database) {
+          getDatabase(database).then((value) {
+            allFavorite = value;
+          }).catchError((error) {
+            print('error i ${error.toString()}');
+          });
+          print('Database Opened');
+        }).then((value) {
+      database = value;
+      print('Database Created');
+      emit(CreateDatabaseSuccessState());
     }).catchError((error) {
-      debugPrint('Error in getStationToFire is ${error.toString()}');
-      emit(GetFavStationErrorState());
+      print('error is ${error.toString()}');
+      emit(CreateDatabaseErrorState());
     });
   }
-  void getFavouriteIds(){
-    emit(GetFavStationIdsLoadingState());
-   favoriteStationsIds.forEach((element) {
-     getFavoriteStationFromFire(element);
-   });
-    emit(GetFavStationIdsSuccessState());
+
+  Future insertDatabase({
+    required String name,
+    required String address,
+    required String lat,
+    required String long,
+    required context,
+  }) async {
+    return database?.transaction((txn) {
+      return txn
+          .rawInsert(
+          'INSERT INTO favorite (name,address,lat,long) VALUES ( "$name" , "$address" , "$lat" , "$long")')
+          .then((value) async{
+        print("${value} Insert Success");
+        emit(InsertDatabaseSuccessState());
+         await getDatabase(database).then((value) {
+          allFavorite = value;
+        });
+        emit(InsertDatabaseSuccessState());
+        print("***************** stations inserted successfully");
+      }).catchError((error) {
+        print('Error is ${error.toString()}');
+      });
+    });
+  }
+
+  Future<List<Map>> getDatabase(database) async {
+    allFavorite = [];
+    return database?.rawQuery('SELECT * FROM favorite').then((value) {
+      value.forEach((element) {
+        allFavorite.add(element);
+      });
+
+      print(allFavorite);
+      emit(GetDatabaseSuccessState());
+      print("got stations successfully");
+    }).catchError((error) {
+      print('GetError is ${error.toString()}');
+    });
+  }
+
+  Future deleteDatabase({required String id, required context}) async {
+    return await database
+        ?.rawDelete('DELETE FROM favorite WHERE id = ?', [id]).then((value) {
+      debugPrint('Item Deleted');
+      getDatabase(database).then((value) {
+        allFavorite = value;
+      }).catchError((error) {
+        print('Error is ${error.toString()}');
+      });
+      emit(DeleteDatabaseSuccessState());
+    });
+  }
+
+  void updateDatabase({
+    required String number,
+    required String id,
+  }) async {
+    database?.rawUpdate(
+        'UPDATE favorite SET rate = ? WHERE id = ?',
+        [number, id]).then((value) {
+      print('Update Done');
+      getDatabase(database);
+      emit(UpdateNoteDatabaseState());
+    }).catchError((error) {
+      print('error is ${error.toString()}');
+    });
   }
 
 
+  void changeFavoriteColorToTrue({required String name}){
+    CashHelper.saveData(key: '$name',value:true );
+    debugPrint('Item favorite updated To true');
+    emit(ChangeFavoriteColorState());
+  }
 
-  bool isClicked=false;
+  void changeFavoriteColorToFalse({required String  name}){
+    CashHelper.saveData(key: '$name',value:false );
+    debugPrint('Item favorite updated to false');
+    emit(ChangeFavoriteColorState());
 
-  void changeFavouriteState({required int index }){
-    isClicked=!isClicked;
-    emit(ChangeFavouriteState());
+  }
+
+  bool isFavorite=false;
+
+  void switchBetweenOrderAndFavorite(){
+
+    isFavorite=!isFavorite;
+    emit(SwitchOrderAndFavoriteState());
   }
 
 }

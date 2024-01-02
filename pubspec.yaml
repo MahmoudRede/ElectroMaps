@@ -62,6 +62,7 @@ dependencies:
   url_launcher: ^6.2.2
   country_code_picker: ^3.0.0
   permission_handler: ^10.2.0
+  sqflite: ^2.3.0
 
 
 dev_dependencies:

@@ -61,16 +61,39 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
                       var cubit = AppCubit.get(context);
                       return IconButton(
                           onPressed: () {
+                            cubit.insertDatabase(
+                              name: cubit
+                                  .stationList[index]
+                                  .stationName
+                                  .toString(),
+                              address: cubit
+                                  .stationList[index]
+                                  .address
+                                  .toString(),
+                              lat: cubit
+                                  .stationList[index]
+                                  .langitude
+                                  .toString(),
+                              long: cubit
+                                  .stationList[index]
+                                  .latitude
+                                  .toString(),
+                              context: context,
+                            ).then((value) => {
+                            cubit.changeFavoriteColorToTrue(name: cubit
+                                .stationList[index]
+                                .stationName
+                                .toString(),),
+                                cubit.switchBetweenOrderAndFavorite(),
+                            });
 
-                            cubit.favoriteStationsIds.add(cubit.stationList[cubit.stationIndex!].stationId!);
-                            debugPrint("*******************************${cubit.favoriteStationsIds.length}");
                           },
                           icon: Icon(
-                            AppCubit.get(context).isClicked == true
+                            CashHelper.getData(key: 'name') == true
                                 ? Icons.favorite
                                 : Icons.favorite_border_rounded,
-                            size:  MediaQuery.sizeOf(context).width * .08,
-                            color: AppCubit.get(context).isClicked == true
+                            size: MediaQuery.sizeOf(context).width * .08,
+                            color: CashHelper.getData(key: 'name') == true
                                 ? ColorManager.red
                                 : ColorManager.grey,
                           ));

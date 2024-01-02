@@ -1,5 +1,3 @@
-
-
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/core/remote/dio_helper.dart';
 import 'package:e_electromaps/presentation/screens/splash_screen/splash_screen.dart';
@@ -41,24 +39,23 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (BuildContext context) =>
-              AppCubit()..getUser(id: uId == null ? uId = '' : uId!)..getStationFromFire(),
+          create: (BuildContext context) => AppCubit()
+            ..createDatabase()
+            ..getUser(id: uId == null ? uId = '' : uId!)
+            ..getStationFromFire(),
         ),
         BlocProvider(
             create: (BuildContext context) =>
-            LocalizationCubit()..fetchLocalization()),
-
+                LocalizationCubit()..fetchLocalization()),
       ],
       child: BlocConsumer<LocalizationCubit, LocalizationStates>(
-
           listener: (context, state) {},
           builder: (context, state) {
             return MaterialApp(
               theme: getApplicationTheme(context),
               debugShowCheckedModeBanner: false,
-
               home: const SplashScreen(),
-              localizationsDelegates:  const [
+              localizationsDelegates: const [
                 AppLocalizations.delegate,
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
@@ -80,11 +77,6 @@ class _MyAppState extends State<MyApp> {
                 }
                 return supportLang.first;
               },
-
-
-
-
-
             );
           }),
     );
