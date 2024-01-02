@@ -111,3 +111,20 @@ class GetCurrentPositionFailed extends AppStates{}
 class CameraChanged extends AppStates{}
 
 class ChangeFavouriteState extends AppStates{}
+
+
+class CreateTableState extends AppStates{}
+
+class CreateDatabaseSuccessState extends AppStates{}
+class CreateDatabaseErrorState extends AppStates{}
+
+class InsertDatabaseSuccessState extends AppStates{}
+
+class GetDatabaseSuccessState extends AppStates{}
+
+class DeleteDatabaseSuccessState extends AppStates{}
+
+class UpdateNoteDatabaseState extends AppStates{}
+
+class ChangeFavoriteColorState extends AppStates{}
+class SwitchOrderAndFavoriteState extends AppStates{}
