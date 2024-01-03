@@ -117,5 +117,11 @@
   "station_details": "تفاصيل المحطة",
   "edit_station_information": "تعديل بيانات المحطة",
   "get_direction": "الإتجاهات",
-  "plugin_added": "تم إضافة الملحق"
+  "plugin_added": "تم إضافة الملحق",
+  "photo_permission_title": "الوصول للصور",
+  "photo_permission_body": "مطلوب اذن الوصول للصور للاستكمال",
+  "photo_permission_button_text": "امنح الاذن",
+  "location_permission_title": "الوصول للموقع",
+  "location_permission_body": "مطلوب اذن الوصول للموقع للاستكمال",
+  "location_permission_button_text": "امنح الاذن"
 }

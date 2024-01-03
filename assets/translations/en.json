@@ -118,5 +118,11 @@
   "station_details": "Station Details",
   "edit_station_information": "Edit Station Information",
   "get_direction": "Get Direction",
-  "plugin_added": "Plugin Added"
+  "plugin_added": "Plugin Added",
+  "photo_permission_title": "Photo Permission",
+  "photo_permission_body": "Access photo permission is required to proceed",
+  "photo_permission_button_text": "Give Permission",
+  "location_permission_title": "Location Permission",
+  "location_permission_body": "Access Location permission is required to proceed",
+  "location_permission_button_text": "Give Permission"
 }

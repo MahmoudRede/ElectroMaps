@@ -266,7 +266,7 @@ class AppCubit extends Cubit<AppStates> {
 
     } catch (e) {
       // An error occurred, handle the error
-      print('Error in ResetPassword is ${e.toString()}');
+      log('Error in ResetPassword is ${e.toString()}');
       emit(ForgetPasswordErrorState());
     }
   }
@@ -785,22 +785,22 @@ StationModel? stationModel;
               .execute(
               'CREATE TABLE favorite (id INTEGER PRIMARY KEY , name TEXT , address TEXT, lat TEXT, long TEXT)')
               .then((value) {
-            print('Table Created');
+            log('Table Created');
             emit(CreateTableState());
           });
         }, onOpen: (database) {
           getDatabase(database).then((value) {
             allFavorite = value;
           }).catchError((error) {
-            print('error i ${error.toString()}');
+            log('error i ${error.toString()}');
           });
-          print('Database Opened');
+          log('Database Opened');
         }).then((value) {
       database = value;
-      print('Database Created');
+      log('Database Created');
       emit(CreateDatabaseSuccessState());
     }).catchError((error) {
-      print('error is ${error.toString()}');
+      log('error is ${error.toString()}');
       emit(CreateDatabaseErrorState());
     });
   }
@@ -817,15 +817,15 @@ StationModel? stationModel;
           .rawInsert(
           'INSERT INTO favorite (name,address,lat,long) VALUES ( "$name" , "$address" , "$lat" , "$long")')
           .then((value) async{
-        print("${value} Insert Success");
+        log("${value} Insert Success");
         emit(InsertDatabaseSuccessState());
          await getDatabase(database).then((value) {
           allFavorite = value;
         });
         emit(InsertDatabaseSuccessState());
-        print("***************** stations inserted successfully");
+        log("***************** stations inserted successfully");
       }).catchError((error) {
-        print('Error is ${error.toString()}');
+        log('Error is ${error.toString()}');
       });
     });
   }
@@ -837,11 +837,11 @@ StationModel? stationModel;
         allFavorite.add(element);
       });
 
-      print(allFavorite);
+      log(allFavorite.toString());
       emit(GetDatabaseSuccessState());
-      print("got stations successfully");
+      log("got stations successfully");
     }).catchError((error) {
-      print('GetError is ${error.toString()}');
+      log('GetError is ${error.toString()}');
     });
   }
 
@@ -852,7 +852,20 @@ StationModel? stationModel;
       getDatabase(database).then((value) {
         allFavorite = value;
       }).catchError((error) {
-        print('Error is ${error.toString()}');
+        log('Error is ${error.toString()}');
+      });
+      emit(DeleteDatabaseSuccessState());
+    });
+  }
+
+  Future deleteDatabaseWithName({required String name, required context}) async {
+    return await database
+        ?.rawDelete('DELETE FROM favorite WHERE name = ?', [name]).then((value) {
+      debugPrint('Item Deleted');
+      getDatabase(database).then((value) {
+        allFavorite = value;
+      }).catchError((error) {
+        log('Error is ${error.toString()}');
       });
       emit(DeleteDatabaseSuccessState());
     });
@@ -865,34 +878,66 @@ StationModel? stationModel;
     database?.rawUpdate(
         'UPDATE favorite SET rate = ? WHERE id = ?',
         [number, id]).then((value) {
-      print('Update Done');
+      log('Update Done');
       getDatabase(database);
       emit(UpdateNoteDatabaseState());
     }).catchError((error) {
-      print('error is ${error.toString()}');
+      log('error is ${error.toString()}');
     });
   }
 
 
-  void changeFavoriteColorToTrue({required String name}){
-    CashHelper.saveData(key: '$name',value:true );
-    debugPrint('Item favorite updated To true');
-    emit(ChangeFavoriteColorState());
+
+
+
+
+
+  //check if station in database or  not
+
+  Future<bool> isStationInDatabase(String stationName) async{
+    List<Map<String,dynamic>>  result = await database!.rawQuery('SELECT * FROM favorite WHERE name = ?', [stationName]);
+    log('station check result ${result.toString()}');
+    if(result.isNotEmpty){
+      return true;
+    }else{
+      return false;
+    }
+
+
+
+}
+
+  Color favBtnColor=Colors.grey;
+
+  Future<void>  checkIfStationInDatabase(String stationName)async{
+  bool isFound = await isStationInDatabase(stationName);
+  if(isFound){
+    favBtnColor=Colors.red;
+  }else{
+    favBtnColor=Colors.grey;
+  }
+  log('favBtnColor is ${favBtnColor.toString()}');
   }
 
-  void changeFavoriteColorToFalse({required String  name}){
-    CashHelper.saveData(key: '$name',value:false );
-    debugPrint('Item favorite updated to false');
-    emit(ChangeFavoriteColorState());
+  pressFavoriteBtn(String name, String address, String lat, String long, BuildContext context){
+    if(favBtnColor==Colors.grey){
 
+      insertDatabase(name: name, address:address, lat: lat, long: long, context: context);
+    }else{
+
+      deleteDatabaseWithName(name: name, context: context);
+    }
   }
 
-  bool isFavorite=false;
-
-  void switchBetweenOrderAndFavorite(){
-
-    isFavorite=!isFavorite;
-    emit(SwitchOrderAndFavoriteState());
+  changeFavBtnColor(){
+    if(favBtnColor==Colors.grey){
+      favBtnColor=Colors.red;
+      emit(ColorChanged());
+    }else if(favBtnColor==Colors.red){
+      favBtnColor=Colors.grey;
+      emit(ColorChanged());
+    }
   }
+
 
 }

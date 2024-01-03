@@ -57,10 +57,6 @@ class FavoriteWidget extends StatelessWidget {
                                             .allFavorite[index]['id']
                                             .toString(),
                                         context: context);
-                                    cubit
-                                        .changeFavoriteColorToFalse(
-                                            name: cubit
-                                                .allFavorite[index]['name']);
                                   },
                                   icon: const Icon(
                                     Icons.delete,

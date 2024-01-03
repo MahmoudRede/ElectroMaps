@@ -216,7 +216,8 @@ class AddStationSix extends StatelessWidget {
                                           voltage: CashHelper.getData(key: "voltage"),
                                           connectorType: CashHelper.getData(key: "connectorType"),
                                           power: CashHelper.getData(key: "power"),
-                                          bookingOptions: CashHelper.getData(key: "bookingOptions"))
+                                          bookingOptions: CashHelper.getData(key: "bookingOptions"),
+                                          )
                                       .then((value) {
                                     customToast(
                                         title: AppLocalizations.of(context)!
