@@ -61,41 +61,33 @@ Future<dynamic> stationDetailsBottomSheet(BuildContext context,
                       var cubit = AppCubit.get(context);
                       return IconButton(
                           onPressed: () {
-                            cubit.insertDatabase(
-                              name: cubit
-                                  .stationList[index]
-                                  .stationName
-                                  .toString(),
-                              address: cubit
+                            cubit.pressFavoriteBtn(cubit
+                                .stationList[index]
+                                .stationName
+                                .toString(),
+                               cubit
                                   .stationList[index]
                                   .address
                                   .toString(),
-                              lat: cubit
+                               cubit
                                   .stationList[index]
                                   .langitude
                                   .toString(),
-                              long: cubit
+                              cubit
                                   .stationList[index]
                                   .latitude
                                   .toString(),
-                              context: context,
-                            ).then((value) => {
-                            cubit.changeFavoriteColorToTrue(name: cubit
-                                .stationList[index]
-                                .stationName
-                                .toString(),),
-                                cubit.switchBetweenOrderAndFavorite(),
-                            });
+                                context);
+
+                            cubit.changeFavBtnColor();
 
                           },
                           icon: Icon(
-                            CashHelper.getData(key: 'name') == true
+                            cubit.favBtnColor == Colors.red
                                 ? Icons.favorite
                                 : Icons.favorite_border_rounded,
                             size: MediaQuery.sizeOf(context).width * .08,
-                            color: CashHelper.getData(key: 'name') == true
-                                ? ColorManager.red
-                                : ColorManager.grey,
+                            color: cubit.favBtnColor,
                           ));
                     },
                   ),

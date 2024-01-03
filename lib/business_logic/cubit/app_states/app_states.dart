@@ -48,6 +48,24 @@ class DeleteUserLoadingState extends AppStates{}
 class DeleteUserSuccessState extends AppStates{}
 class DeleteUserErrorState extends AppStates{}
 
+// add fav station
+class AddFavStationLoading extends AppStates {}
+class AddFavStationSuccess extends AppStates {}
+class AddFavStationFailed extends AppStates {}
+// delete fav station
+class DeleteFavStationLoading extends AppStates {}
+class DeleteFavStationSuccess extends AppStates {}
+// get fav stations
+class GetFavStationLoading extends AppStates {}
+class GetFavStationSuccess extends AppStates {}
+class GetFavStationFailed extends AppStates {}
+class ChangeColor extends AppStates {}
+class CheckingFavLoading extends AppStates {}
+class CheckingFavSuccess extends AppStates {}
+class CheckingFavFailed extends AppStates {}
+
+
+
 
 //Getting Search Suggestions
 class GettingSearchSuggestionsLoading extends AppStates{}
@@ -87,12 +105,7 @@ class GetStationLoadingState extends AppStates{}
 class GetStationSuccessState extends AppStates{}
 class GetStationErrorState extends AppStates{}
 
-class GetFavStationLoadingState extends AppStates{}
-class GetFavStationSuccessState extends AppStates{}
-class GetFavStationErrorState extends AppStates{}
 
-class GetFavStationIdsLoadingState extends AppStates{}
-class GetFavStationIdsSuccessState extends AppStates{}
 
 class LocationLinkLanuchState extends AppStates{}
 //Pick Profile Image
@@ -128,3 +141,4 @@ class UpdateNoteDatabaseState extends AppStates{}
 
 class ChangeFavoriteColorState extends AppStates{}
 class SwitchOrderAndFavoriteState extends AppStates{}
+class ColorChanged extends AppStates{}

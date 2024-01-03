@@ -30,7 +30,7 @@ class HomeLayout extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const NewChargingStationScreen1(),
+                    builder: (context) => const NewChargingStationScreen1(), 
                   ));
             },
             child: Row(mainAxisSize: MainAxisSize.min, children: [

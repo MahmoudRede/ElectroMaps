@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:e_electromaps/business_logic/cubit/app_cubit/app_cubit.dart';
 import 'package:e_electromaps/business_logic/cubit/app_states/app_states.dart';
+import 'package:e_electromaps/core/local/cash_helper.dart';
 import 'package:e_electromaps/presentation/widgets/marker_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,9 +47,10 @@ class _StationsScreenState extends State<StationsScreen> {
         List<Marker> markers = List.generate(
           cubit.stationList.length,
           (index) => Marker(
-            onTap: () {
+            onTap: () async{
               cubit.stationIndex=index;
               markerBottomSheet(context, index: cubit.stationIndex!);
+              cubit.checkIfStationInDatabase(cubit.stationList[cubit.stationIndex!].stationName!);
             },
             markerId: MarkerId(index.toString()),
             position: LatLng(

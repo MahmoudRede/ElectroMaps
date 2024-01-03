@@ -1,6 +1,5 @@
-class StationModel {
+class FavoriteModel {
   static const String collectionName = 'Stations';
-
   String? stationId;
   String? stationName;
   String? stationType;
@@ -27,10 +26,11 @@ class StationModel {
   String? proprietary;
   String? email;
   String? phoneNumber;
+  bool? isFavorite;
 
 
 
-  StationModel({
+  FavoriteModel({
 
     required this.stationId,
     required this.stationName,
@@ -58,10 +58,11 @@ class StationModel {
     required this.proprietary,
     required this.email,
     required this.phoneNumber,
+    required this.isFavorite,
 
   });
 
-  StationModel.fromJson(Map<String, dynamic> json) : this(
+  FavoriteModel.fromJson(Map<String, dynamic> json) : this(
     stationId: json['stationId'],
     address: json['address'],
     stationName : json['stationName'],
@@ -88,12 +89,12 @@ class StationModel {
     proprietary : json['proprietary'],
     email : json['email'],
     phoneNumber : json['phoneNumber'],
+    isFavorite:json['isFavorite']
 
   );
 
   Map<String, dynamic> toJson() {
     return {
-      'stationId': stationId,
       'address': address,
       'stationName': stationName,
       'stationType': stationType,
@@ -119,6 +120,7 @@ class StationModel {
       'proprietary': proprietary,
       'email': email,
       'phoneNumber': phoneNumber,
+      'isFavorite':isFavorite,
 
     };
   }
