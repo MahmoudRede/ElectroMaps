@@ -1,4 +1,4 @@
-package com.example.e_electromaps
+package com.mugeep.e_electromaps
 
 import io.flutter.embedding.android.FlutterActivity
 
