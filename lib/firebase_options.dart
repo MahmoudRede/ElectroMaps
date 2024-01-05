@@ -45,17 +45,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDTI0ODwYIZ2kPRCNl-jqdKdGne0NzUTQw',
-    appId: '1:818789905198:web:187a316a3d3d89b93480bf',
+    appId: '1:818789905198:web:9112be4cf48b9cad3480bf',
     messagingSenderId: '818789905198',
     projectId: 'electro-maps-7bc45',
     authDomain: 'electro-maps-7bc45.firebaseapp.com',
     storageBucket: 'electro-maps-7bc45.appspot.com',
-    measurementId: 'G-HH70E7KBE8',
+    measurementId: 'G-QBZZ3GW25T',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDB4wMsArKmmNOVPlQQsiT0aJDjn1yAE4k',
-    appId: '1:818789905198:android:4d485baf9fce28983480bf',
+    appId: '1:818789905198:android:6d97833a8d3c81043480bf',
     messagingSenderId: '818789905198',
     projectId: 'electro-maps-7bc45',
     storageBucket: 'electro-maps-7bc45.appspot.com',
@@ -63,19 +63,19 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDZMQbb8fveM8cl5pBeqNZUqoJaVmFTwbg',
-    appId: '1:818789905198:ios:e35bad2a01b43b7e3480bf',
+    appId: '1:818789905198:ios:c61eba441bd04f423480bf',
     messagingSenderId: '818789905198',
     projectId: 'electro-maps-7bc45',
     storageBucket: 'electro-maps-7bc45.appspot.com',
-    iosBundleId: 'com.example.eElectromaps',
+    iosBundleId: 'com.mugeep.eElectromaps',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDZMQbb8fveM8cl5pBeqNZUqoJaVmFTwbg',
-    appId: '1:818789905198:ios:b5df0ebaebf8a7843480bf',
+    appId: '1:818789905198:ios:1dacf313051d38013480bf',
     messagingSenderId: '818789905198',
     projectId: 'electro-maps-7bc45',
     storageBucket: 'electro-maps-7bc45.appspot.com',
-    iosBundleId: 'com.example.eElectromaps.RunnerTests',
+    iosBundleId: 'com.mugeep.eElectromaps.RunnerTests',
   );
 }

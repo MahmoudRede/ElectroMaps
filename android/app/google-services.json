@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:818789905198:android:4d485baf9fce28983480bf",
+        "mobilesdk_app_id": "1:818789905198:android:6d97833a8d3c81043480bf",
         "android_client_info": {
-          "package_name": "com.example.e_electromaps"
+          "package_name": "com.mugeep.e_electromaps"
         }
       },
       "oauth_client": [],
